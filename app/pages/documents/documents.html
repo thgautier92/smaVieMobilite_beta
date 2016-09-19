@@ -1,0 +1,25 @@
+<!--
+  Generated template for the DocumentsPage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-navbar *navbar action>
+  <ion-title>Espace Documentaire</ion-title>
+  <button menuToggle>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+</ion-navbar>
+
+<ion-content padding class="documents">
+  <ion-searchbar autocorrect="true" autocomplete="true" placeholder="Chercher une documentation" showCancelButton="true" cancelButtonText="Annuler"
+    (ionInput)="getItems($event)" (ionCancel)="onCancel($event)" (ionClear)="onCancel($event)">
+  </ion-searchbar>
+  <ion-list>
+    <button (click)="openFile(item)" ion-item text-wrap *ngFor="let item of lstDocs">
+    <h2>{{item.lib}}</h2>
+    <ion-note item-right><h6>{{item.dateMaj}}</h6></ion-note>
+    <ion-icon primary item-right name="eye"></ion-icon>
+  </button>
+  </ion-list>
+</ion-content>

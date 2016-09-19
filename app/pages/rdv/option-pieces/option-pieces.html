@@ -1,0 +1,44 @@
+<!--
+  Generated template for the OptionPiecesPage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-navbar danger>
+  <ion-title>
+    <ion-icon name="copy"></ion-icon> Justificatifs</ion-title>
+  <ion-buttons end>
+    <button (click)="close()">Fermer</button>
+  </ion-buttons>
+</ion-navbar>
+<ion-content padding class="option-pieces">
+  <ion-card>
+    <div class="image-container">
+      <ion-img [src]="base64Image" class="image-scale"></ion-img>
+      <button fab fab-right fab-top class="fab-map" (click)="takePhoto()"><ion-icon name="camera"></ion-icon></button>
+      <button fab fab-left fab-top class="fab-map" (click)="takeMail()"><ion-icon name="mail"></ion-icon></button>
+    </div>
+    <ion-item>
+      <ion-icon name="photo" item-left large></ion-icon>
+      <ion-label stacked>Nature de la pièce</ion-label>
+      <ion-select [(ngModel)]="nature" cancelText="Annuler" okText="Ok" (ngModelChange)="natureChange($event)">
+        <ion-option value="">== Choisir la piece ==</ion-option>
+        <ion-option *ngFor="let n of lstNatureInfo" [value]="n.code">{{n.lib}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <h2>
+      <ion-icon name="people"></ion-icon> Pièce à affecter aux clients
+    </h2>
+    <ion-list>
+      <ion-item *ngFor="let cible of lstCible">
+        <ion-label>{{cible.name}}</ion-label>
+        <ion-checkbox [(ngModel)]="cible.sel"></ion-checkbox>
+      </ion-item>
+    </ion-list>
+    <ion-item>
+      <button primary item-right (click)="execute()">
+        <ion-icon name="save"></ion-icon>Affecter la pièce
+      </button>
+    </ion-item>
+  </ion-card>
+</ion-content>

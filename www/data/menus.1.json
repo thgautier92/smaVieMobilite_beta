@@ -1,0 +1,12 @@
+[
+    { "id": 1, "status": "Hold", "lib": "Connaissance Client", "icon": "person", "form":1 },
+    { "id": 2, "status": "Hold", "lib": "Contact", "icon": "person", "form":2 },
+    { "id": 3, "status": "Hold", "lib": "ICS Vie", "icon": "checkmark-circle", "form":3 },
+    { "id": 4, "status": "Hold", "lib": "Offre 1", "icon": "medkit", "form":4 },
+    { "id": 5, "status": "Hold", "lib": "Offre 2", "icon": "school", "form":5 },
+    { "id": 6, "status": "Hold", "lib": "Offre 3", "icon": "cash", "form":6 },
+    { "id": 7, "status": "Hold", "lib": "Signatures", "icon": "ribbon", "form":7 },
+    { "id": 8, "status": "Hold", "lib": "Pièces justificatives", "icon": "qr-scanner", "form":8 },
+    { "id": 9, "status": "Hold", "lib": "Documents SMAVie", "icon": "document", "form":9 },
+    { "id": 10, "status": "Hold", "lib": "Adhésion", "icon": "camera", "form":10}
+]

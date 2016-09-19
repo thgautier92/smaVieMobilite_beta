@@ -1,0 +1,12 @@
+<!--
+  Generated template for the DiagConseilPage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-content padding class="decouverte">
+  <div *ngFor="let f of lstForms">
+    <flex-list *ngIf="f.pres=='list'" [idPage]=idPage [idForm]=f.id [formTitle]=f.title [dataIn]=dataIn [idClient]=idClient></flex-list>
+    <flex-input *ngIf="f.pres=='detail'" [idPage]=idPage [idMenu]=f.id [formTitle]=f.title [dataIn]=dataIn [idClient]=idClient></flex-input>
+  </div>
+</ion-content>

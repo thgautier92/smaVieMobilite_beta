@@ -1,0 +1,67 @@
+<!--
+  Generated template for the FlexInput component.
+
+  See https://angular.io/docs/ts/latest/api/core/ComponentMetadata-class.html
+  for more info on Angular 2 Components.
+-->
+<div>
+  <form *ngIf="okForm" (ngSubmit)="onSubmit()" [(ngFormModel)]="form" class="css-form">
+    <ion-toolbar light position="top">
+      <ion-title start>{{formTitle}}</ion-title>
+      <ion-buttons end>
+        <!--<button>Etat de votre saisie : {{menuCurrent.status}}</button> -->
+        <button danger (click)="diagNext('hold',$event)"><ion-icon name="square"></ion-icon></button>
+        <button favorite (click)="diagNext('partial',$event)"><ion-icon name="pause"></ion-icon></button>
+        <button secondary (click)="diagNext('completed',$event)"><ion-icon name="play"></ion-icon></button>
+      </ion-buttons>
+    </ion-toolbar>
+    <ion-row wrap>
+      <ion-col width-33  *ngFor="let key of selectedFields | keys">
+        <ion-card>
+          <ion-card-header>{{key.key}}</ion-card-header>
+          <ion-list>
+            <ion-item *ngFor="let field of key.value, let idx=index">
+              <ion-icon item-left class="fieldIcon" [ngClass]="{
+                  'ion-md-list' : field.type=='enum',
+                  'ion-md-calendar' : field.type=='date',
+                  'ion-md-text' : field.type=='text',
+                  'ion-md-calculator' : field.type=='number',
+                  'ion-md-call': field.type=='tel',
+                  'ion-md-mail' : field.type=='email',
+                  'ion-md-wifi' : field.type=='url',
+                  'ion-md-cloud-upload' : field.type=='urlData'}" (click)="initField(idx, field.model)">
+              </ion-icon>
+              <ion-label stacked>{{field.title}}</ion-label>
+              <ion-input clearInput *ngIf="field.type=='number'" type="number" [(ngControl)]="field.model" name="input_{{field.model}}" [(ngModel)]="field.value"
+                min="{{field.enum[0]}}" max="{{field.enum[1]}}"></ion-input>
+              <!-- <ion-range *ngIf="field.type=='number'" min="{{field.enum[0]}}" max="{{field.enum[1]}}" pin="true" [(ngControl)]="field.model" name="input_{{field.model}}"
+                [(ngModel)]="field.value">
+                <ion-label range-left>{{field.enum[0]}}</ion-label>
+                <ion-label range-right>{{field.enum[1]}}</ion-label>
+              </ion-range>
+               -->
+              <ion-input clearInput *ngIf="field.type=='text'" type="{{field.type}}" primary [ngControl]="field.model" name="input_{{field.model}}"
+                [(ngModel)]="field.value" [required]="field.required"></ion-input>
+              <ion-input clearInput *ngIf="field.type=='date'" type="{{field.type}}" primary [ngControl]="field.model" name="input_{{field.model}}"
+                [(ngModel)]="field.value"></ion-input>
+              <ion-input clearInput *ngIf="field.type=='tel'" type="{{field.type}}" primary [ngControl]="field.model" name="input_{{field.model}}"
+                [(ngModel)]="field.value"></ion-input>
+              <ion-input *ngIf="field.type=='email'" type="{{field.type}}" [ngControl]="field.model" primary name="input_{{field.model}}"
+                [(ngModel)]="field.value"></ion-input>
+              <button outline item-right *ngIf="field.type=='url'" (click)="openSimu(field.default)"><ion-icon name="wifi"></ion-icon> démarrer</button>
+              <button outline item-right *ngIf="field.type=='urlData'" (click)="openSimuData(idx,field.model,field.default)"><ion-icon name="wifi"></ion-icon> démarrer</button>
+
+              <ion-toggle *ngIf="field.type=='boolean'" checked="false" [ngControl]="field.model" name="input_{{field.model}}" [(ngModel)]="field.value"></ion-toggle>
+
+              <ion-select clearInput *ngIf="field.type=='enum'" [(ngModel)]="field.value" [ngControl]="field.model" cancelText="Annuler" okText="Ok">
+                <ion-option value="">== Choisir une option ==</ion-option>
+                <ion-option *ngFor="let b of field.enum | objToArray" [value]="b.key">{{b.value}}</ion-option>
+              </ion-select>
+              <!-- <div class="errorMessage" *ngIf="isValid(field.model)">{{field.title}} est invalide</div> -->
+            </ion-item>
+          </ion-list>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </form>
+</div>

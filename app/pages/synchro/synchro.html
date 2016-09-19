@@ -1,0 +1,52 @@
+<!--
+  Generated template for the SynchroPage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar danger>
+    <ion-title>
+      <ion-icon name="wifi"></ion-icon> Synchronisation</ion-title>
+    <button menuToggle>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+  </ion-navbar>
+</ion-header>
+<ion-content padding class="synchro">
+  <button primary (click)="startSync()">Synchroniser {{params.base}}</button>
+  <button primary (click)="delDb()">Effacer</button>
+  <button class="actionButton" fab fab-right fab-bottom favorite (click)="showBase()"><ion-icon name="refresh"></ion-icon></button>
+  <ion-card>
+    <ion-card-header>Base : {{params.base}} - {{docs['total_rows']}} lignes</ion-card-header>
+    <ion-card-content>
+      <ion-item *ngIf="sync['timer']">
+        <button primary clear item-left>
+          <ion-icon name="cloud-download"></ion-icon>
+          <div> {{sync['timer']['pull']}}ms</div>
+        </button>
+        <button primary clear item-left>
+          <ion-icon name="cloud-upload"></ion-icon>
+          <div> {{sync['timer']['push']}}ms</div>
+        </button>
+        <button primary clear item-rigth (click)="getSyncDetail()">
+          <ion-icon name="information-circle"></ion-icon>
+        </button>
+      </ion-item>
+      <ion-item *ngIf="sync['start']">
+        <p class="small wrap" favorite *ngIf="sync['info']">Action de
+          <mark>{{sync['info']['direction']}}</mark>, le {{sync['info']['change']['start_time']}} :<br>{{sync['info']['change']['docs_read']}}
+          lectures,{{sync['info']['change']['docs_written']}} écritures, {{sync['info']['change']['doc_write_failures']}}
+          erreurs
+        </p>
+        <p class="small wrap" danger *ngIf="sync['info']">Problème de synchronisation : {{sync['info']}}</p>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngFor="let item of docs.rows">
+    <ion-card-header>#{{item.id}}, revision #{{item.value.rev}}</ion-card-header>
+    <ion-card-content>
+      <pre class="small">{{item | json }}</pre>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

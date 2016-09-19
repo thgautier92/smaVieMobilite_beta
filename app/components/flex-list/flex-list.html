@@ -1,0 +1,38 @@
+<!--
+  Generated template for the FlexList component.
+
+  See https://angular.io/docs/ts/latest/api/core/ComponentMetadata-class.html
+  for more info on Angular 2 Components.
+-->
+<div>
+  <ion-toolbar light position="top">
+    <ion-title start>{{formTitle}}</ion-title>
+    <ion-buttons end>
+      <!--<button>Etat de votre saisie : {{menuCurrent.status}}</button> -->
+      <button outline primary (click)="addItem()"><ion-icon name="add-circle"></ion-icon> Ajouter</button>
+    </ion-buttons>
+    <ion-buttons *ngIf="addedForm" end>
+      <button danger (click)="diagNext('hold',$event)"><ion-icon name="square"></ion-icon></button>
+      <button favorite (click)="diagNext('partial',$event)"><ion-icon name="pause"></ion-icon></button>
+      <button secondary (click)="diagNext('completed',$event)"><ion-icon name="play"></ion-icon></button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-list>
+    <ion-item-sliding *ngFor="let item of list; let idx=index">
+      <ion-item>
+        <ion-avatar item-left>
+          <img src="img/sales.png">
+        </ion-avatar>
+        <ion-grid>
+          <ion-row>
+            <ion-col *ngFor="let field of item | keys">{{field.value}}</ion-col>
+          </ion-row>
+        </ion-grid>
+        <ion-icon (click)="removeItem(idx)" danger name="trash" item-right></ion-icon>
+      </ion-item>
+      <ion-item-options side="right">
+        <button danger (click)="removeItem(idx)"><ion-icon name="trash"></ion-icon>Supprimer</button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</div>

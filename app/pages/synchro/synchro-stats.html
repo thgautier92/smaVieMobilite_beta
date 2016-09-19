@@ -1,0 +1,66 @@
+<ion-navbar secondary>
+
+    <ion-title><ion-icon name="wifi"></ion-icon> Résultats</ion-title>
+    <ion-buttons end>
+        <button (click)="close()">Fermer</button>
+    </ion-buttons>
+
+</ion-navbar>
+<ion-content>
+    <ion-card>
+        <ion-card-header primary>Serveur vers moi</ion-card-header>
+        <ion-card-content>
+            <ion-item>
+                <button large primary clear item-left>
+                    <ion-icon name="eye"></ion-icon>
+                    <div>{{infos.pull.docs_read}} lus</div>
+                </button>
+                <button large primary clear item-left>
+                    <ion-icon name="cloud-download"></ion-icon>
+                    <div>{{infos.pull.docs_written}} écrits</div>
+                </button>
+            </ion-item>
+            <p class="small">Debut : {{infos.pull.start_time}}</p>
+            <p class="small">Fin : {{infos.pull.end_time}}</p>
+            <ion-item>
+                <button large primary clear item-left>
+                    <ion-icon name="bug"></ion-icon>
+                    <div>{{infos.push.doc_write_failures}} erreurs d'ecriture</div>
+                </button>
+            </ion-item>
+            <p>Erreurs : {{infos.pull.errors}}</p>
+            <p>Dernière séquence : {{infos.pull.last_seq}}</p>
+            <ion-icon secondary *ngIf="infos.pull.ok" name="thumbs-up"></ion-icon>
+            <ion-icon danger *ngIf="!infos.pull.ok" name="thumbs-down"></ion-icon>
+            <ion-note item-right>Status {{infos.pull.status}}</ion-note>
+        </ion-card-content>
+    </ion-card>
+    <ion-card>
+        <ion-card-header primary>Moi vers le serveur</ion-card-header>
+        <ion-card-content>
+            <ion-item>
+                <button large primary clear item-left>
+                    <ion-icon name="eye"></ion-icon>
+                    <div>{{infos.push.docs_read}} lus</div>
+                </button>
+                <button large primary clear item-left>
+                    <ion-icon name="cloud-upload"></ion-icon>
+                    <div>{{infos.push.docs_written}} écrits</div>
+                </button>
+            </ion-item>
+            <p class="small">Debut : {{infos.push.start_time}}</p>
+            <p class="small">Fin : {{infos.push.end_time}}</p>
+            <ion-item>
+                <button large primary clear item-left>
+                    <ion-icon name="bug"></ion-icon>
+                    <div>{{infos.push.doc_write_failures}} erreurs d'ecriture</div>
+                </button>
+            </ion-item>
+            <p>Erreurs : {{infos.push.errors}}</p>
+            <p>Dernière séquence : {{infos.push.last_seq}}</p>
+            <ion-icon secondary *ngIf="infos.push.ok" name="thumbs-up"></ion-icon>
+            <ion-icon danger *ngIf="!infos.push.ok" name="thumbs-down"></ion-icon>
+            <ion-note item-right>Status {{infos.push.status}}</ion-note>
+        </ion-card-content>
+    </ion-card>
+</ion-content>

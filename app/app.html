@@ -1,0 +1,20 @@
+<ion-menu [content]="content">
+  <ion-toolbar light>
+    <ion-title><ion-icon name="cog"></ion-icon> Comptes et Outils</ion-title>
+  </ion-toolbar>
+
+  <ion-content>
+    <ion-list>
+      <button full *ngFor="let p of pages" (click)="openPage(p)" [color]="p.color">
+         <ion-icon item-left name="{{p.icon}}"></ion-icon>
+        {{p.title}}
+      </button>
+      <ion-item-divider divider>Votre compte : {{userData['name']}}</ion-item-divider>
+      <button ion-item *ngIf="!isAut" (click)="connect()"><ion-icon item-left name="log-in"></ion-icon>Connexion</button>
+      <button ion-item *ngIf="isAut" (click)="disConnect()"><ion-icon item-left name="log-out"></ion-icon>Déconnexion</button>
+    </ion-list>
+  </ion-content>
+
+</ion-menu>
+
+<ion-nav [root]="rootPage" #content swipe-back-enabled="false"></ion-nav>
