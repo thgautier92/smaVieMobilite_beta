@@ -93,7 +93,8 @@ export class RdvPage {
       //console.log(doc);
       me.currentRdv = doc;
       // Create JSON Structure for data input by application
-      me.currentRdv.rdv['docsInput'] = [];    //for docs capture
+      //me.currentRdv.rdv['docsInput'] = [];    //for docs capture
+      if (typeof me.currentRdv.rdv['docsInput'] === 'undefined') me.currentRdv.rdv['docsInput'] = [];
       let idResult = "resultByClient";
       me.currentRdv.rdv[idResult] = [];
       for (var idx in doc.clients) {

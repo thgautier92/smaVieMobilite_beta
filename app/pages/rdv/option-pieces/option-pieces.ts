@@ -18,6 +18,7 @@ import {groupBy, ValuesPipe, KeysPipe} from '../../../pipes/common';
   providers: [Paramsdata]
 })
 export class OptionPiecesPage {
+  action:string="docs";
   form: any;
   idClient: any;
   dataIn: any;
@@ -45,8 +46,14 @@ export class OptionPiecesPage {
   ngOnInit() {
     this.form = new FormGroup({
       nature: new FormControl('', [<any>Validators.required, <any>Validators.minLength(5)]),
-      reference: new FormControl('', <any>Validators.required)
+      reference: new FormControl('', <any>Validators.required),
+      validite: new FormControl('', <any>Validators.required)
     });
+  }
+  delItem(idx){
+    console.log(idx);
+    this.dataIn['rdv']['docsInput'].splice(idx,1);
+     this.events.publish('rdvSave', this.dataIn);
   }
   close() {
     this.viewCtrl.dismiss();
@@ -82,7 +89,13 @@ export class OptionPiecesPage {
     //store Image Data+Ref in docs
      console.log(this.dataIn,this.form);
     let idDoc=0;
-    this.dataIn['rdv']['docsInput'].push({ "idClient": this.idClient, "idDoc": idDoc, "nature": this.form['_value']['nature'],"reference": this.form['_value']['reference'], "img64": this.base64Image });
+    this.dataIn['rdv']['docsInput'].push(
+      { "idClient": this.idClient, 
+      "idDoc": idDoc, 
+      "nature": this.form['_value']['nature'],
+      "reference": this.form['_value']['reference'],
+      "validite": this.form['_value']['validite'], 
+      "img64": this.base64Image });
     // Save data to the client folder
     for (let key in this.lstCible) {
       console.log(this.dataIn, key);

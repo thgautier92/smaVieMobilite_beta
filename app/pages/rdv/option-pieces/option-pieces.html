@@ -23,15 +23,15 @@
   <div [ngSwitch]="action">
     <div *ngSwitchCase="'docs'">
       <ion-list>
-        <ion-item-sliding *ngFor="let item of dataIn['rdv']['docsInput']">
+        <ion-item-sliding *ngFor="let item of dataIn['rdv']['docsInput'];let idx=index">
           <ion-item>
             <ion-avatar item-left>
-              <img (ngSrc)="item['img64']">
+              <img [src]="item['img64']">
             </ion-avatar>
             <h2>{{item.idDoc}}. {{item.nature}} - {{item.reference}}</h2>
           </ion-item>
           <ion-item-options side="right">
-            <button danger><ion-icon name="text"></ion-icon>Suppr.</button>
+            <button danger (click)="delItem(idx)"><ion-icon name="trash"></ion-icon>Suppr.</button>
             <button primary><ion-icon name="mail"></ion-icon>Email</button>
           </ion-item-options>
         </ion-item-sliding>
@@ -48,17 +48,22 @@
         <form [formGroup]="form" class="css-form">
           <ion-list>
             <ion-item>
-              <ion-icon name="photo" item-left large></ion-icon>
-              <ion-label stacked>Nature de la pièce</ion-label>
+              <ion-icon name="folder-open" item-left large></ion-icon>
+              <ion-label floating>Nature de la pièce</ion-label>
               <ion-select formControlName="nature" cancelText="Annuler" okText="Ok">
                 <ion-option value="">== Choisir la piece ==</ion-option>
                 <ion-option *ngFor="let n of lstNatureInfo" [value]="n.code">{{n.lib}}</ion-option>
               </ion-select>
             </ion-item>
             <ion-item>
-              <ion-icon name="photo" item-left large></ion-icon>
-              <ion-label stacked>Référence de la pièce</ion-label>
+              <ion-icon name="bookmark" item-left large></ion-icon>
+              <ion-label floating>Référence de la pièce</ion-label>
               <ion-input clearInput type="text" primary formControlName="reference" [required]="true"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-icon name="calendar" item-left large></ion-icon>
+              <ion-label stacked>Date de validité</ion-label>
+              <ion-input clearInput type="date" primary formControlName="reference" [required]="true"></ion-input>
             </ion-item>
           </ion-list>
         </form>

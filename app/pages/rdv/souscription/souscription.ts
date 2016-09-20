@@ -10,7 +10,7 @@ import {FlexInput} from '../../../components/flex-input/flex-input';
   Ionic pages and navigation.
 */
 @Component({
-  templateUrl: 'build/pages/rdv/decouverte/decouverte.html',
+  templateUrl: 'build/pages/rdv/souscription/souscription.html',
   directives: [FlexInput],
   providers: [CalcTools],
 })

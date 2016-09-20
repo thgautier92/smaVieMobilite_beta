@@ -56,8 +56,6 @@ Rdv Main Page
     </ion-list>
   </ion-content>
 </ion-menu>
-
-
 <ion-content #contentRdv class="rdv">
   <ion-tabs #rdvTabs *ngIf="currentContext" tabsPlacement="top" tabsLayout="icon-left">
   <ion-tab *ngFor="let item of dataMenu, let i = index" secondary [tabIcon]="item.icon" [tabTitle]="item.lib" [root]="item.page"
