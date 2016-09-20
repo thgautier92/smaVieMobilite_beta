@@ -14,47 +14,71 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding class="option-pieces">
-  <ion-card>
-    <div class="image-container">
-      <ion-img [src]="base64Image" class="image-scale"></ion-img>
-      <button fab fab-right fab-top class="fab-map" (click)="takePhoto()"><ion-icon name="camera"></ion-icon></button>
-      <button fab fab-left fab-top class="fab-map" (click)="takeMail()"><ion-icon name="mail"></ion-icon></button>
+  <div padding>
+    <ion-segment [(ngModel)]="action">
+      <ion-segment-button value="docs">Pièces enregistrées</ion-segment-button>
+      <ion-segment-button value="capture">Capturer une piece</ion-segment-button>
+    </ion-segment>
+  </div>
+  <div [ngSwitch]="action">
+    <div *ngSwitchCase="'docs'">
+      <ion-list>
+        <ion-item-sliding *ngFor="let item of dataIn['rdv']['docsInput']">
+          <ion-item>
+            <ion-avatar item-left>
+              <img (ngSrc)="item['img64']">
+            </ion-avatar>
+            <h2>{{item.idDoc}}. {{item.nature}} - {{item.reference}}</h2>
+          </ion-item>
+          <ion-item-options side="right">
+            <button danger><ion-icon name="text"></ion-icon>Suppr.</button>
+            <button primary><ion-icon name="mail"></ion-icon>Email</button>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
     </div>
 
-    <form [formGroup]="form" class="css-form">
-      <ion-list>
-        <ion-item>
-          <ion-icon name="photo" item-left large></ion-icon>
-          <ion-label stacked>Nature de la pièce</ion-label>
-          <ion-select formControlName="nature" cancelText="Annuler" okText="Ok">
-            <ion-option value="">== Choisir la piece ==</ion-option>
-            <ion-option *ngFor="let n of lstNatureInfo" [value]="n.code">{{n.lib}}</ion-option>
-          </ion-select>
-        </ion-item>
-        <ion-item>
-          <ion-icon name="photo" item-left large></ion-icon>
-          <ion-label stacked>Référence de la pièce</ion-label>
-          <ion-input clearInput type="text" primary formControlName="reference" [required]="true"></ion-input>
-        </ion-item>
-      </ion-list>
-    </form>
-  </ion-card>
-  <ion-card>
-    <ion-card-header>
-      <ion-icon name="people"></ion-icon> Affecter cette pièce aux clients (cochez...)</ion-card-header>
-    <ion-card-content>
-      <ion-list>
-
-        <ion-item *ngFor="let cible of lstCible">
-          <ion-label>{{cible.name}}</ion-label>
-          <ion-checkbox [(ngModel)]="cible.sel"></ion-checkbox>
-        </ion-item>
-      </ion-list>
-      <ion-item>
-        <button primary item-right (click)="execute()">
-        <ion-icon name="save"></ion-icon>Affecter la pièce
-      </button>
-      </ion-item>
-    </ion-card-content>
-  </ion-card>
+    <div *ngSwitchCase="'capture'">
+      <ion-card>
+        <div class="image-container">
+          <ion-img [src]="base64Image" class="image-scale"></ion-img>
+          <button fab fab-right fab-top class="fab-map" (click)="takePhoto()"><ion-icon name="camera"></ion-icon></button>
+          <button fab fab-left fab-top class="fab-map" (click)="takeMail()"><ion-icon name="mail"></ion-icon></button>
+        </div>
+        <form [formGroup]="form" class="css-form">
+          <ion-list>
+            <ion-item>
+              <ion-icon name="photo" item-left large></ion-icon>
+              <ion-label stacked>Nature de la pièce</ion-label>
+              <ion-select formControlName="nature" cancelText="Annuler" okText="Ok">
+                <ion-option value="">== Choisir la piece ==</ion-option>
+                <ion-option *ngFor="let n of lstNatureInfo" [value]="n.code">{{n.lib}}</ion-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-icon name="photo" item-left large></ion-icon>
+              <ion-label stacked>Référence de la pièce</ion-label>
+              <ion-input clearInput type="text" primary formControlName="reference" [required]="true"></ion-input>
+            </ion-item>
+          </ion-list>
+        </form>
+      </ion-card>
+      <ion-card>
+        <ion-card-header>
+          <ion-icon name="people"></ion-icon> Affecter cette pièce aux clients (cochez...)
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list>
+            <ion-item *ngFor="let cible of lstCible">
+              <ion-label>{{cible.name}}</ion-label>
+              <ion-checkbox [(ngModel)]="cible.sel"></ion-checkbox>
+            </ion-item>
+            <ion-item>
+              <button primary item-right (click)="execute()"><ion-icon name="save"></ion-icon>Affecter la pièce</button>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
 </ion-content>

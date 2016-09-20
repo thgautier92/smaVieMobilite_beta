@@ -1,6 +1,6 @@
 {
-  "name": "My Ionic App",
-  "short_name": "My Ionic App",
+  "name": "SMAVie Mobilité",
+  "short_name": "SMAVie Mobilité",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{

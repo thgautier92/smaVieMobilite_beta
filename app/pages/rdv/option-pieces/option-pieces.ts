@@ -32,7 +32,7 @@ export class OptionPiecesPage {
     this.dataIn = params.data['currentDoc'];
     this.lstCible = [];
     for (let i in this.dataIn['clients']) {
-      console.log(i, this.dataIn['clients'][i]);
+      //console.log(i, this.dataIn['clients'][i]);
       this.lstCible.push({ "id": i, "name": this.dataIn['clients'][i]['client']['output'][0]['NOM'], "sel": false })
     };
     this.lstNatureInfo = [
@@ -76,18 +76,21 @@ export class OptionPiecesPage {
       });
       alert.present();
     }
-
   }
   takeMail() { }
   execute() {
+    //store Image Data+Ref in docs
+     console.log(this.dataIn,this.form);
+    let idDoc=0;
+    this.dataIn['rdv']['docsInput'].push({ "idClient": this.idClient, "idDoc": idDoc, "nature": this.form['_value']['nature'],"reference": this.form['_value']['reference'], "img64": this.base64Image });
     // Save data to the client folder
     for (let key in this.lstCible) {
+      console.log(this.dataIn, key);
       if (this.lstCible[key]['sel']) {
-        this.dataIn.resultByClient[key]['doc'].push({ "nature": this.nature, "ts": new Date(), "img64": this.base64Image });
-        this.events.publish('rdvSave', this.dataIn);
+        this.dataIn['rdv']['resultByClient'][key]['docs'].push({"idClient": this.idClient, "idDoc": idDoc,"ts": new Date()});
       }
     }
-
+    this.events.publish('rdvSave', this.dataIn);
   }
 }
 function setOptions(srcType) {
