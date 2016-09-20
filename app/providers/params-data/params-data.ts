@@ -2,7 +2,8 @@ import {Storage, LocalStorage} from 'ionic-angular';
 import {Injectable, Pipe, PipeTransform} from '@angular/core';
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
-import { FORM_DIRECTIVES, FormBuilder, Control, ControlGroup, Validators, AbstractControl } from '@angular/common';
+import { FORM_DIRECTIVES, Control, ControlGroup, AbstractControl } from '@angular/common';
+import {FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 const mailFormat = '/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i';
 /*
   Generated class for the ParamsparamsForm provider.
@@ -97,7 +98,8 @@ export class Paramsdata {
           //console.log("=====Form ",form);
           ret['form'] = form[0];
           // Generate a Form Builder Group
-          let group = {};
+          let group = new FormGroup({});
+          let groupValue={};
           form[0]['fields'].forEach(question => {
             // Get default value from dataInput, params in Form
             let model = formModel.filter(item => item['field'] === question['model']);
@@ -127,14 +129,15 @@ export class Paramsdata {
             if (question['type'] == 'email') lstValidator.push(ValidationService.emailValidator);
             if (question['type'] == 'number') lstValidator.push(ValidationService.numberFormat);
             // Create the control
-            let ctrl = new Control(field, Validators.compose(lstValidator));
-            ctrl.updateValue(modelValue);
-            group[field] = ctrl;
+            let ctrl = new FormControl(modelValue, Validators.compose(lstValidator));
+            groupValue[field]=modelValue;
+            //ctrl.updateValue(modelValue);
+            group.addControl(field,ctrl);
             //console.log("==== Question", group);
           });
           //console.log("=====Form Group ", group, this.fb);
-          let formB = this.fb.group(group);
-          ret['formGroup'] = formB;
+          //let formB = group;
+          ret['formGroup'] = group;
           //console.log("=====Return forms ", ret);
           resolve(ret);
         } else {

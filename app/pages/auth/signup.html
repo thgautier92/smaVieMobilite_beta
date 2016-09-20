@@ -1,0 +1,24 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            Ouverture d'un compte
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content text-center>
+    <img src="img/logo_smavie_actu2.jpg">
+    <form [formGroup]="signupCreds">
+        <ion-item>
+            <ion-label floating>Nom utilisateur</ion-label>
+            <ion-input type="text" formControlName="name"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Mot de passe</ion-label>
+            <ion-input type="password" formControlName="password"></ion-input>
+        </ion-item>
+        <div padding>
+            <button block [disabled]="!signupCreds.valid" (click)="signup(signupCreds.value)">Créer un compte</button>
+        </div>
+    </form>
+    <button secondary (click)="cancel()">Annuler</button>
+</ion-content>

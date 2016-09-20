@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
-import { NavController, Events, ToastController } from 'ionic-angular';
-import {Page, Storage, LocalStorage} from 'ionic-angular';
+import { Component} from '@angular/core';
 import {FORM_DIRECTIVES} from '@angular/common';
+import { NavController, ViewController, Events, ToastController } from 'ionic-angular';
+import {FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {Page, Storage, LocalStorage} from 'ionic-angular';
+
 import {CouchDbServices} from '../../providers/couch/couch';
 import {HomePage} from '../home/home';
-
 
 @Component({
   templateUrl: 'build/pages/auth/auth.html',
@@ -14,17 +15,23 @@ import {HomePage} from '../home/home';
 export class AuthPage {
   authType: string = "login";
   user: string;
-  isAut: boolean;
-  constructor(private nav: NavController, private toastCtrl: ToastController ,private couch: CouchDbServices, private events:Events) {
+  isAut: boolean = false;
+  loginCreds: any;
+  signupCreds: any;
+  constructor(private nav: NavController, private viewCtrl: ViewController, private toastCtrl: ToastController, private fb: FormBuilder, private couch: CouchDbServices, private events: Events) {
     //this.couch.closeSession();
-    this.couch.verifSession(true).then(response => {
-      this.isAut = true;
-      this.nav.setRoot(HomePage, response);
-    }, error => {
-      console.log(error);
-      this.isAut = false;
+  }
+  ionViewLoaded() {
+    this.loginCreds = this.fb.group({
+      name: ['', Validators.required],
+      password: ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(40)
+      ])]
     });
   }
+  ngOnInit() { }
   login(credentials) {
     //console.log(credentials);
     this.couch.openSession(credentials, null).then(response => {
@@ -61,27 +68,66 @@ export class AuthPage {
       toast.present();
     })
   }
-
-  signup(credentials) {
-    console.log(credentials);
-    this.couch.putUser(credentials, null).then(response => {
-      console.log(response);
-      if (credentials.password === response['password']) {
-        console.log("User Auth validated");
-        this.nav.push(HomePage);
-      } else {
-        console.log("Password not valid");
-      }
-    }, error => {
-      console.log(error);
-    })
-  }
-  authenticated() {
-    return this.isAut;
+  createAccount() {
+    this.nav.push(SignUpPage);
   }
   restart() {
     this.couch.closeSession();
     this.isAut = false;
     this.authType = "login";
+  }
+}
+
+// SIGNUP component
+@Component({
+  templateUrl: 'build/pages/auth/signup.html',
+  directives: [FORM_DIRECTIVES],
+  providers: [CouchDbServices]
+})
+export class SignUpPage {
+  signupCreds: any;
+  constructor(private nav: NavController, private viewCtrl: ViewController, private toastCtrl: ToastController, private fb: FormBuilder, private couch: CouchDbServices, private events: Events) {
+  }
+  ionViewLoaded() {
+    this.signupCreds = this.fb.group({
+      name: ['', Validators.required],
+      password: ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(40)
+      ])]
+    });
+  }
+  signup(credentials) {
+    console.log(credentials);
+    this.couch.putUser(credentials, null).then(response => {
+      console.log("CouchDB response", response);
+      if (response['ok'] === true) {
+        console.log("User Auth creation validated");
+        let toast = this.toastCtrl.create({
+          message: 'Compte crée. Vous pouvez vous connecter.',
+          duration: 3000
+        });
+        toast.present();
+        this.nav.pop();
+      } else {
+        console.log("Error during creating account");
+        let toast = this.toastCtrl.create({
+          message: 'Création du compte impossible. Erreur technique.',
+          duration: 3000
+        });
+        toast.present();
+      }
+    }, error => {
+      console.log(error);
+      let toast = this.toastCtrl.create({
+        message: 'Connexion impossible. Erreur technique.',
+        duration: 3000
+      });
+      toast.present();
+    })
+  }
+  cancel() {
+    this.nav.pop();
   }
 }

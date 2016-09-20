@@ -17,7 +17,7 @@
 <ion-content padding class="home">
   <!-- <button primary menuToggle>Menus</button> -->
   <h1 primary text-center>Bienvenue dans l'Ultra Mobilité</h1>
-  <ion-row center wrap>
+  <ion-row center wrap [hidden]="!userData['ok']">
     <ion-col center *ngFor="let item of items">
       <ion-card (click)="openNavDetailsPage(item)">
         <ion-img src="img/{{item.icon}}"></ion-img>

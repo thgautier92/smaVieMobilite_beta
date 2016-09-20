@@ -21,6 +21,7 @@ Rdv Main Page
   </ion-content>
 </ion-menu>
 -->
+
 <ion-menu type="overlay" danger id="menuRdv" [content]="contentRdv" side="right">
   <ion-toolbar danger>
     <ion-title>
@@ -48,19 +49,19 @@ Rdv Main Page
     </ion-list>
   </ion-content>
 </ion-menu>
-<ion-header>
-  <ion-navbar primary>
-    <ion-title>Rdv #{{rdvId}} - {{titleRdv}}</ion-title>
-    <button start menuToggle><ion-icon name="menu"></ion-icon></button>
-    <!-- <button end menuToggle="menuCli"><ion-icon name="people"></ion-icon></button> -->
-    <button end menuToggle="menuRdv"><ion-icon name="options"></ion-icon></button>
-  </ion-navbar>
-</ion-header>
 <ion-content #contentRdv class="rdv">
-  <ion-tabs #rdvTabs *ngIf="currentContext" tabbarPlacement="top" tabbarLayout="icon-left">
+  <ion-header>
+    <ion-navbar primary>
+      <ion-title>Rdv #{{rdvId}} - {{titleRdv}}</ion-title>
+      <button start menuToggle><ion-icon name="menu"></ion-icon></button>
+      <!-- <button end menuToggle="menuCli"><ion-icon name="people"></ion-icon></button> -->
+      <button end menuToggle="menuRdv"><ion-icon name="options"></ion-icon></button>
+    </ion-navbar>
+  </ion-header>
+  <ion-tabs #rdvTabs *ngIf="currentContext" tabsPlacement="bottom" tabsLayout="icon-left">
     <ion-tab *ngFor="let item of dataMenu, let i = index" secondary [tabIcon]="item.icon" [tabTitle]="item.lib" [root]="item.page"
       [rootParams]="retrieveData(i)" [tabBadge]="getStyle(item.status,'lib')" [tabBadgeStyle]="getStyle(item.status,'color')"
-      preloadTabs="false">
+      preloadTabs="true">
     </ion-tab>
   </ion-tabs>
 </ion-content>

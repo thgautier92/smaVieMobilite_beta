@@ -7,19 +7,17 @@
 <ion-header>
   <ion-navbar simple>
     <ion-title>Les rendez-vous préparés</ion-title>
-    <button menuToggle>
-    <ion-icon name="menu"></ion-icon>
-  </button>
+      <button menuToggle><ion-icon name="menu"></ion-icon></button>
     <ion-buttons end>
       <button favorite (click)="showBase()"><ion-icon name="refresh"></ion-icon></button>
     </ion-buttons>
   </ion-navbar>
-  <ion-header>
-    <ion-content padding class="start">
-      <ion-card class="cards-list-start" *ngFor="let key of docs | keys">
-        <ion-card-header>Vos Rendez-vous du {{key.key}}</ion-card-header>
-        <ion-list>
-          <button ion-item *ngFor="let item of key.value" [ngClass]="{
+</ion-header>
+<ion-content padding class="start">
+  <ion-card class="cards-list-start" *ngFor="let key of docs | keys">
+    <ion-card-header>Vos Rendez-vous du {{key.key}}</ion-card-header>
+    <ion-list>
+      <button ion-item *ngFor="let item of key.value" [ngClass]="{
                   'soc' : item.doc.rdv.ETATVIE=='SOCIETAIRE',
                   'prosp' : item.doc.rdv.ETATVIE=='PROSPECT'}" (click)="start(item)">
         <ion-icon name="flag" item-right primary></ion-icon>
@@ -52,6 +50,6 @@
           </ion-col>
         </ion-row>
       </button>
-        </ion-list>
-      </ion-card>
-    </ion-content>
+    </ion-list>
+  </ion-card>
+</ion-content>

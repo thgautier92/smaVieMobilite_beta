@@ -130,8 +130,7 @@ export class CouchDbServices {
         .map(res => res.json())
         .subscribe(
         data => {
-          this.dataBases = data;
-          resolve(this.dataBases);
+          resolve(data);
         }, error => {
           console.log("USER : User request error", error);
           if (typeof (error._body) === "string") {

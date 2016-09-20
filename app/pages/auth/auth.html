@@ -1,67 +1,38 @@
-<!--
-  Generated template for the AuthPage page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<!--
-<ion-navbar *navbar>
-  <ion-title>Authentification</ion-title>
-</ion-navbar>
--->
-
-<ion-content padding class="auth" *ngIf="!authenticated()">
-  <div class="logo"><img src="img/logo_smavie_actu2.jpg"></div>
-  <div padding>
-
-    <ion-segment [(ngModel)]="authType">
-      <ion-segment-button value="login">Se connecter</ion-segment-button>
-      <ion-segment-button value="signup">Nouveau compte</ion-segment-button>
-    </ion-segment>
-  </div>
-
-  <div [ngSwitch]="authType">
-    <form *ngSwitchWhen="'login'" #loginCreds="ngForm" (ngSubmit)="login(loginCreds.value)">
-      <ion-item>
-        <ion-label floating>Nom utilisateur</ion-label>
-        <ion-input type="text" ngControl="name"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label floating>Mot de passe</ion-label>
-        <ion-input type="password" ngControl="password"></ion-input>
-      </ion-item>
-
-      <div padding>
-        <button block type="submit">Se connecter</button>
-      </div>
-    </form>
-    <form *ngSwitchWhen="'signup'" #signupCreds="ngForm" (ngSubmit)="signup(signupCreds.value)">
-      <ion-item>
-        <ion-label floating>Nom utilisateur</ion-label>
-        <ion-input type="text" ngControl="name"></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label floating>Mot de passe</ion-label>
-        <ion-input type="password" ngControl="password"></ion-input>
-      </ion-item>
-
-      <div padding>
-        <button block type="submit">Créer un compte</button>
-      </div>
-
-    </form>
-  </div>
-</ion-content>
-
-<ion-content *ngIf="authenticated()">
-  <div padding text-center>
-    <img src="img/logo_smavie_actu2.jpg">
-    <h1>Bienvenue.</h1>
-    <button block (click)="restart()">Commencer</button>
-  </div>
-  <ion-toolbar position="bottom">
-    <p text-center>&copy; Groupe SMA - DSI/SMA Labs<br>R&D projet SMAVIE Mobilité<br>Juillet 2016</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Authentifiez-vous
+    </ion-title>
   </ion-toolbar>
+</ion-header>
+<ion-content>
+    <div [hidden]="isAuth" text-center>
+      <img src="img/logo_smavie_actu2.jpg">
+        <form [formGroup]="loginCreds">
+          <ion-item>
+            <ion-label floating>Nom utilisateur</ion-label>
+            <ion-input type="text" formControlName="name"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label floating>Mot de passe</ion-label>
+            <ion-input type="password" formControlName="password"></ion-input>
+          </ion-item>
+
+          <div padding>
+            <button block [disabled]="!loginCreds.valid" (click)="login(loginCreds.value)">Se connecter</button>
+          </div>
+        </form>
+        <button clear (click)="createAccount()"><ion-icon name="people"></ion-icon>Vous n'avez pas de compte ?<br>Créer le...</button>
+    </div>
+    <div [hidden]="!isAuth">
+      <img src="img/logo_smavie_actu2.jpg">
+      <div padding text-center>
+        <h1>Bienvenue.</h1>
+        <button block (click)="restart()">Commencer</button>
+      </div>
+      <ion-toolbar position="bottom">
+        <p text-center>&copy; Groupe SMA - DSI/SMA Labs<br>R&D projet SMAVIE Mobilité<br>Juillet 2016</p>
+      </ion-toolbar>
+    </div>
 </ion-content>

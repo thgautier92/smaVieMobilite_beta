@@ -90,8 +90,9 @@ export class SynchroPage {
           "pull": (info.pull.end_time - info.pull.start_time),
           "push": (info.push.end_time - info.push.start_time)
         };
-        me.openModal();
         me.showBase();
+        me.openModal();
+        
       }).on('paused', function (err) {
         // replication paused (e.g. replication up to date, user went offline)
         me.display.displayToast("Synchronisation en pause");
@@ -127,13 +128,12 @@ export class SynchroPage {
   }
 }
 // ========== Modal for displaying sync results ==========
-@Page({
+@Component({
   templateUrl: "build/pages/synchro/synchro-stats.html"
 })
 class statSynchroModal {
   infos: any;
-  constructor(public platform: Platform, public params: NavParams, public viewCtrl: ViewController) {
-    this.viewCtrl = viewCtrl;
+  constructor(public platform: Platform, public params: NavParams, private viewCtrl: ViewController) {
     this.infos = this.params.get('infos');
   }
   close() {

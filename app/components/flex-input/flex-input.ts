@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef, Input, Output, OnInit, OnChanges} from '@angular/core';
 import {IONIC_DIRECTIVES, Platform, Events} from 'ionic-angular';
-import { FORM_DIRECTIVES, FormBuilder, Control, ControlGroup, Validators, AbstractControl} from '@angular/common';
+import {REACTIVE_FORM_DIRECTIVES, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {groupBy, ValuesPipe, KeysPipe} from '../../pipes/common';
 import {Paramsdata} from '../../providers/params-data/params-data';
 import {Simu} from '../../providers/simu/simu';
@@ -15,7 +15,7 @@ import {Simu} from '../../providers/simu/simu';
   selector: 'flex-input',
   templateUrl: 'build/components/flex-input/flex-input.html',
   inputs: [, 'idPage', 'idMenu', 'dataIn', 'idClient'],
-  directives: [IONIC_DIRECTIVES, FORM_DIRECTIVES],
+  directives: [IONIC_DIRECTIVES, REACTIVE_FORM_DIRECTIVES],
   pipes: [groupBy, ValuesPipe, KeysPipe],
   providers: [Paramsdata, Simu]
 })
@@ -45,7 +45,7 @@ export class FlexInput implements OnInit, OnChanges {
       console.log("==> Form created", response);
       this.form = response['formGroup'];
       this.selectedForm = response['selectedForm'];
-      if(this.formTitle=="") this.formTitle=this.selectedForm['title'];
+      if (this.formTitle == "") this.formTitle = this.selectedForm['title'];
       this.selectedFields = response['selectedFields'];
       this.okForm = true;
     }, error => {
@@ -61,9 +61,10 @@ export class FlexInput implements OnInit, OnChanges {
       this.dataCurrent = this.dataIn;
     }
     this.loadForm(this.idMenu, this.dataIn['clients'][this.idClient]['client']['output'][0]).then(response => {
+      console.log("==> Form change", response);
       this.form = response['formGroup'];
       this.selectedForm = response['selectedForm'];
-      if(this.formTitle=="") this.formTitle=this.selectedForm['title'];
+      if (this.formTitle == "") this.formTitle = this.selectedForm['title'];
       this.selectedFields = response['selectedFields'];
       this.okForm = true;
     }, error => {
@@ -194,7 +195,7 @@ interface ValidationResult {
   [key: string]: boolean;
 }
 export class ValidationService {
-  static mailFormat(control: Control): ValidationResult {
+  static mailFormat(control: FormControl): ValidationResult {
     var EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
     if (control.value != "" && (control.value.length <= 5 || !EMAIL_REGEXP.test(control.value))) {
       return { "incorrectMailFormat": true };
@@ -219,7 +220,7 @@ export class ValidationService {
       return { 'invalidCreditCard': true };
     }
   }
-  static numberFormat(control: Control, numLimit?: Array<number>): ValidationResult {
+  static numberFormat(control: FormControl, numLimit?: Array<number>): ValidationResult {
     console.log("Bornes : ", numLimit);
     if (numLimit) {
       if (control.value < numLimit[0] || control.value > numLimit[1]) {

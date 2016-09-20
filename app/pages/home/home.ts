@@ -27,7 +27,10 @@ export class HomePage {
       { 'title': 'Go !', 'icon': 'rdv.jpg', 'description': "Démarrer un RDV", 'link': StartPage, 'color': this.display.getRandomColor() },
       { 'title': 'Découvrir', 'icon': 'regime_retraite_complementaire.jpg', 'description': "Découvrir les offres", 'link': StartPage, 'color': this.display.getRandomColor() },
       { 'title': 'Documents', 'icon': 'documents.jpg', 'description': "La base documentaire", 'link': DocumentsPage, 'color': this.display.getRandomColor() },
-    ]
+    ];
+  }
+  ngOnInit(){
+    
   }
   openNavDetailsPage(item) {
     this.nav.setRoot(item.link);
