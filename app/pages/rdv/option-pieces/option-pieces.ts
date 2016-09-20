@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Camera } from 'ionic-native';
 import { Page, NavController, NavParams, Events, ModalController, AlertController, IONIC_DIRECTIVES, Platform, ViewController } from 'ionic-angular';
-import { FORM_DIRECTIVES, FormBuilder, Control, ControlGroup, Validators, AbstractControl} from '@angular/common';
+import {REACTIVE_FORM_DIRECTIVES, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Paramsdata} from '../../../providers/params-data/params-data';
 import {groupBy, ValuesPipe, KeysPipe} from '../../../pipes/common';
 
@@ -14,10 +14,11 @@ import {groupBy, ValuesPipe, KeysPipe} from '../../../pipes/common';
 @Component({
   templateUrl: 'build/pages/rdv/option-pieces/option-pieces.html',
   pipes: [groupBy, ValuesPipe, KeysPipe],
-  directives: [IONIC_DIRECTIVES, FORM_DIRECTIVES],
+  directives: [IONIC_DIRECTIVES, REACTIVE_FORM_DIRECTIVES],
   providers: [Paramsdata]
 })
 export class OptionPiecesPage {
+  form: any;
   idClient: any;
   dataIn: any;
   lstCible: any = [];
@@ -34,13 +35,18 @@ export class OptionPiecesPage {
       console.log(i, this.dataIn['clients'][i]);
       this.lstCible.push({ "id": i, "name": this.dataIn['clients'][i]['client']['output'][0]['NOM'], "sel": false })
     };
-    console.log(this.lstCible);
     this.lstNatureInfo = [
       { "code": "cni", "lib": "Carte d'identité Nationale" },
       { "code": "passport", "lib": "Passport" },
       { "code": "permisauto", "lib": "Permis de conduire" },
       { "code": "livretfam", "lib": "Livret de famille" }
     ]
+  }
+  ngOnInit() {
+    this.form = new FormGroup({
+      nature: new FormControl('', [<any>Validators.required, <any>Validators.minLength(5)]),
+      reference: new FormControl('', <any>Validators.required)
+    });
   }
   close() {
     this.viewCtrl.dismiss();
@@ -49,7 +55,7 @@ export class OptionPiecesPage {
   takePhoto() {
     let srcType = Camera.PictureSourceType.CAMERA;
     let options = setOptions(srcType);
-    let me=this;
+    let me = this;
     try {
       Camera.getPicture(options).then((imageData) => {
         me.base64Image = 'data:image/jpeg;base64,' + imageData;
@@ -57,7 +63,7 @@ export class OptionPiecesPage {
         // Handle error
         let alert = this.alertCtrl.create({
           title: 'Capture de documents',
-          subTitle: 'Appareil non disponible : ' + err,
+          subTitle: 'Appareil non disponible. <br>Erreur  : ' + err,
           buttons: ['OK']
         });
         alert.present();
@@ -85,16 +91,16 @@ export class OptionPiecesPage {
   }
 }
 function setOptions(srcType) {
-    var options = {
-        // Some common settings are 20, 50, and 100
-        quality: 50,
-        destinationType: Camera.DestinationType.FILE_URI,
-        // In this app, dynamically set the picture source, Camera or photo gallery
-        sourceType: srcType,
-        encodingType: Camera.EncodingType.JPEG,
-        mediaType: Camera.MediaType.PICTURE,
-        allowEdit: true,
-        correctOrientation: true  //Corrects Android orientation quirks
-    }
-    return options;
+  var options = {
+    // Some common settings are 20, 50, and 100
+    quality: 50,
+    destinationType: Camera.DestinationType.FILE_URI,
+    // In this app, dynamically set the picture source, Camera or photo gallery
+    sourceType: srcType,
+    encodingType: Camera.EncodingType.JPEG,
+    mediaType: Camera.MediaType.PICTURE,
+    allowEdit: true,
+    correctOrientation: true  //Corrects Android orientation quirks
+  }
+  return options;
 }

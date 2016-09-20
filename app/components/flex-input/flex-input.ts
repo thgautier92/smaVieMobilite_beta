@@ -39,6 +39,7 @@ export class FlexInput implements OnInit, OnChanges {
   }
   ngOnInit() {
     console.log("==> Data passed to component : ", this.idPage, this.idMenu, this.dataIn, this.idClient);
+    /*
     this.form = this.fb.group({});
     this.dataCurrent = this.dataIn;
     this.loadForm(this.idMenu, this.dataIn['clients'][this.idClient]['client']['output'][0]).then(response => {
@@ -51,9 +52,10 @@ export class FlexInput implements OnInit, OnChanges {
     }, error => {
       this.okForm = false;
     });
+    */
   };
   ngOnChanges(changes: any) {
-    //console.log("Data Changes",changes);
+    //console.log("Data Changes", changes);
     this.idClient = changes.idClient.currentValue;
     if (changes['dataIn']) {
       this.dataCurrent = changes.dataIn.currentValue;
@@ -61,7 +63,7 @@ export class FlexInput implements OnInit, OnChanges {
       this.dataCurrent = this.dataIn;
     }
     this.loadForm(this.idMenu, this.dataIn['clients'][this.idClient]['client']['output'][0]).then(response => {
-      console.log("==> Form change", response);
+      console.log("==> Form change",response);
       this.form = response['formGroup'];
       this.selectedForm = response['selectedForm'];
       if (this.formTitle == "") this.formTitle = this.selectedForm['title'];
@@ -70,6 +72,7 @@ export class FlexInput implements OnInit, OnChanges {
     }, error => {
       this.okForm = false;
     });
+
   };
   /* ======================================================================
   * Create a form component with 

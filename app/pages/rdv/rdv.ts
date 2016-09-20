@@ -65,7 +65,7 @@ export class RdvPage {
     this.rdvMenu = [
       { "id": 1, "lib": "Recopier", "icon": "copy", "page": OptionCopierPage, "nav": "dialog" },
       { "id": 2, "lib": "Pièces justificatives", "icon": "camera", "page": OptionPiecesPage, "nav": "dialog" },
-      { "id": 3, "lib": "Diagnostic Conseil", "icon": "home", "page": DiagConseilPage, "nav": "page" },
+      { "id": 3, "lib": "Diagnostic Conseil", "icon": "compass", "page": DiagConseilPage, "nav": "page" },
       { "id": 4, "lib": "Simuler", "icon": "calculator", "page": SimulerPage, "nav": "page" },
       { "id": 5, "lib": "Souscription", "icon": "contract", "page": SouscriptionPage, "nav": "page" },
     ];
@@ -115,7 +115,7 @@ export class RdvPage {
     });
   }
   start(idx) {
-    console.log("Select client Index", this.currentCli);
+    console.log("Select client Index", idx);
     this.titleRdv = this.currentRdv['clients'][idx]['client']['output'][0]['NOM'];
     this.currentCli = idx;
     //this.currentContext = { "currentPage": null, "currentCli": this.currentCli, "currentDoc": this.currentRdv }

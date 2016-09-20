@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Page, NavController, NavParams, Events, Modal, IONIC_DIRECTIVES, Platform, ViewController } from 'ionic-angular';
-import { FORM_DIRECTIVES, FormBuilder, Control, ControlGroup, Validators, AbstractControl} from '@angular/common';
+//import { FORM_DIRECTIVES, FormBuilder, Control, ControlGroup, Validators, AbstractControl} from '@angular/common';
 import {Paramsdata} from '../../../providers/params-data/params-data';
 import {groupBy, ValuesPipe, KeysPipe} from '../../../pipes/common';
 
@@ -13,7 +13,7 @@ import {groupBy, ValuesPipe, KeysPipe} from '../../../pipes/common';
 @Component({
   templateUrl: 'build/pages/rdv/option-copier/option-copier.html',
   pipes: [groupBy, ValuesPipe, KeysPipe],
-  directives: [IONIC_DIRECTIVES, FORM_DIRECTIVES],
+  directives: [IONIC_DIRECTIVES],
   providers: [Paramsdata]
 })
 export class OptionCopierPage {

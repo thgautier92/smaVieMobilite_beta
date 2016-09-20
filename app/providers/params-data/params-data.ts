@@ -35,6 +35,10 @@ export class Paramsdata {
     this.fb = fb;
     this.dataForms = [];
   }
+  /* ========
+  List the documents avaible in the application
+  All docs are stored in www/data/docs
+  ===== */
   loadDocs() {
     if (this.dataDocs) {
       // already loaded paramsForm
@@ -50,24 +54,12 @@ export class Paramsdata {
         });
     });
   }
-  loadFile(file){
-    if (file!=="") window.open("data/docs/"+file,"_blank");
+  // Load a file (pdf,...) in internal navigator (inAppBrowser plugin)
+  loadFile(file) {
+    if (file !== "") window.open("data/docs/" + file, "_blank");
   }
-  loadMenu() {
-    if (this.dataMenu) {
-      // already loaded paramsForm
-      return Promise.resolve(this.dataMenu);
-    }
-    // don't have the paramsForm yet
-    return new Promise(resolve => {
-      this.http.get('data/menus.json')
-        .map(res => res.json())
-        .subscribe(dataMenu => {
-          this.dataMenu = dataMenu;
-          resolve(this.dataMenu);
-        });
-    });
-  }
+
+  /* ===== Methods for configuring dynamics forms ===== */
   loadForm() {
     return new Promise(resolve => {
       if (this.paramsForm) {
@@ -99,7 +91,7 @@ export class Paramsdata {
           ret['form'] = form[0];
           // Generate a Form Builder Group
           let group = new FormGroup({});
-          let groupValue={};
+          let groupValue = {};
           form[0]['fields'].forEach(question => {
             // Get default value from dataInput, params in Form
             let model = formModel.filter(item => item['field'] === question['model']);
@@ -130,9 +122,9 @@ export class Paramsdata {
             if (question['type'] == 'number') lstValidator.push(ValidationService.numberFormat);
             // Create the control
             let ctrl = new FormControl(modelValue, Validators.compose(lstValidator));
-            groupValue[field]=modelValue;
+            groupValue[field] = modelValue;
             //ctrl.updateValue(modelValue);
-            group.addControl(field,ctrl);
+            group.addControl(field, ctrl);
             //console.log("==== Question", group);
           });
           //console.log("=====Form Group ", group, this.fb);
@@ -147,24 +139,10 @@ export class Paramsdata {
       })
     });
   };
-  /* -----
-  * Tests : Methods for data store during forms input
-  */
-  initDataForms() {
-    this.dataForms[0] = { ts: new Date() };
-    this.local.set(this.keyStore, JSON.stringify(this.dataForms));
-  }
-  storeDataForms(id, data) {
-    this.dataForms[id] = data;
-    this.local.set(this.keyStore, JSON.stringify(this.dataForms));
-  }
-  getDataForms() {
-    return JSON.parse(this.local.get(this.keyStore));
-  }
 }
 
 
-// Specific validator for input
+// ===== Specific validator for input =====
 export class GlobalValidator {
   static mailFormat(control: Control): ValidationResult {
     var EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
@@ -230,3 +208,37 @@ export class ValidationService {
     }
   }
 }
+
+
+/* ===== Deprecated =====
+    loadMenu() {
+      if (this.dataMenu) {
+        // already loaded paramsForm
+        return Promise.resolve(this.dataMenu);
+      }
+      // don't have the paramsForm yet
+      return new Promise(resolve => {
+        this.http.get('data/menus.json')
+          .map(res => res.json())
+          .subscribe(dataMenu => {
+            this.dataMenu = dataMenu;
+            resolve(this.dataMenu);
+          });
+      });
+    }
+  ===== */
+
+  /* ===== Not Use =====
+  * Methods for local data store during forms input
+    initDataForms() {
+      this.dataForms[0] = { ts: new Date() };
+      this.local.set(this.keyStore, JSON.stringify(this.dataForms));
+    }
+    storeDataForms(id, data) {
+      this.dataForms[id] = data;
+      this.local.set(this.keyStore, JSON.stringify(this.dataForms));
+    }
+    getDataForms() {
+      return JSON.parse(this.local.get(this.keyStore));
+    }
+  ===== */

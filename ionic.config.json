@@ -2,5 +2,31 @@
   "name": "smaVieMobilite",
   "app_id": "",
   "v2": true,
-  "typescript": true
+  "typescript": true,
+  "proxies": [
+    {
+      "path": "/gnews",
+      "proxyUrl": "http://news.google.fr/"
+    },
+    {
+      "path": "/gapi",
+      "proxyUrl": "http://ajax.googleapis.com"
+    },
+    {
+      "path": "/lemonde",
+      "proxyUrl": "http://www.lemonde.fr"
+    },
+    {
+      "path": "/ibm",
+      "proxyUrl": "http://gautiersa.fr:8080"
+    },
+    {
+      "path": "/gsapi",
+      "proxyUrl": "http://gautiersa.fr/apps/api/v2"
+    },
+    {
+      "path": "/docuSign",
+      "proxyUrl": "https://demo.docusign.net"
+    }
+  ]
 }

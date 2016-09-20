@@ -4,37 +4,37 @@
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-navbar danger>
-  <ion-title>
-    <ion-icon name="copy"></ion-icon> Recopier</ion-title>
-  <ion-buttons end>
-    <button (click)="close()">Fermer</button>
-  </ion-buttons>
-</ion-navbar>
-
+<ion-header>
+  <ion-navbar danger>
+    <ion-title>
+      <ion-icon name="copy"></ion-icon> Recopier</ion-title>
+    <ion-buttons end>
+      <button (click)="close()">Fermer</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
 <ion-content class="option-copier">
   <ion-list>
+    <ion-list-header>
+      <ion-icon secondary name="bookmark" item-left></ion-icon> Source : {{lstCible[idClient]['client']['output'][0]['NOM']}}
+    </ion-list-header>
     <ion-item>
-      <ion-icon name="copy"></ion-icon> Source : {{lstCible[idClient]['client']['output'][0]['NOM']}}
-    </ion-item>
-    <ion-item>
-      <ion-icon name="buffer"></ion-icon> Cible :
-    </ion-item>
-    <ion-item>
-      <ion-label stacked>Client cible de la recopie</ion-label>
+      <ion-icon primary name="copy" item-left></ion-icon>
+      <ion-label stacked>Client cible de la recopie</ion-label> 
       <ion-select [(ngModel)]="cible" cancelText="Annuler" okText="Ok">
         <ion-option value=null>== Choisir une cible ==</ion-option>
         <ion-option *ngFor="let b of lstCible | objToArray" [value]="b.key">{{b.value['client']['output'][0]['NOM']}}</ion-option>
       </ion-select>
     </ion-item>
     <ion-item>
+      <ion-icon danger name="information-circle" item-left></ion-icon>
       <ion-label stacked>Nature d'information à recopier</ion-label>
       <ion-select [(ngModel)]="nature" cancelText="Annuler" okText="Ok" (ngModelChange)="natureChange($event)">
         <ion-option value="">== Choisir la nature ==</ion-option>
         <ion-option *ngFor="let n of lstNatureInfo" [value]="n.code">{{n.lib}}</ion-option>
       </ion-select>
     </ion-item>
-    
+
   </ion-list>
   <ion-list *ngIf="lstfields">
     <ion-card *ngFor="let form of lstfields">
@@ -42,13 +42,13 @@
         {{form.name}}
       </ion-card-header>
       <ion-card-content>
-      <ion-list>
-        <ion-item *ngFor="let field of form.fields">
-          <ion-label>{{field.title}} <small>({{field.model}})</small></ion-label>
-          <!-- <ion-checkbox [(ngModel)]="field.check" checked="true"></ion-checkbox> -->
-          <ion-checkbox checked="true"></ion-checkbox>
-        </ion-item>
-      </ion-list>
+        <ion-list>
+          <ion-item *ngFor="let field of form.fields">
+            <ion-label>{{field.title}} <small>({{field.model}})</small></ion-label>
+            <!-- <ion-checkbox [(ngModel)]="field.check" checked="true"></ion-checkbox> -->
+            <ion-checkbox checked="true"></ion-checkbox>
+          </ion-item>
+        </ion-list>
       </ion-card-content>
     </ion-card>
   </ion-list>
