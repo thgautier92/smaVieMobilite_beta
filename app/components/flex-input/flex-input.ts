@@ -4,6 +4,7 @@ import {REACTIVE_FORM_DIRECTIVES, FormBuilder, FormControl, FormGroup} from '@an
 import {groupBy, ValuesPipe, KeysPipe} from '../../pipes/common';
 import {Paramsdata} from '../../providers/params-data/params-data';
 import {Simu} from '../../providers/simu/simu';
+import {FlexRadio} from '../flex-radio/flex-radio';
 
 /*
   Generated class for the FlexInput component.
@@ -15,9 +16,9 @@ import {Simu} from '../../providers/simu/simu';
   selector: 'flex-input',
   templateUrl: 'build/components/flex-input/flex-input.html',
   inputs: [, 'idPage', 'idMenu', 'dataIn', 'idClient'],
-  directives: [IONIC_DIRECTIVES, REACTIVE_FORM_DIRECTIVES],
+  directives: [IONIC_DIRECTIVES, REACTIVE_FORM_DIRECTIVES, FlexRadio],
   pipes: [groupBy, ValuesPipe, KeysPipe],
-  providers: [Paramsdata, Simu]
+  providers: [Paramsdata, Simu, FlexRadio]
 })
 export class FlexInput implements OnInit, OnChanges {
   menuCurrent: any = {};
@@ -63,7 +64,7 @@ export class FlexInput implements OnInit, OnChanges {
       this.dataCurrent = this.dataIn;
     }
     this.loadForm(this.idMenu, this.dataIn['clients'][this.idClient]['client']['output'][0]).then(response => {
-      console.log("==> Form change",response);
+      console.log("==> Form change", response);
       this.form = response['formGroup'];
       this.selectedForm = response['selectedForm'];
       if (this.formTitle == "") this.formTitle = this.selectedForm['title'];

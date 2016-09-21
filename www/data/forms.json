@@ -822,7 +822,7 @@
                     "required": "false",
                     "readOnly": "false",
                     "error": "",
-                    "type": "radio",
+                    "type": "enum",
                     "enum": {
                         "v1": "Moins de 10%",
                         "v2": "Entre 10 et 50%",
@@ -978,9 +978,9 @@
                     "error": "",
                     "type": "enum",
                     "enum": {
-                        "BR": "Batiretraite",
-                        "BP": "Batiprojet",
-                        "AU": "Autre"
+                        "Batiretraite": "Batiretraite",
+                        "Batiprojet": "Batiprojet",
+                        "Autre": "Autre"
                     }
                 },
                 {

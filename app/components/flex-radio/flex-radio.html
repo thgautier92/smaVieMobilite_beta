@@ -1,0 +1,10 @@
+<!--
+  [(formControlName)]="field.model"
+-->
+{{field}}
+<ion-list radio-group>
+  <ion-item *ngFor="let b of field.enum | objToArray">
+    <ion-label>{{b.value}}</ion-label>
+    <ion-radio checked="false" value="{{b.key}}"></ion-radio>
+  </ion-item>
+</ion-list>

@@ -45,18 +45,16 @@
               <button outline item-right *ngIf="field.type=='url'" (click)="openSimu(field.default)"><ion-icon name="wifi"></ion-icon> démarrer</button>
               <button outline item-right *ngIf="field.type=='urlData'" (click)="openSimuData(idx,field.model,field.default)"><ion-icon name="wifi"></ion-icon> démarrer</button>
 
-              <ion-select clearInput *ngIf="field.type=='enum'" [(formControlName)]="field.model" cancelText="Annuler" okText="Ok">
+              <ion-select clearInput *ngIf="field.type=='enum'" [(formControlName)]="field.model" cancelText="Annuler" okText="Choisir">
                 <ion-option value="">== Choisir une option ==</ion-option>
                 <ion-option *ngFor="let b of field.enum | objToArray" [value]="b.key">{{b.value}}</ion-option>
               </ion-select>
-              <div *ngIf="field.type=='radio'">
-                <ion-list radio-group [(formControlName)]="field.model">
-                  <ion-item *ngFor="let b of field.enum | objToArray">
-                    <ion-label>{{b.value}}</ion-label>
-                    <ion-radio checked="false" value="{{b.key}}"></ion-radio>
-                  </ion-item>
-                </ion-list>
-              </div>
+              <ion-list *ngIf="field.type=='radio'" radio-group [(formControlName)]="field.model">
+                <ion-item *ngFor="let b of field.enum | objToArray">
+                  <ion-label>{{b.value}}</ion-label>
+                  <ion-radio checked="false" value="{{b.key}}"></ion-radio>
+                </ion-item>
+              </ion-list>
             </ion-item>
           </ion-list>
         </ion-card>
