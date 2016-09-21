@@ -12,6 +12,7 @@ import {SynthesePage} from './synthese/synthese';
 import {DiagConseilPage} from './diag-conseil/diag-conseil';
 import {DecouvertePage} from './decouverte/decouverte';
 import {PatrimoinePage} from './patrimoine/patrimoine';
+import {ProfilRisquePage} from './profil-risque/profil-risque';
 import {ConcurrentsPage} from './concurrents/concurrents';
 import {SouscriptionPage} from './souscription/souscription';
 import {SignaturePage} from './signature/signature';
@@ -61,6 +62,7 @@ export class RdvPage {
       { "id": 2, "status": "hold", "lib": "Connaissance Client", "icon": "person", "page": DecouvertePage },
       { "id": 3, "status": "hold", "lib": "Patrimoine", "icon": "home", "page": PatrimoinePage },
       { "id": 4, "status": "hold", "lib": "Concurrents", "icon": "sign", "page": ConcurrentsPage },
+      { "id": 5, "status": "hold", "lib": "Profil de risque", "icon": "sign", "page": ProfilRisquePage },
     ]
     this.rdvMenu = [
       { "id": 1, "lib": "Recopier", "icon": "copy", "page": OptionCopierPage, "nav": "dialog" },

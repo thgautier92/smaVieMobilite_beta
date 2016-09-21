@@ -703,23 +703,24 @@
         },
         {
             "id": 6,
-            "name": "offre3",
-            "title": "Offre 3",
+            "name": "simulator",
+            "title": "Simulation",
             "icon": "body",
             "fields": [
                 {
                     "group": "Simulateur",
-                    "model": "csp",
-                    "title": "Code CSP",
+                    "model": "simutools",
+                    "title": "Outil de simulation",
                     "default": "",
                     "required": "false",
                     "readOnly": "true",
-                    "error": "Veuillez vérifier la zone : 'Code CSP'",
+                    "error": "",
                     "type": "enum",
                     "enum": {
-                        "v1": "valeur1",
-                        "v2": "valeur2",
-                        "v3": "valeur3"
+                        "v1": "Opticap",
+                        "v2": "E-Futuris",
+                        "v3": "E-Succession",
+                        "demo":"Démonstration"
                     }
                 },
                 {
@@ -730,11 +731,7 @@
                     "required": false,
                     "readonly": false,
                     "error": "Simulateur indisponible",
-                    "type": "urlData",
-                    "enum": [
-                        17600,
-                        60000
-                    ]
+                    "type": "urlData"
                 }
             ]
         },
@@ -813,19 +810,24 @@
         },
         {
             "id": 10,
-            "name": "adhesion",
-            "title": "Adhesion",
+            "name": "profilrisque",
+            "title": "Questionnaire pour définir le profil de risque",
             "icon": "body",
             "fields": [
                 {
-                    "group": "Action réservé conseiller",
-                    "model": "adhesion_valid",
-                    "title": "Validation del'adhesion ?",
+                    "group": "",
+                    "model": "part_versement",
+                    "title": "Part du versement envisagé par rapport à votre patrimoine financier ?",
                     "default": "",
                     "required": "false",
                     "readOnly": "false",
                     "error": "",
-                    "type": "boolean"
+                    "type": "radio",
+                    "enum": {
+                        "v1": "Moins de 10%",
+                        "v2": "Entre 10 et 50%",
+                        "v3": "Superieur à 50%"
+                    }
                 }
             ]
         },

@@ -17,7 +17,7 @@
       </ion-buttons>
     </ion-toolbar>
     <ion-row wrap>
-      <ion-col width-33 *ngFor="let key of selectedFields | keys">
+      <ion-col *ngFor="let key of selectedFields | keys">
         <ion-card>
           <ion-card-header>{{key.key}}</ion-card-header>
           <ion-list>
@@ -35,24 +35,28 @@
               <ion-label stacked>{{field.title}}</ion-label>
               <ion-input clearInput *ngIf="field.type=='number'" type="number" [(formControlName)]="field.model" min="{{field.enum[0]}}"
                 max="{{field.enum[1]}}"></ion-input>
-              <!-- <ion-range *ngIf="field.type=='number'" min="{{field.enum[0]}}" max="{{field.enum[1]}}" pin="true" [(formControlName)]="field.model" name="input_{{field.model}}"
-                >
-                <ion-label range-left>{{field.enum[0]}}</ion-label>
-                <ion-label range-right>{{field.enum[1]}}</ion-label>
-              </ion-range>
-               -->
               <ion-input clearInput *ngIf="field.type=='text'" type="{{field.type}}" primary [(formControlName)]="field.model" [required]="field.required"></ion-input>
               <ion-input clearInput *ngIf="field.type=='date'" type="{{field.type}}" primary [(formControlName)]="field.model" [required]="field.required"></ion-input>
               <ion-input clearInput *ngIf="field.type=='tel'" type="{{field.type}}" primary [(formControlName)]="field.model" [required]="field.required"></ion-input>
               <ion-input clearInput *ngIf="field.type=='email'" type="{{field.type}}" [(formControlName)]="field.model" primary [required]="field.required"></ion-input>
               <ion-toggle *ngIf="field.type=='boolean'" checked="false" [(formControlName)]="field.model" [required]="field.required"></ion-toggle>
+
+              <button outline item-right *ngIf="field.type=='page'" (click)="openPage(field.default)"><ion-icon name="link"></ion-icon> démarrer</button>
               <button outline item-right *ngIf="field.type=='url'" (click)="openSimu(field.default)"><ion-icon name="wifi"></ion-icon> démarrer</button>
               <button outline item-right *ngIf="field.type=='urlData'" (click)="openSimuData(idx,field.model,field.default)"><ion-icon name="wifi"></ion-icon> démarrer</button>
+
               <ion-select clearInput *ngIf="field.type=='enum'" [(formControlName)]="field.model" cancelText="Annuler" okText="Ok">
                 <ion-option value="">== Choisir une option ==</ion-option>
                 <ion-option *ngFor="let b of field.enum | objToArray" [value]="b.key">{{b.value}}</ion-option>
               </ion-select>
-              <!-- <div class="errorMessage" *ngIf="isValid(field.model)">{{field.title}} est invalide</div> -->
+              <div *ngIf="field.type=='radio'">
+                <ion-list radio-group [(formControlName)]="field.model">
+                  <ion-item *ngFor="let b of field.enum | objToArray">
+                    <ion-label>{{b.value}}</ion-label>
+                    <ion-radio checked="false" value="{{b.key}}"></ion-radio>
+                  </ion-item>
+                </ion-list>
+              </div>
             </ion-item>
           </ion-list>
         </ion-card>
