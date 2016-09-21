@@ -13,7 +13,7 @@
   </button>
   </ion-navbar>
 </ion-header>
-<ion-content padding class="synchro">
+<ion-content no-padding class="synchro">
   <button primary (click)="startSync()">Synchroniser {{params.base}}</button>
   <button primary (click)="delDb()">Effacer</button>
   <button class="actionButton" fab fab-right fab-bottom favorite (click)="showBase()"><ion-icon name="refresh"></ion-icon></button>
@@ -43,11 +43,21 @@
       </ion-item>
     </ion-card-content>
   </ion-card>
-  <ion-card *ngFor="let item of docs.rows;let i=index">
-    <ion-card-header>#{{item.id}}, revision #{{item.value.rev}}</ion-card-header>
-    <ion-card-content>
-      <pre class="small">{{item | json }}</pre>
-      <!-- <div id="json_{{i}}" [innerHTML]="showFormated(i,item)"></div> -->
+  <ion-card >
+    <!--<ion-card-header>#{{item.id}}, revision #{{item.value.rev}}</ion-card-header>-->
+    <ion-card-content no-padding>
+      <ion-grid>
+        <ion-row wrap>
+          <ion-col width-20>
+            <ion-list>
+              <button ion-item *ngFor="let item of docs.rows;let i=index" (click)="getDocId(item)"> _id : {{item.id}}</button>
+            </ion-list>
+          </ion-col>
+          <ion-col width-80 no-padding>
+            <record [dataRecord]='detailDoc'></record>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-card-content>
   </ion-card>
 </ion-content>

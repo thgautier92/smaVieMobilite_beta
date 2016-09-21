@@ -5,6 +5,17 @@
   for more info on Angular 2 Components.
 -->
 <div [style.background-color]="checkColor" text-left>
+  <ion-list-header *ngIf="data" no-padding>
+    <ion-badge item-right>Niveau {{levelOpen}}</ion-badge>
+    <ion-range no-padding item-left min="0" max="10" snaps="true" [(ngModel)]="levelOpen" secondary (ngModelChange)="levelChange()">
+      <ion-label range-left>
+        <ion-icon style="font-size: 20px;" name="folder"></ion-icon>
+      </ion-label>
+      <ion-label range-right>
+        <ion-icon style="font-size: 50px;" name="folder-open"></ion-icon>
+      </ion-label>
+    </ion-range>
+  </ion-list-header>
   <div class="jsonFormat" #result>
     <ng-content></ng-content>
   </div>

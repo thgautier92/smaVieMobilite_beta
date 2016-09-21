@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import {Page, Loading, ModalController, Platform, NavController, NavParams, ViewController,
   Storage, SqlStorage, LocalStorage} from 'ionic-angular';
+import {Record} from '../../components/record/record';
 import {CouchDbServices} from '../../providers/couch/couch';
 import {DisplayTools} from '../comon/display';
 
 declare var PouchDB: any;
-declare var JSONFormatter: any;
 
 /*
   Generated class for the SynchroPage page.
@@ -16,6 +16,7 @@ declare var JSONFormatter: any;
 @Component({
   templateUrl: 'build/pages/synchro/synchro.html',
   providers: [DisplayTools, CouchDbServices],
+  directives: [Record]
 })
 export class SynchroPage {
   srvInfo: any;
@@ -25,6 +26,7 @@ export class SynchroPage {
   sync: any = {};
   syncExec: any;
   docs: any;
+  detailDoc: any = null;
   params: any;
   constructor(public nav: NavController, private modalCtrl: ModalController, private platform: Platform, private display: DisplayTools, private couch: CouchDbServices) {
     this.display = display;
@@ -61,14 +63,6 @@ export class SynchroPage {
       //console.log("==> Refresh list", data);
     });
   };
-  showFormated(elt, item) {
-    console.log(elt,item);
-     var result = document.getElementById('json_'+elt);
-    let formatter = new JSONFormatter(item);
-    result.innerHTML = '';
-    result.appendChild(formatter.render());
-    return (true);
-  }
   // ===== Sync opérations =====
   startSync() {
     console.log("Start Sync");
@@ -121,26 +115,29 @@ export class SynchroPage {
   getSyncDetail() {
     this.openModal();
   }
-  delDb() {
-    let me = this;
-    this.db.destroy().then(function (response) {
-      console.log("Del DB", response);
-      me.display.displayToast("Base effacée en local.");
-      me.loadBase(me.params);
-    }).catch(function (err) {
-      console.log(err);
-    });
+  getDocId(item) {
+    this.detailDoc=item;
   }
-  openModal() {
-    let modal = this.modalCtrl.create(statSynchroModal, { infos: this.sync.stats });
-    modal.present();
+    delDb() {
+      let me = this;
+      this.db.destroy().then(function (response) {
+        console.log("Del DB", response);
+        me.display.displayToast("Base effacée en local.");
+        me.loadBase(me.params);
+      }).catch(function (err) {
+        console.log(err);
+      });
+    }
+    openModal() {
+      let modal = this.modalCtrl.create(statSynchroModal, { infos: this.sync.stats });
+      modal.present();
+    }
   }
-}
-// ========== Modal for displaying sync results ==========
-@Component({
-  templateUrl: "build/pages/synchro/synchro-stats.html"
-})
-class statSynchroModal {
+  // ========== Modal for displaying sync results ==========
+  @Component({
+    templateUrl: "build/pages/synchro/synchro-stats.html"
+  })
+  class statSynchroModal {
   infos: any;
   constructor(public platform: Platform, public params: NavParams, private viewCtrl: ViewController) {
     this.infos = this.params.get('infos');

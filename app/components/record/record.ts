@@ -20,6 +20,9 @@ export class Record implements AfterViewInit,OnChanges {
   resultDiv: HTMLDivElement;
   @ViewChild('result') result: ElementRef;
   @Input() dataRecord: any;
+  formatter:any;
+  levelOpen:number=3;
+  data:any;
   constructor() {
     this.checkColor = 'transparent';
   }
@@ -28,15 +31,20 @@ export class Record implements AfterViewInit,OnChanges {
   }
   ngOnChanges(changes: any) {
     //console.log(changes);
-    this.render(changes['dataRecord'].currentValue);
+    this.data=changes['dataRecord'].currentValue;
+    this.render(this.data,this.levelOpen);
   }
-  render(data) {
+  levelChange(){
+    this.render(this.data,this.levelOpen);
+  }
+  render(data,level) {
     try {
-      var formatter = new JSONFormatter(data,Infinity);
+      this.formatter = new JSONFormatter(data,level);
       this.resultDiv.innerHTML = '';
-      this.resultDiv.appendChild(formatter.render());
+      this.resultDiv.appendChild(this.formatter.render());
       this.checkColor = 'transparent';
     } catch (e) {
+      console.log("Erreur JSONFormatter",e);
       this.checkColor = 'rgba(197, 69, 110, 0.30)';
     }
   }
