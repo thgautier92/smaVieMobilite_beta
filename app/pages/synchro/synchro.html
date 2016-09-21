@@ -43,10 +43,11 @@
       </ion-item>
     </ion-card-content>
   </ion-card>
-  <ion-card *ngFor="let item of docs.rows">
+  <ion-card *ngFor="let item of docs.rows;let i=index">
     <ion-card-header>#{{item.id}}, revision #{{item.value.rev}}</ion-card-header>
     <ion-card-content>
       <pre class="small">{{item | json }}</pre>
+      <!-- <div id="json_{{i}}" [innerHTML]="showFormated(i,item)"></div> -->
     </ion-card-content>
   </ion-card>
 </ion-content>

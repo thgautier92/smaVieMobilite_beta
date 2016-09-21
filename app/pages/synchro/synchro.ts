@@ -5,6 +5,7 @@ import {CouchDbServices} from '../../providers/couch/couch';
 import {DisplayTools} from '../comon/display';
 
 declare var PouchDB: any;
+declare var JSONFormatter: any;
 
 /*
   Generated class for the SynchroPage page.
@@ -14,18 +15,18 @@ declare var PouchDB: any;
 */
 @Component({
   templateUrl: 'build/pages/synchro/synchro.html',
-  providers: [DisplayTools, CouchDbServices]
+  providers: [DisplayTools, CouchDbServices],
 })
 export class SynchroPage {
   srvInfo: any;
   userData: any;
   db: any;
   remoteCouch: any;
-  sync: any={};
+  sync: any = {};
   syncExec: any;
   docs: any;
   params: any;
-  constructor(public nav: NavController, private modalCtrl:ModalController,private platform: Platform, private display: DisplayTools, private couch: CouchDbServices) {
+  constructor(public nav: NavController, private modalCtrl: ModalController, private platform: Platform, private display: DisplayTools, private couch: CouchDbServices) {
     this.display = display;
     this.params = couch.getParams();
     //console.log(this.params);
@@ -60,6 +61,14 @@ export class SynchroPage {
       //console.log("==> Refresh list", data);
     });
   };
+  showFormated(elt, item) {
+    console.log(elt,item);
+     var result = document.getElementById('json_'+elt);
+    let formatter = new JSONFormatter(item);
+    result.innerHTML = '';
+    result.appendChild(formatter.render());
+    return (true);
+  }
   // ===== Sync opérations =====
   startSync() {
     console.log("Start Sync");
@@ -92,7 +101,7 @@ export class SynchroPage {
         };
         me.showBase();
         me.openModal();
-        
+
       }).on('paused', function (err) {
         // replication paused (e.g. replication up to date, user went offline)
         me.display.displayToast("Synchronisation en pause");

@@ -1,5 +1,5 @@
 import { Component, Input} from '@angular/core';
-import { Page, NavController, NavParams, Events } from 'ionic-angular';
+import { Page, NavController,ViewController, NavParams, Events } from 'ionic-angular';
 import {CalcTools} from '../../comon/calculate'
 import {FlexInput} from '../../../components/flex-input/flex-input';
 /*
@@ -19,10 +19,8 @@ export class DiagConseilPage {
   idPage: any = {};
   idClient: any = "";
   dataOut: any = {};
-  params: NavParams;
   pageStatus: any;
-  constructor(private nav: NavController, params: NavParams, private events: Events, private CalcTools: CalcTools) {
-    this.params = params;
+  constructor(private nav: NavController,private viewCtrl:ViewController, private params: NavParams, private events: Events, private CalcTools: CalcTools) {
     //this.idPage = this.params.data['currentPage'];
     this.idPage = 2;
     this.idClient = this.params.data['currentCli'];
@@ -46,5 +44,8 @@ export class DiagConseilPage {
       f[0]['status'] = dataReturn[0]['status'];
       CalcTools.calcPageStatus(this.idPage, this.lstForms);
     });
+  }
+    close() {
+    this.viewCtrl.dismiss();
   }
 }

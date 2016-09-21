@@ -44,7 +44,7 @@ export class RdvPage {
   rdvId: any;
   dataMenu: any;
   rdvMenu: any;
-  constructor(private platform: Platform, private nav: NavController, private modalCtrl: ModalController, private alertCtrl:AlertController,private navParams: NavParams, public events: Events, private menuOpt: MenuController,
+  constructor(private platform: Platform, private nav: NavController, private modalCtrl: ModalController, private alertCtrl: AlertController, private navParams: NavParams, public events: Events, private menuOpt: MenuController,
     private display: DisplayTools, private couch: CouchDbServices,
     private paramsApi: Paramsdata, fb: FormBuilder) {
     this.platform = platform;
@@ -89,25 +89,27 @@ export class RdvPage {
   }
   getRdv(id) {
     let me = this;
-    this.db.get(id).then(function (doc) {
+    this.db.get(id).then(function (rdv) {
       //console.log(doc);
-      me.currentRdv = doc;
+      me.currentRdv = rdv;
       // Create JSON Structure for data input by application
-      //me.currentRdv.rdv['docsInput'] = [];    //for docs capture
-      if (typeof me.currentRdv.rdv['docsInput'] === 'undefined') me.currentRdv.rdv['docsInput'] = [];
       let idResult = "resultByClient";
-      me.currentRdv.rdv[idResult] = [];
-      for (var idx in doc.clients) {
-        let cli = doc.clients[idx]
-        me.currentRdv.rdv[idResult].push({
-          clientId: cli['client']['output'][0]['REF'],
-          clientName: cli['client']['output'][0]['NOM'],
-          clientPrenom: cli['client']['output'][0]['PRENOM'],
-          etatVie: cli['client']['output'][0]['ETATVIE'],
-          forms: [],
-          docs: [],
-          rdvStatus: false
-        });
+      let idDocsInput = "docsInput";
+      if (typeof me.currentRdv.rdv[idDocsInput] === 'undefined') me.currentRdv.rdv[idDocsInput] = [];
+      if (typeof me.currentRdv.rdv[idResult] === 'undefined') {
+        me.currentRdv.rdv[idResult] = [];
+        for (var idx in rdv.clients) {
+          let cli = rdv.clients[idx]
+          me.currentRdv.rdv[idResult].push({
+            clientId: cli['client']['output'][0]['REF'],
+            clientName: cli['client']['output'][0]['NOM'],
+            clientPrenom: cli['client']['output'][0]['PRENOM'],
+            etatVie: cli['client']['output'][0]['ETATVIE'],
+            forms: [],
+            docs: [],
+            rdvStatus: false
+          });
+        }
       }
       me.lstCli = me.currentRdv.rdv[idResult];
       console.log("Current RDV", me.currentRdv);
