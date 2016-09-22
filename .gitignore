@@ -1,7 +1,8 @@
 # Specifies files to intentionally ignore when using Git
 # http://git-scm.com/docs/gitignore
 
-node_modules/
+node_modules/*
+!node_modules/ionic-gulp-scripts-copy/
 www/build/
 platforms/
 plugins/
