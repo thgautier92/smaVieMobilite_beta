@@ -106,6 +106,9 @@ export class Paramsdata {
                 case "boolean":
                   modelValue = false;
                   break;
+                case "radio":
+                  modelValue = "";
+                  break;
                 default:
                   modelValue = '';
               }

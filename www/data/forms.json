@@ -720,7 +720,7 @@
                         "v1": "Opticap",
                         "v2": "E-Futuris",
                         "v3": "E-Succession",
-                        "demo":"Démonstration"
+                        "demo": "Démonstration"
                     }
                 },
                 {
@@ -815,18 +815,92 @@
             "icon": "body",
             "fields": [
                 {
-                    "group": "",
+                    "group": "Votre projet",
                     "model": "part_versement",
                     "title": "Part du versement envisagé par rapport à votre patrimoine financier ?",
                     "default": "",
                     "required": "false",
                     "readOnly": "false",
                     "error": "",
-                    "type": "enum",
+                    "type": "radio",
                     "enum": {
                         "v1": "Moins de 10%",
                         "v2": "Entre 10 et 50%",
                         "v3": "Superieur à 50%"
+                    }
+                },
+                {
+                    "group": "Votre projet",
+                    "model": "objectif_operation",
+                    "title": "Votre objectif pour cette opération ?",
+                    "default": "",
+                    "required": "false",
+                    "readOnly": "false",
+                    "error": "",
+                    "type": "radio",
+                    "enum": {
+                        "v1": "Epargner en vue d'un projet",
+                        "v2": "Valoriser un capital",
+                        "v3": "Transmettre un capital",
+                        "v4": "Rechercher un complement de revenus",
+                        "v5": "Préparer la retraite"
+                    }
+                },
+                {
+                    "group": "Votre projet",
+                    "model": "horizon_placement",
+                    "title": "Quel est votre horizon de placement ?",
+                    "default": "",
+                    "required": "false",
+                    "readOnly": "false",
+                    "error": "",
+                    "type": "radio",
+                    "enum": {
+                        "v1": "Au-delàs de 5 ans",
+                        "v2": "2 à 5 ans",
+                        "v3": "Inférieur à 2 ans"
+                    }
+                },
+                {
+                    "group": "Vos connaissances en matière financière ?",
+                    "model": "connaissance_sicav",
+                    "title": "Connaissance du mecanisme des SICAV, FCP, Unité de Compte(actions) et les risques associés",
+                    "default": "",
+                    "required": "false",
+                    "readOnly": "false",
+                    "error": "",
+                    "type": "radio",
+                    "enum": {
+                        "oui": "Oui",
+                        "non": "Non"
+                    }
+                },
+                {
+                    "group": "Vos connaissances en matière financière ?",
+                    "model": "connaissance_support",
+                    "title": "Connaissance du support euros des contrats d'assurance vie",
+                    "default": "",
+                    "required": "false",
+                    "readOnly": "false",
+                    "error": "",
+                    "type": "radio",
+                    "enum": {
+                        "oui": "Oui",
+                        "non": "Non"
+                    }
+                },
+                {
+                    "group": "Vos connaissances en matière financière ?",
+                    "model": "connaissance_livretA",
+                    "title": "Connaissance des produits réglementés (livret A, CEL, ...)",
+                    "default": "",
+                    "required": "false",
+                    "readOnly": "false",
+                    "error": "",
+                    "type": "radio",
+                    "enum": {
+                        "oui": "Oui",
+                        "non": "Non"
                     }
                 }
             ]

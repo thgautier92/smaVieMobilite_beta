@@ -46,6 +46,6 @@
       "locator": "ios"
     }
   ],
-  "name": "ionic-hello-world",
-  "description": "smaVieMobilite: An Ionic project"
+  "name": "sma-vie-mobilite",
+  "description": "smaVieMobilite: Un projet du Groupe SMA"
 }

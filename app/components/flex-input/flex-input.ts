@@ -193,6 +193,9 @@ export class FlexInput implements OnInit, OnChanges {
   isValid(ctrl) {
     console.log(ctrl);
   }
+  getCheck(model,value){
+    return this.form['_value'][model]===value;
+  }
 }
 // ===== Validators method ===================
 interface ValidationResult {

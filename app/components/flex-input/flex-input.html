@@ -33,28 +33,29 @@
                   'ion-md-cloud-upload' : field.type=='urlData'}" (click)="initField(idx, field.model)">
               </ion-icon>
               <ion-label stacked>{{field.title}}</ion-label>
-              <ion-input clearInput *ngIf="field.type=='number'" type="number" [(formControlName)]="field.model" min="{{field.enum[0]}}"
+              <ion-input clearInput *ngIf="field.type==='number'" type="number" [(formControlName)]="field.model" min="{{field.enum[0]}}"
                 max="{{field.enum[1]}}"></ion-input>
-              <ion-input clearInput *ngIf="field.type=='text'" type="{{field.type}}" primary [(formControlName)]="field.model" [required]="field.required"></ion-input>
-              <ion-input clearInput *ngIf="field.type=='date'" type="{{field.type}}" primary [(formControlName)]="field.model" [required]="field.required"></ion-input>
-              <ion-input clearInput *ngIf="field.type=='tel'" type="{{field.type}}" primary [(formControlName)]="field.model" [required]="field.required"></ion-input>
-              <ion-input clearInput *ngIf="field.type=='email'" type="{{field.type}}" [(formControlName)]="field.model" primary [required]="field.required"></ion-input>
-              <ion-toggle *ngIf="field.type=='boolean'" checked="false" [(formControlName)]="field.model" [required]="field.required"></ion-toggle>
+              <ion-input clearInput *ngIf="field.type==='text'" type="{{field.type}}" primary [(formControlName)]="field.model" [required]="field.required"></ion-input>
+              <ion-input clearInput *ngIf="field.type==='date'" type="{{field.type}}" primary [(formControlName)]="field.model" [required]="field.required"></ion-input>
+              <ion-input clearInput *ngIf="field.type==='tel'" type="{{field.type}}" primary [(formControlName)]="field.model" [required]="field.required"></ion-input>
+              <ion-input clearInput *ngIf="field.type==='email'" type="{{field.type}}" [(formControlName)]="field.model" primary [required]="field.required"></ion-input>
+              <ion-toggle *ngIf="field.type==='boolean'" checked="false" [(formControlName)]="field.model" [required]="field.required"></ion-toggle>
 
-              <button outline item-right *ngIf="field.type=='page'" (click)="openPage(field.default)"><ion-icon name="link"></ion-icon> démarrer</button>
-              <button outline item-right *ngIf="field.type=='url'" (click)="openSimu(field.default)"><ion-icon name="wifi"></ion-icon> démarrer</button>
-              <button outline item-right *ngIf="field.type=='urlData'" (click)="openSimuData(idx,field.model,field.default)"><ion-icon name="wifi"></ion-icon> démarrer</button>
-
-              <ion-select clearInput *ngIf="field.type=='enum'" [(formControlName)]="field.model" cancelText="Annuler" okText="Choisir">
+              <button outline item-right *ngIf="field.type==='page'" (click)="openPage(field.default)"><ion-icon name="link"></ion-icon> démarrer</button>
+              <button outline item-right *ngIf="field.type==='url'" (click)="openSimu(field.default)"><ion-icon name="wifi"></ion-icon> démarrer</button>
+              <button outline item-right *ngIf="field.type==='urlData'" (click)="openSimuData(idx,field.model,field.default)"><ion-icon name="wifi"></ion-icon> démarrer</button>
+              <item-note item-right *ngIf="field.type==='radio'">
+                <ion-list no-lines radio-group [(formControlName)]="field.model">
+                  <ion-item no-padding *ngFor="let b of field.enum | objToArray;let i=index">
+                    <ion-label no-padding  style="font-size: 1.3rem;">{{b.value}}</ion-label>
+                    <ion-radio no-padding [(value)]="b.key" [checked]="getCheck(field.model,b.key)"></ion-radio>
+                  </ion-item>
+                </ion-list>
+              </item-note>
+              <ion-select clearInput *ngIf="field.type==='enum'" [(formControlName)]="field.model" cancelText="Annuler" okText="Choisir">
                 <ion-option value="">== Choisir une option ==</ion-option>
                 <ion-option *ngFor="let b of field.enum | objToArray" [value]="b.key">{{b.value}}</ion-option>
               </ion-select>
-              <ion-list *ngIf="field.type=='radio'" radio-group [(formControlName)]="field.model">
-                <ion-item *ngFor="let b of field.enum | objToArray">
-                  <ion-label>{{b.value}}</ion-label>
-                  <ion-radio checked="false" value="{{b.key}}"></ion-radio>
-                </ion-item>
-              </ion-list>
             </ion-item>
           </ion-list>
         </ion-card>
