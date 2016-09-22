@@ -1,7 +1,8 @@
 import { Component, Input} from '@angular/core';
-import { Page, NavController,ViewController, NavParams, Events } from 'ionic-angular';
+import { Page, NavController, ViewController, NavParams, Events } from 'ionic-angular';
 import {CalcTools} from '../../comon/calculate'
 import {FlexInput} from '../../../components/flex-input/flex-input';
+import {ProfilRisquePage} from "../profil-risque/profil-risque"
 /*
   Generated class for the DiagConseilPage page.
 
@@ -20,9 +21,9 @@ export class DiagConseilPage {
   idClient: any = "";
   dataOut: any = {};
   pageStatus: any;
-  constructor(private nav: NavController,private viewCtrl:ViewController, private params: NavParams, private events: Events, private CalcTools: CalcTools) {
+  constructor(private nav: NavController, private viewCtrl: ViewController, private params: NavParams, private events: Events, private CalcTools: CalcTools) {
     //this.idPage = this.params.data['currentPage'];
-    this.idPage = 2;
+    this.idPage = 10;
     this.idClient = this.params.data['currentCli'];
     this.dataIn = this.params.data['currentDoc'];
     this.dataOut = {};
@@ -45,7 +46,10 @@ export class DiagConseilPage {
       CalcTools.calcPageStatus(this.idPage, this.lstForms);
     });
   }
-    close() {
+  close() {
     this.viewCtrl.dismiss();
+  }
+  callProfil(){
+    this.nav.push(ProfilRisquePage);
   }
 }

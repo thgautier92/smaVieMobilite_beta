@@ -14,8 +14,15 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding class="diag-conseil">
-  <div *ngFor="let f of lstForms">
-    <flex-list *ngIf="f.pres=='list'" [idPage]=idPage [idForm]=f.id [formTitle]=f.title [dataIn]=dataIn [idClient]=idClient></flex-list>
-    <flex-input *ngIf="f.pres=='detail'" [idPage]=idPage [idMenu]=f.id [formTitle]=f.title [dataIn]=dataIn [idClient]=idClient></flex-input>
-  </div>
+  <flex-input [idPage]=idPage idForm=30 formTitle="Connaissance Client nécéssaire au Diagnostic conseil" [dataIn]=dataIn [idClient]=idClient></flex-input>
+  <ion-row>
+    <ion-col>
+      1. Sécurisé 2. Modèré 3. Dynamique
+    </ion-col>
+    <ion-col>
+      <ion-range snaps="true" min="1" max="3" [(ngModel)]="profilCalculated" danger pin="true"></ion-range>
+    </ion-col>
+  </ion-row>
+  <flex-input [idPage]=idPage idForm=31 formTitle="La SMAvie vous recommande les produits suivants" [dataIn]=dataIn [idClient]=idClient></flex-input>
+  
 </ion-content>

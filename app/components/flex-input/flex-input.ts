@@ -15,7 +15,7 @@ import {FlexRadio} from '../flex-radio/flex-radio';
 @Component({
   selector: 'flex-input',
   templateUrl: 'build/components/flex-input/flex-input.html',
-  inputs: [, 'idPage', 'idMenu', 'dataIn', 'idClient'],
+  inputs: [, 'idPage', 'idForm', 'dataIn', 'idClient'],
   directives: [IONIC_DIRECTIVES, REACTIVE_FORM_DIRECTIVES, FlexRadio],
   pipes: [groupBy, ValuesPipe, KeysPipe],
   providers: [Paramsdata, Simu, FlexRadio]
@@ -31,7 +31,7 @@ export class FlexInput implements OnInit, OnChanges {
   popupWindow: any = null;    // windows object, open for simulation
   simuExec: boolean = false;  // flag for exec simulation 
   @Input() idPage: any;
-  @Input() idMenu: any;
+  @Input() idForm: any;
   @Input() dataIn: any;
   @Input() idClient: any;
   @Input() formTitle: any;
@@ -39,11 +39,11 @@ export class FlexInput implements OnInit, OnChanges {
     this.form = this.fb.group({});
   }
   ngOnInit() {
-    console.log("==> Data passed to component : ", this.idPage, this.idMenu, this.dataIn, this.idClient);
+    console.log("==> Data passed to component : ", this.idPage, this.idForm, this.dataIn, this.idClient);
     /*
     this.form = this.fb.group({});
     this.dataCurrent = this.dataIn;
-    this.loadForm(this.idMenu, this.dataIn['clients'][this.idClient]['client']['output'][0]).then(response => {
+    this.loadForm(this.idForm, this.dataIn['clients'][this.idClient]['client']['output'][0]).then(response => {
       console.log("==> Form created", response);
       this.form = response['formGroup'];
       this.selectedForm = response['selectedForm'];
@@ -63,7 +63,7 @@ export class FlexInput implements OnInit, OnChanges {
     } else {
       this.dataCurrent = this.dataIn;
     }
-    this.loadForm(this.idMenu, this.dataIn['clients'][this.idClient]['client']['output'][0]).then(response => {
+    this.loadForm(this.idForm, this.dataIn['clients'][this.idClient]['client']['output'][0]).then(response => {
       console.log("==> Form change", response);
       this.form = response['formGroup'];
       this.selectedForm = response['selectedForm'];
@@ -109,8 +109,8 @@ export class FlexInput implements OnInit, OnChanges {
       }
     });
     if (previousValue) {
-      console.log(this.selectedForm);
-      this.selectedForm['fields'][idx]['value'] = previousValue;
+      console.log(this.form);
+      this.form['_value'][modelField] = previousValue;
     }
   }
   // Validation form

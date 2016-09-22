@@ -1027,7 +1027,7 @@
             ]
         },
         {
-            "id": 100,
+            "id": 12,
             "name": "Concurrents",
             "title": "Concurrents",
             "icon": "body",
@@ -1066,6 +1066,102 @@
                     "readOnly": "false",
                     "error": "",
                     "type": "date"
+                }
+            ]
+        },
+                {
+            "id": 30,
+            "name": "diag_info",
+            "title": "Connaissance Client nécéssaire au Diagnostic conseil",
+            "icon": "body",
+            "fields": [
+                {
+                    "group": "Identification",
+                    "model": "nom",
+                    "title": "Nom",
+                    "default": "",
+                    "required": "true",
+                    "readOnly": "true",
+                    "error": "Veuillez vérifier la zone : 'Nom'",
+                    "type": "text"
+                },
+                {
+                    "group": "Identification",
+                    "model": "prenom",
+                    "title": "Prénom",
+                    "default": "",
+                    "required": "true",
+                    "readOnly": "true",
+                    "error": "Veuillez vérifier la zone : 'Prénom'",
+                    "type": "text"
+                },
+                {
+                    "group": "Identification",
+                    "model": "naiss_nom",
+                    "title": "Nom de naissance",
+                    "default": "",
+                    "required": "false",
+                    "readOnly": "false",
+                    "error": "Veuillez vérifier la zone : 'Nom de naissance'",
+                    "type": "text"
+                },
+                {
+                    "group": "Identification",
+                    "model": "naiss_date",
+                    "title": "Date de naissance",
+                    "default": "",
+                    "required": "true",
+                    "readOnly": "false",
+                    "error": "Veuillez vérifier la zone : 'Date de naissance'",
+                    "type": "date"
+                }
+            ]
+        },
+                {
+            "id": 31,
+            "name": "diag_reco",
+            "title": "La SMAvie vous recommande les produits suivants",
+            "icon": "body",
+            "fields": [
+                {
+                    "group": "Contrat préconisé",
+                    "model": "preco_contrat",
+                    "title": "Contrat",
+                    "default": "",
+                    "required": "true",
+                    "readOnly": "false",
+                    "error": "Veuillez vérifier la zone",
+                    "type": "text"
+                },
+                {
+                    "group": "Contrat préconisé",
+                    "model": "preco_partEuro",
+                    "title": "Part Euros préconisée",
+                    "default": "",
+                    "required": "true",
+                    "readOnly": "true",
+                    "error": "Veuillez vérifier la zone",
+                    "type": "text"
+                },
+                {
+                    "group": "Option arbritrage préconisée",
+                    "model": "preco_option",
+                    "title": "Contrat",
+                    "default": "",
+                    "required": "true",
+                    "readOnly": "false",
+                    "error": "Veuillez vérifier la zone",
+                    "type": "text"
+                },
+                {
+                    "group": "Option arbritrage préconisée",
+                    "model": "preco_partUC",
+                    "title": "Part UC préconisée",
+                    "default": "",
+                    "required": "true",
+                    "readOnly": "true",
+                    "error": "Veuillez vérifier la zone",
+                    "type": "text"
                 }
             ]
         }

@@ -76,13 +76,14 @@ export class Paramsdata {
     });
   }
   getForm(id, dataInput?) {
-    //console.log("=====Get form : id,dataInput", id, dataInput)
+    console.log("=====Get form : idForm,dataInput", id, dataInput)
     return new Promise((resolve, reject) => {
       this.loadForm().then((data) => {
         // console.log("=====Forms Parameters ", data);
         if (data) {
           let ret = {}
-          let form = data['forms'].filter(item => item['id'] === id);
+          let form = data['forms'].filter(item => item['id'] == id);
+          console.log("=====Form find fo id",id,form);
           let formModel = data['dataToForm'];
           if (form.length == 0) {
             form = data['forms'].filter(item => item['id'] === 1);

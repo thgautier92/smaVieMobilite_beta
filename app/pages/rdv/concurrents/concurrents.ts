@@ -32,7 +32,7 @@ export class ConcurrentsPage {
     this.dataIn = this.params.data['currentDoc'];
     this.dataOut = {};
     this.lstForms = [
-      { "id": 100, "title":"Concurrents","pres": "list", "status": "" },
+      { "id": 12, "title":"Concurrents","pres": "list", "status": "" },
       { "id": 2, "title":"","pres": "detail", "status": "" }
     ];
 

@@ -1,5 +1,5 @@
 import { Component, Input} from '@angular/core';
-import { Page, NavController, NavParams, Events } from 'ionic-angular';
+import { Page, NavController, NavParams, Events, LoadingController } from 'ionic-angular';
 import {CalcTools} from '../../comon/calculate'
 import {FlexInput} from '../../../components/flex-input/flex-input';
 
@@ -22,7 +22,7 @@ export class ProfilRisquePage {
   dataOut: any = {};
   params: NavParams;
   pageStatus: any;
-  constructor(private nav: NavController, params: NavParams, private events: Events, private CalcTools: CalcTools) {
+  constructor(private nav: NavController, params: NavParams, private events: Events, private CalcTools: CalcTools, private loadingCtrl: LoadingController) {
     this.params = params;
     //this.idPage = this.params.data['currentPage'];
     this.idPage = 2
@@ -46,5 +46,19 @@ export class ProfilRisquePage {
       f[0]['status'] = dataReturn[0]['status'];
       CalcTools.calcPageStatus(this.idPage, this.lstForms);
     });
+  }
+  calcProfil() {
+    let loader = this.loadingCtrl.create({
+      content: "Calcul en cours...",
+      duration: 5000
+    });
+    loader.present();
+    // read forms
+    let lstValue=[];
+    for(let f of this.lstForms){
+      // Read form f['id']
+      let idF=f['id'];
+      let d=this.dataIn;
+    }
   }
 }
