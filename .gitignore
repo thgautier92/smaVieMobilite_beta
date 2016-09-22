@@ -3,6 +3,7 @@
 
 node_modules/*
 !node_modules/ionic-gulp-scripts-copy/
+
 www/build/
 platforms/
 plugins/
