@@ -1,8 +1,9 @@
 import { Component, Input} from '@angular/core';
 import { Page, NavController, ViewController, NavParams, Events } from 'ionic-angular';
-import {CalcTools} from '../../comon/calculate'
+import {CalcTools} from '../../comon/calculate';
 import {FlexInput} from '../../../components/flex-input/flex-input';
-import {ProfilRisquePage} from "../profil-risque/profil-risque"
+import {FlexDisplay} from '../../../components/flex-display/flex-display';
+import {ProfilRisquePage} from "../profil-risque/profil-risque";
 /*
   Generated class for the DiagConseilPage page.
 
@@ -11,7 +12,7 @@ import {ProfilRisquePage} from "../profil-risque/profil-risque"
 */
 @Component({
   templateUrl: 'build/pages/rdv/diag-conseil/diag-conseil.html',
-  directives: [FlexInput],
+  directives: [FlexInput,FlexDisplay],
   providers: [CalcTools],
 })
 export class DiagConseilPage {

@@ -14,7 +14,7 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding class="diag-conseil">
-  <flex-input [idPage]=idPage idForm=30 formTitle="Connaissance Client nécéssaire au Diagnostic conseil" [dataIn]=dataIn [idClient]=idClient></flex-input>
+  <flex-display [idPage]=idPage idForm=1 formTitle="Connaissance Client nécéssaire au Diagnostic conseil" [dataIn]=dataIn [idClient]=idClient></flex-display>
   <ion-row>
     <ion-col>
       1. Sécurisé 2. Modèré 3. Dynamique
@@ -23,6 +23,5 @@
       <ion-range snaps="true" min="1" max="3" [(ngModel)]="profilCalculated" danger pin="true"></ion-range>
     </ion-col>
   </ion-row>
-  <flex-input [idPage]=idPage idForm=31 formTitle="La SMAvie vous recommande les produits suivants" [dataIn]=dataIn [idClient]=idClient></flex-input>
-  
+  <flex-input [idPage]=idPage idForm=31 formTitle="La SMAvie vous recommande les produits suivants" [dataIn]=dataIn [idClient]=idClient></flex-input>  
 </ion-content>

@@ -1,0 +1,24 @@
+<!--
+  Generated template for the FlexInput component.
+
+  See https://angular.io/docs/ts/latest/api/core/ComponentMetadata-class.html
+  for more info on Angular 2 Components.
+-->
+<ion-toolbar light position="top">
+  <ion-title start>{{formTitle}}</ion-title>
+</ion-toolbar>
+<ion-row wrap *ngIf="selectedFields">
+  <ion-col *ngFor="let key of selectedFields | keys">
+    <ion-card>
+      <ion-card-header>{{key.key}}</ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item *ngFor="let f of key.value, let idx=index">
+            <h3 primary>{{f.field}}</h3>
+            <p>{{f.value}}</p>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </ion-col>
+</ion-row>
