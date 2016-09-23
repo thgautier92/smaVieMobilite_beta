@@ -743,16 +743,6 @@
             "fields": [
                 {
                     "group": "Identité numérique",
-                    "model": "email_perso",
-                    "title": "Email personnel",
-                    "default": "",
-                    "required": "true",
-                    "readOnly": "false",
-                    "error": "Veuillez vérifier la zone : 'Email personnel'",
-                    "type": "email"
-                },
-                {
-                    "group": "Identité numérique",
                     "model": "nom",
                     "title": "Nom",
                     "default": "",
@@ -770,6 +760,26 @@
                     "readOnly": "true",
                     "error": "Veuillez vérifier la zone : 'Prénom'",
                     "type": "text"
+                },
+                {
+                    "group": "Identité numérique",
+                    "model": "email_perso",
+                    "title": "Email personnel",
+                    "default": "",
+                    "required": "true",
+                    "readOnly": "false",
+                    "error": "Veuillez vérifier la zone : 'Email personnel'",
+                    "type": "email"
+                },
+                {
+                    "group": "Identité numérique",
+                    "model": "mobile",
+                    "title": "Téléphone Mobile",
+                    "default": "",
+                    "required": "true",
+                    "readOnly": "true",
+                    "error": "Veuillez vérifier la zone : 'Téléphone'",
+                    "type": "tel"
                 },
                 {
                     "group": "Action réservé conseiller",

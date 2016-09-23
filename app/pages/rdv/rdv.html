@@ -50,9 +50,9 @@ Rdv Main Page
     <ion-list>
       <ion-list-header>Options</ion-list-header>
       <button menuClose="menuRdv" ion-item *ngFor="let opt of rdvMenu" (click)="callMenu(opt)" detail-push>
-        <ion-icon item-left name="{{opt.icon}}"></ion-icon>{{opt.lib}}
+        <ion-icon *ngIf="opt.nav!=''" item-left name="{{opt.icon}}"></ion-icon>{{opt.lib}}
         </button>
-      <button danger menuClose="menuRdv" (click)="rdvEnd()">Terminer le RDV</button>
+      <button full danger menuClose="menuRdv" (click)="rdvEnd()"><ion-icon item-left name="contacts"></ion-icon> Terminer le RDV</button>
     </ion-list>
   </ion-content>
 </ion-menu>

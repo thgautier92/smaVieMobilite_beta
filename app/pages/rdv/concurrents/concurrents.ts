@@ -32,8 +32,8 @@ export class ConcurrentsPage {
     this.dataIn = this.params.data['currentDoc'];
     this.dataOut = {};
     this.lstForms = [
-      { "id": 12, "title":"Concurrents","pres": "list", "status": "" },
-      { "id": 2, "title":"","pres": "detail", "status": "" }
+      { "id": 12, "title": "Concurrents", "pres": "list", "status": "" },
+      { "id": 2, "title": "", "pres": "detail", "status": "" }
     ];
 
     // Return events from inputs forms
@@ -42,6 +42,10 @@ export class ConcurrentsPage {
       this.dataIn = eventData[0]['currentDoc'];
       for (var key in this.lstForms) { this.lstForms[key]['status'] = ""; }
       CalcTools.calcPageStatus(this.idPage, this.lstForms);
+    });
+    this.events.subscribe('rdvUpdate', eventData => {
+      console.log("Update page conccurents with data", eventData);
+      this.dataIn = eventData[0];
     });
     this.events.subscribe('rdvStatus_' + this.idPage, dataReturn => {
       //console.log("Update status form", this.lstForms, dataReturn);

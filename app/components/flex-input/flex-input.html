@@ -11,7 +11,8 @@
       <ion-title start>{{formTitle}}</ion-title>
       <ion-buttons end>
         <!--<button>Etat de votre saisie : {{menuCurrent.status}}</button> -->
-        <button danger (click)="diagNext('hold',$event)"><ion-icon name="square"></ion-icon></button>
+        <button primary (click)="getReload($event)"><ion-icon name="refresh"></ion-icon></button>
+        <!--<button danger (click)="diagNext('hold',$event)"><ion-icon name="square"></ion-icon></button>-->
         <button favorite (click)="diagNext('partial',$event)"><ion-icon name="pause"></ion-icon></button>
         <button secondary (click)="diagNext('completed',$event)"><ion-icon name="play"></ion-icon></button>
       </ion-buttons>

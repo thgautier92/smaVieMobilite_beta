@@ -6,7 +6,7 @@
 -->
 <ion-content padding class="concurrents">
   <div *ngFor="let f of lstForms">
-    <flex-list *ngIf="f.pres=='list'" [idPage]=idPage [idForm]=f.id [formTitle]=f.title [dataIn]=dataIn [idClient]=idClient></flex-list>
-    <flex-input *ngIf="f.pres=='detail'" [idPage]=idPage [idForm]=f.id [formTitle]=f.title [dataIn]=dataIn [idClient]=idClient></flex-input>
+    <flex-list *ngIf="f.pres=='list'" [idPage]=idPage [idForm]=f.id [formTitle]=f.title [(dataIn)]=dataIn [idClient]=idClient></flex-list>
+    <flex-input *ngIf="f.pres=='detail'" [idPage]=idPage [idForm]=f.id [formTitle]=f.title [(dataIn)]=dataIn [idClient]=idClient></flex-input>
   </div>
 </ion-content>

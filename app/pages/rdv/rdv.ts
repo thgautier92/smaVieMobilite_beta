@@ -62,18 +62,21 @@ export class RdvPage {
       { "id": 2, "status": "hold", "lib": "Connaissance Client", "icon": "person", "page": DecouvertePage },
       { "id": 3, "status": "hold", "lib": "Patrimoine", "icon": "home", "page": PatrimoinePage },
       { "id": 4, "status": "hold", "lib": "Concurrents", "icon": "sign", "page": ConcurrentsPage },
-      { "id": 5, "status": "hold", "lib": "Profil de risque", "icon": "sign", "page": ProfilRisquePage },
     ]
     this.rdvMenu = [
-      { "id": 1, "lib": "Recopier", "icon": "copy", "page": OptionCopierPage, "nav": "dialog" },
+      //{ "id": 1, "lib": "Recopier", "icon": "copy", "page": OptionCopierPage, "nav": "dialog" },
       { "id": 2, "lib": "Pièces justificatives", "icon": "camera", "page": OptionPiecesPage, "nav": "dialog" },
-      { "id": 3, "lib": "Diagnostic Conseil", "icon": "compass", "page": DiagConseilPage, "nav": "page" },
+      { "id": 3, "lib": "Signatures", "icon": "create", "page": SignaturePage, "nav": "page" },
       { "id": 4, "lib": "Simuler", "icon": "calculator", "page": SimulerPage, "nav": "page" },
-      { "id": 5, "lib": "Souscription", "icon": "contract", "page": SouscriptionPage, "nav": "page" },
+      //{ "id": 5, "lib": "Vos échanges", "icon": "", "page": "", "nav": "" },
+      { "id": 6, "lib": "Diagnostic Conseil", "icon": "compass", "page": DiagConseilPage, "nav": "page" },
+      { "id": 7, "lib": "Souscription", "icon": "contract", "page": SouscriptionPage, "nav": "page" },
     ];
     // ===== Events operation on page =====
     events.subscribe('rdvSave', eventData => {
-      this.saveData(eventData[0]).then(response => { }, error => { });
+      this.saveData(eventData[0]).then(response => {
+        events.publish('rdvUpdate', eventData[0]);
+      }, error => { });
     });
     events.subscribe('menuStatusChange', eventData => {
       //console.log("Update status menu", eventData);
@@ -148,7 +151,7 @@ export class RdvPage {
         let rev = docLocal['_rev'];
         let up = { _id: id, _rev: rev, clients: docPut['clients'], rdv: docPut['rdv'] };
         this.db.put(up).then(saveResponse => {
-          console.log("<== RDV is saved successfully in Pouch", saveResponse);
+          //console.log("<== RDV is saved successfully in Pouch", saveResponse);
           resolve(saveResponse)
         }, saveError => {
           console.log("==> ERROR saving the RDV in Pouch", saveError);
@@ -174,8 +177,8 @@ export class RdvPage {
       this.nav.setRoot(HomePage);
     } else {
       let alert = this.alertCtrl.create({
-        title: "Confirmer l'abandon du RDV",
-        message: 'Il reste des onglets non validés.<br>' + invalid.join(","),
+        title: "Confirmer la fin du RDV",
+        message: 'Il reste des onglets non validés.<br>' + invalid.join(",")+"<br>Etes-vous sûr ?",
         buttons: [
           {
             text: 'Annuler', role: 'cancel',
@@ -184,7 +187,7 @@ export class RdvPage {
             }
           },
           {
-            text: "Confirmer l'abandon",
+            text: "Confirmer",
             handler: () => {
               this.nav.setRoot(HomePage);
             }

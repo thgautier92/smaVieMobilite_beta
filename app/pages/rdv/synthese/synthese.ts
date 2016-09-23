@@ -40,6 +40,9 @@ export class SynthesePage {
       for (var key in this.lstForms) { this.lstForms[key]['status'] = ""; }
       CalcTools.calcPageStatus(this.idPage, this.lstForms);
     });
+    this.events.subscribe('rdvUpdate', eventData => {
+      this.dataIn = eventData[0];
+    });
     this.events.subscribe('rdvStatus_' + this.idPage, dataReturn => {
       //console.log("Update status form", this.lstForms, dataReturn);
       let idForm = dataReturn[0]['form']['id'];

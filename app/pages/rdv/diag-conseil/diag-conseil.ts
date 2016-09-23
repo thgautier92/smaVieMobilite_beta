@@ -12,7 +12,7 @@ import {ProfilRisquePage} from "../profil-risque/profil-risque";
 */
 @Component({
   templateUrl: 'build/pages/rdv/diag-conseil/diag-conseil.html',
-  directives: [FlexInput,FlexDisplay],
+  directives: [FlexInput, FlexDisplay],
   providers: [CalcTools],
 })
 export class DiagConseilPage {
@@ -22,6 +22,7 @@ export class DiagConseilPage {
   idClient: any = "";
   dataOut: any = {};
   pageStatus: any;
+  profilCalculated: any = null;
   constructor(private nav: NavController, private viewCtrl: ViewController, private params: NavParams, private events: Events, private CalcTools: CalcTools) {
     //this.idPage = this.params.data['currentPage'];
     this.idPage = 10;
@@ -46,11 +47,14 @@ export class DiagConseilPage {
       f[0]['status'] = dataReturn[0]['status'];
       CalcTools.calcPageStatus(this.idPage, this.lstForms);
     });
+    this.events.subscribe('profilCalculted', dataReturn => {
+      this.profilCalculated = dataReturn[0];
+    })
   }
   close() {
     this.viewCtrl.dismiss();
   }
-  callProfil(){
-    this.nav.push(ProfilRisquePage);
+  callProfil() {
+    this.nav.push(ProfilRisquePage,{"currentCli":this.idClient,"currentDoc":this.dataIn});
   }
 }

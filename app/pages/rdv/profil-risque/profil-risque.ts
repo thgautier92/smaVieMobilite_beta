@@ -1,5 +1,5 @@
 import { Component, Input} from '@angular/core';
-import { Page, NavController, NavParams, Events, LoadingController } from 'ionic-angular';
+import { Page, NavController, NavParams, Events, LoadingController, ViewController } from 'ionic-angular';
 import {CalcTools} from '../../comon/calculate'
 import {FlexInput} from '../../../components/flex-input/flex-input';
 
@@ -22,7 +22,7 @@ export class ProfilRisquePage {
   dataOut: any = {};
   params: NavParams;
   pageStatus: any;
-  constructor(private nav: NavController, params: NavParams, private events: Events, private CalcTools: CalcTools, private loadingCtrl: LoadingController) {
+  constructor(private nav: NavController, params: NavParams, private viewCtrl: ViewController, private events: Events, private CalcTools: CalcTools, private loadingCtrl: LoadingController) {
     this.params = params;
     //this.idPage = this.params.data['currentPage'];
     this.idPage = 2
@@ -39,6 +39,9 @@ export class ProfilRisquePage {
       for (var key in this.lstForms) { this.lstForms[key]['status'] = ""; }
       CalcTools.calcPageStatus(this.idPage, this.lstForms);
     });
+    this.events.subscribe('rdvUpdate', eventData => {
+      this.dataIn = eventData[0];
+    });
     this.events.subscribe('rdvStatus_' + this.idPage, dataReturn => {
       //console.log("Update status form", this.lstForms, dataReturn);
       let idForm = dataReturn[0]['form']['id'];
@@ -54,11 +57,17 @@ export class ProfilRisquePage {
     });
     loader.present();
     // read forms
-    let lstValue=[];
-    for(let f of this.lstForms){
+    let lstValue = [];
+    for (let f of this.lstForms) {
       // Read form f['id']
-      let idF=f['id'];
-      let d=this.dataIn;
+      let idF = f['id'];
+      let d = this.dataIn;
     }
+    this.events.publish("profilCalculted", 2);
+    loader.dismiss();
+    this.viewCtrl.dismiss();
+  }
+  close() {
+    this.viewCtrl.dismiss();
   }
 }

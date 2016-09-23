@@ -19,6 +19,16 @@ export class ValuesPipe implements PipeTransform {
     return a;
   }
 }
+@Pipe({ name: 'arrayByKey', pure: false })
+export class arrayByKeyPipe implements PipeTransform {
+  transform(collection: any, occurs: any): any {
+    let a=null;
+    collection.forEach((elt, key) => {
+        if (key == occurs) {a=elt;}
+      });
+    return a;
+  }
+}
 @Pipe({ name: 'binaryData' })
 export class binaryData {
   // Transform is the new "return function(value, args)" in Angular 1.x

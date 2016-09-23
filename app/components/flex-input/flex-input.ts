@@ -32,57 +32,64 @@ export class FlexInput implements OnInit, OnChanges {
   simuExec: boolean = false;  // flag for exec simulation 
   @Input() idPage: any;
   @Input() idForm: any;
-  @Input() dataIn: any;
+  @Input() dataIn: Object;
   @Input() idClient: any;
   @Input() formTitle: any;
   constructor(private platform: Platform, private fb: FormBuilder, private paramsApi: Paramsdata, private simu: Simu, private events: Events) {
     this.form = this.fb.group({});
   }
   ngOnInit() {
-    console.log("==> Data passed to component : ", this.idPage, this.idForm, this.dataIn, this.idClient);
-    /*
-    this.form = this.fb.group({});
-    this.dataCurrent = this.dataIn;
-    this.loadForm(this.idForm, this.dataIn['clients'][this.idClient]['client']['output'][0]).then(response => {
-      console.log("==> Form created", response);
-      this.form = response['formGroup'];
-      this.selectedForm = response['selectedForm'];
-      if (this.formTitle == "") this.formTitle = this.selectedForm['title'];
-      this.selectedFields = response['selectedFields'];
-      this.okForm = true;
-    }, error => {
-      this.okForm = false;
-    });
-    */
+    //console.log("==> Data passed to component : ", this.idPage, this.idForm, this.dataIn, this.idClient);
   };
   ngOnChanges(changes: any) {
-    //console.log("Data Changes", changes);
+    console.log("Data Changes", changes);
     this.idClient = changes.idClient.currentValue;
     if (changes['dataIn']) {
       this.dataCurrent = changes.dataIn.currentValue;
     } else {
       this.dataCurrent = this.dataIn;
     }
-    this.loadForm(this.idForm, this.dataIn['clients'][this.idClient]['client']['output'][0]).then(response => {
-      console.log("==> Form change", response);
-      this.form = response['formGroup'];
-      this.selectedForm = response['selectedForm'];
-      if (this.formTitle == "") this.formTitle = this.selectedForm['title'];
-      this.selectedFields = response['selectedFields'];
-      this.okForm = true;
-    }, error => {
-      this.okForm = false;
-    });
+    this.loadForm(
+      this.idForm,
+      this.dataIn['clients'][this.idClient]['client']['output'][0],
+      this.dataIn['rdv']['resultByClient'][this.idClient])
+      .then(response => {
+        //console.log("==> Form change", response);
+        this.form = response['formGroup'];
+        this.selectedForm = response['selectedForm'];
+        if (this.formTitle == "") this.formTitle = this.selectedForm['title'];
+        this.selectedFields = response['selectedFields'];
+        this.okForm = true;
+      }, error => {
+        this.okForm = false;
+      });
 
   };
+  getReload() {
+    this.loadForm(
+      this.idForm,
+      this.dataIn['clients'][this.idClient]['client']['output'][0],
+      this.dataIn['rdv']['resultByClient'][this.idClient])
+      .then(response => {
+        //console.log("==> Form change", response);
+        this.form = response['formGroup'];
+        this.selectedForm = response['selectedForm'];
+        if (this.formTitle == "") this.formTitle = this.selectedForm['title'];
+        this.selectedFields = response['selectedFields'];
+        this.okForm = true;
+      }, error => {
+        this.okForm = false;
+      });
+  }
   /* ======================================================================
   * Create a form component with 
   *    - all fields parameters and validation control
   *    - default value , initialized from the synchronised folder
   * ======================================================================= */
-  loadForm(idForm, dataForm) {
+  loadForm(idForm, dataForm, dataRdv) {
+    //console.log("LOAD FORM", idForm, dataForm, dataRdv)
     return new Promise((resolve, reject) => {
-      this.paramsApi.getForm(idForm, dataForm).then(data => {
+      this.paramsApi.getForm(idForm, dataForm, dataRdv).then(data => {
         //console.log("== Return form data ", idForm, data);
         let fields = new groupBy().transform(data['form']['fields'], 'group');
         resolve({ "idForm": idForm, "formGroup": data['formGroup'], "selectedForm": data['form'], "selectedFields": fields })
@@ -194,8 +201,8 @@ export class FlexInput implements OnInit, OnChanges {
   isValid(ctrl) {
     console.log(ctrl);
   }
-  getCheck(model,value){
-    return this.form['_value'][model]===value;
+  getCheck(model, value) {
+    return this.form['_value'][model] === value;
   }
 }
 // ===== Validators method ===================

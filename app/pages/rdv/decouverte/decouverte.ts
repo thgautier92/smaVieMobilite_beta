@@ -16,7 +16,7 @@ import {FlexInput} from '../../../components/flex-input/flex-input';
 })
 export class DecouvertePage {
   lstForms: any = [];
-  dataIn: any = {};
+  dataIn: any;
   idPage: any = {};
   idClient: any = "";
   dataOut: any = {};
@@ -26,9 +26,6 @@ export class DecouvertePage {
     this.params = params;
     //this.idPage = this.params.data['currentPage'];
     this.idPage = 2
-    this.idClient = this.params.data['currentCli'];
-    this.dataIn = this.params.data['currentDoc'];
-    this.dataOut = {};
     this.lstForms = [
       { "id": 2, "title": "", "pres": "detail", "status": "" }
     ];
@@ -39,6 +36,11 @@ export class DecouvertePage {
       for (var key in this.lstForms) { this.lstForms[key]['status'] = ""; }
       CalcTools.calcPageStatus(this.idPage, this.lstForms);
     });
+    this.events.subscribe('rdvUpdate', eventData => {
+      console.log("Update page with data", eventData);
+      this.dataIn = eventData[0];
+      for (var key in this.lstForms) { this.lstForms[key]['status'] = ""; }
+    });
     this.events.subscribe('rdvStatus_' + this.idPage, dataReturn => {
       //console.log("Update status form", this.lstForms, dataReturn);
       let idForm = dataReturn[0]['form']['id'];
@@ -46,5 +48,10 @@ export class DecouvertePage {
       f[0]['status'] = dataReturn[0]['status'];
       CalcTools.calcPageStatus(this.idPage, this.lstForms);
     });
+  }
+  ngOnInit() {
+    this.idClient = this.params.data['currentCli'];
+    this.dataIn = this.params.data['currentDoc'];
+    this.dataOut = {};
   }
 }
