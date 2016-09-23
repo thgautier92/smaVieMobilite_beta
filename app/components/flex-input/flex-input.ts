@@ -121,7 +121,7 @@ export class FlexInput implements OnInit, OnChanges {
     }
   }
   // Validation form
-  diagNext(formStatus, evt) {
+  diagNext(formStatus, evt?) {
     //console.log("Save data form", this.form.controls, this.selectedForm['fields']);
     //console.log("Click event",evt);
     this.menuCurrent.status = formStatus;

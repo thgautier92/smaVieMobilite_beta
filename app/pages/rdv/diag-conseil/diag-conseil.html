@@ -26,5 +26,5 @@
       <ion-range snaps="true" min="1" max="3" [(ngModel)]="profilCalculated" danger pin="true"></ion-range>
     </ion-col>
   </ion-row>
-  <flex-input [idPage]=idPage idForm=31 formTitle="La SMAvie vous recommande les produits suivants" [dataIn]=dataIn [idClient]=idClient></flex-input>
+  <flex-input *ngIf="profilCalculated" [idPage]=idPage idForm=31 formTitle="La SMAvie vous recommande les produits suivants" [dataIn]=dataIn [idClient]=idClient></flex-input>
 </ion-content>

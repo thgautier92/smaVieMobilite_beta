@@ -1,4 +1,4 @@
-import { Component, Input} from '@angular/core';
+import { Component, Input,ViewChild} from '@angular/core';
 import { Page, NavController, NavParams, Events, LoadingController, ViewController } from 'ionic-angular';
 import {CalcTools} from '../../comon/calculate'
 import {FlexInput} from '../../../components/flex-input/flex-input';
@@ -15,6 +15,7 @@ import {FlexInput} from '../../../components/flex-input/flex-input';
   providers: [CalcTools],
 })
 export class ProfilRisquePage {
+  @ViewChild(FlexInput) dataProfile: FlexInput
   lstForms: any = [];
   dataIn: any = {};
   idPage: any = {};
@@ -63,6 +64,7 @@ export class ProfilRisquePage {
       let idF = f['id'];
       let d = this.dataIn;
     }
+    this.dataProfile.diagNext('completed');
     this.events.publish("profilCalculted", 2);
     loader.dismiss();
     this.viewCtrl.dismiss();
