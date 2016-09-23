@@ -103,11 +103,13 @@ export class Paramsdata {
             // 1. Search in data allready input in all forms
             let f = [];
             dataRdv['forms'].forEach((elt, key) => {
-              elt['formInput'].forEach(field => {
-                if (field['model'] == question['model']) f.push(field['value']);
-              });
+              if (elt) {
+                elt['formInput'].forEach(field => {
+                  if (field['model'] == question['model']) f.push(field['value']);
+                });
+              }
             });
-            if (f.length>0) {
+            if (f.length > 0) {
               modelValue = f[0];        // Just the first value is avaible
             } else {
               // 2. Search in data data from the IS
