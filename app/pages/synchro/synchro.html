@@ -18,7 +18,11 @@
   <button primary (click)="delDb()">Effacer</button>
   <button class="actionButton" fab fab-right fab-bottom favorite (click)="showBase()"><ion-icon name="refresh"></ion-icon></button>
   <ion-card>
-    <ion-card-header>Base : {{params.base}} - {{docs['total_rows']}} lignes</ion-card-header>
+    <ion-card-header>
+      <h3>Base : {{params.base}}
+        <span item-right [hidden]="docs['total_rows']==0"> {{docs['total_rows']}} rendez-vous</span>
+        </h3>
+      </ion-card-header>
     <ion-card-content>
       <ion-item *ngIf="sync['timer']">
         <button primary clear item-left>
@@ -34,6 +38,7 @@
         </button>
       </ion-item>
       <ion-item *ngIf="sync['start']">
+        <h3 primary>Synchronisation en cours...</h3>
         <p class="small wrap" favorite *ngIf="sync['info']">Action de
           <mark>{{sync['info']['direction']}}</mark>, le {{sync['info']['change']['start_time']}} :<br>{{sync['info']['change']['docs_read']}}
           lectures,{{sync['info']['change']['docs_written']}} écritures, {{sync['info']['change']['doc_write_failures']}}
@@ -43,8 +48,7 @@
       </ion-item>
     </ion-card-content>
   </ion-card>
-  <ion-card >
-    <!--<ion-card-header>#{{item.id}}, revision #{{item.value.rev}}</ion-card-header>-->
+  <ion-card *ngIf="docs.total_rows!==0">
     <ion-card-content no-padding>
       <ion-grid>
         <ion-row wrap>

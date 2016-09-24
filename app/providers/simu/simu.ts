@@ -81,5 +81,12 @@ export class Simu {
         });
     });
   }
+  epicastGetSimu(){
+    return [{"id":"254","produit":"Batiretraite Multicompte","dateSimu":"12/09/2016"},
+    {"id":"854","produit":"Batiretraite Multicompte","dateSimu":"24/08/2016"},
+    {"id":"3985","produit":"Batiretraite Multicompte","dateSimu":"18/02/2016"},
+    {"id":"6","produit":"Batiplacement Multicompte PEA","dateSimu":"30/03/2016"},
+    {"id":"9","produit":"Batiplacement Multicompte PEA","dateSimu":"17/07/2016"}]
+  }
 }
 

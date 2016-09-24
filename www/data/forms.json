@@ -704,27 +704,11 @@
         {
             "id": 6,
             "name": "simulator",
-            "title": "Simulation",
+            "title": "Demo Simulateur",
             "icon": "body",
             "fields": [
                 {
-                    "group": "Simulateur",
-                    "model": "simutools",
-                    "title": "Outil de simulation",
-                    "default": "",
-                    "required": "false",
-                    "readOnly": "true",
-                    "error": "",
-                    "type": "enum",
-                    "enum": {
-                        "v1": "Opticap",
-                        "v2": "E-Futuris",
-                        "v3": "E-Succession",
-                        "demo": "Démonstration"
-                    }
-                },
-                {
-                    "group": "Simulateur",
+                    "group": "",
                     "model": "urlSimu",
                     "title": "Simuler avec transmission de données",
                     "default": "",

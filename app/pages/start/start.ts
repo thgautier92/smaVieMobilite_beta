@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {Page, Loading, Modal, Platform, NavController, NavParams, ViewController,
   Storage, SqlStorage, LocalStorage} from 'ionic-angular';
-import {groupBy, ValuesPipe, KeysPipe,textToDate} from '../../pipes/common';
+import {groupBy, ValuesPipe, KeysPipe, textToDate} from '../../pipes/common';
 import { CouchDbServices } from '../../providers/couch/couch';
 import {DisplayTools} from '../comon/display';
 import { RdvPage } from '../rdv/rdv';
@@ -16,7 +16,7 @@ declare var PouchDB: any;
 @Component({
   templateUrl: 'build/pages/start/start.html',
   providers: [CouchDbServices, DisplayTools],
-  pipes: [groupBy, ValuesPipe, KeysPipe,textToDate]
+  pipes: [groupBy, ValuesPipe, KeysPipe, textToDate]
 })
 export class StartPage {
   platform: any;
@@ -32,6 +32,9 @@ export class StartPage {
     this.display = display;
     this.params = couch.getParams();
     //console.log(this.params);
+    this.docs = [];
+  }
+  ngOnInit() {
     this.couch.verifSession(true).then(response => {
       this.userData = response;
       this.base = this.userData['name'].toLowerCase();
@@ -43,27 +46,29 @@ export class StartPage {
       this.display.displayToast("Veuillez vous identifier ! Mode démo activé");
       this.loadBase(this.base);
     });
-    this.docs = [];
   }
   loadBase(base) {
-    this.display.displayLoading("Activation de la base " + base, 1);
+    let loading = this.display.displayLoading("Activation de la base " + base, 1);
     this.db = new PouchDB(base);
-    this.docs = [];
+    this.docs = []
+    this.showBase();
+    loading.dismiss();
+    /*
     setTimeout(() => {
-      this.showBase();
     }, 2000);
+    */
   }
   showBase() {
     let me = this;
     me.docs = [];
     this.db.allDocs({ include_docs: true, descending: true }, function (err, data) {
-      me.docs = new groupBy().transform(data.rows, 'doc','rdv','dateRdv',10);
+      me.docs = new groupBy().transform(data.rows, 'doc', 'rdv', 'dateRdv', 10);
     });
   };
-  start(item){
+  start(item) {
     // start the RDV with data
-    console.log("Start RDV with item ",item);
-    item['doc']['rdvEnded']=false;
-    this.nav.setRoot(RdvPage,{base:this.base,rdvId:item.id});
+    console.log("Start RDV with item ", item);
+    item['doc']['rdvEnded'] = false;
+    this.nav.setRoot(RdvPage, { base: this.base, rdvId: item.id });
   }
 }

@@ -14,20 +14,64 @@
   </ion-navbar>
 </ion-header>
 <ion-content class="souscription">
-  <div *ngFor="let f of lstForms">
-    <flex-list *ngIf="f.pres=='list'" [idPage]=idPage [idForm]=f.id [formTitle]=f.title [dataIn]=dataIn [idClient]=idClient></flex-list>
-    <flex-input *ngIf="f.pres=='detail'" [idPage]=idPage [idForm]=f.id [formTitle]=f.title [dataIn]=dataIn [idClient]=idClient></flex-input>
+  <!--
+  <ion-select clearInput [(ngModel)]="selSimu" cancelText="Annuler" okText="Choisir">
+    <ion-option value="">== Choisir un simulateur ==</ion-option>
+    <ion-option *ngFor="let b of lstSimu" [value]="b">{{b.lib}}</ion-option>
+  </ion-select>
+  -->
+  <div no-padding>
+    <ion-segment primary [(ngModel)]="selSimu">
+      <ion-segment-button style="height: 9.2rem;" *ngFor="let b of lstSimu" [value]="b.code">
+        <ion-img style="max-height: 5.2rem;" src="img/{{b.img}}"></ion-img>{{b.lib}}</ion-segment-button>
+    </ion-segment>
   </div>
-  <h4 *ngIf="dataSimu.idSimu">#Simulation : {{dataSimu.idSimu}}, le {{dataSimu.dateSimu}}</h4>
-  <ion-card *ngFor="let item of dataSimu.data">
-    <img [src]="item.graph" />
-    <ion-card-content>
-      <ion-card-title>
-        {{item.title}}
-      </ion-card-title>
-      <p>
-        Autres données...
-      </p>
-    </ion-card-content>
-  </ion-card>
+
+  <div [ngSwitch]="selSimu">
+    <div *ngSwitchCase="'demo'">
+      <flex-input [idPage]=idPage idForm=6 formTitle="Demo Simulateur" [dataIn]=dataIn [idClient]=idClient></flex-input>
+      <h4 *ngIf="dataSimu.idSimu">#Simulation : {{dataSimu.idSimu}}, le {{dataSimu.dateSimu}}</h4>
+      <ion-card *ngFor="let item of dataSimu.data">
+        <img [src]="item.graph" />
+        <ion-card-content>
+          <ion-card-title>
+            {{item.title}}
+          </ion-card-title>
+          <p>
+            Autres données...
+          </p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+    <div *ngSwitchCase="'epicaste'">
+      <h3>Simulations EPICASTE</h3>
+      <button (click)="getSimuList(selSimu)"><ion-icon name="wifi"></ion-icon> Actualiser</button>
+      <ion-list>
+        <ion-item-sliding *ngFor="let data of lstSimulation[selSimu]">
+          <ion-item text-wrap>
+            <ion-row>
+              <ion-col width-20><span primary>{{data.id}}</span></ion-col>
+              <ion-col width-50><span secondary>{{data.produit}}</span></ion-col>
+              <ion-col width-30 text-right><span danger>{{data.dateSimu}}</span></ion-col>
+            </ion-row>
+          </ion-item>
+          <ion-item-options side="right">
+            <button danger>
+        <ion-icon name="trash"></ion-icon>
+        Suppr.
+      </button>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+    </div>
+    <div *ngSwitchCase="'v1'">
+      Simulations HARVEST - Opticap
+    </div>
+    <div *ngSwitchCase="'v2'">
+      Simulations HARVEST - E-Futuris
+    </div>
+    <div *ngSwitchCase="'v3'">
+      Simulations EPICASTE - E-Succession
+    </div>
+  </div>
 </ion-content>

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import {Page, Loading, ModalController, Platform, NavController, NavParams, ViewController,
-  Storage, SqlStorage, LocalStorage} from 'ionic-angular';
+import {Page, ModalController, Platform, NavController, NavParams, ViewController} from 'ionic-angular';
 import {Record} from '../../components/record/record';
 import {CouchDbServices} from '../../providers/couch/couch';
 import {DisplayTools} from '../comon/display';
@@ -28,41 +27,48 @@ export class SynchroPage {
   docs: any;
   detailDoc: any = null;
   params: any;
+  okStart: boolean = false;
+  syncRun:boolean=false;
   constructor(public nav: NavController, private modalCtrl: ModalController, private platform: Platform, private display: DisplayTools, private couch: CouchDbServices) {
-    this.display = display;
     this.params = couch.getParams();
-    //console.log(this.params);
+    this.docs = [];
+  }
+  ngOnInit() {
     this.couch.verifSession(true).then(response => {
-      console.log(response);
+      //console.log(response);
       this.userData = response;
       this.params['base'] = this.userData['name'].toLowerCase();
       this.loadBase(this.params);
+      this.showBase();
     }, error => {
       console.log(error);
       this.userData = null;
       this.display.displayToast("Veuillez vous identifier ! Mode démo activé");
       this.loadBase(this.params);
-    });
-    this.docs = [];
-  }
 
+    });
+  }
   loadBase(params) {
     //console.log(params);
+    let loading = this.display.displayLoading("Activation de la base " + params.base, 1);
     this.sync = { "start": false, "info": false, "error": false, "stats": false, "timer": false };
-    this.display.displayLoading("Activation de la base " + params.base, 1);
     this.db = new PouchDB(params.base);
     this.remoteCouch = 'http://' + this.params.user + ':' + this.params.password + '@' + this.params.srv + '/' + this.params.base;
     this.docs = [];
+    loading.dismiss();
   };
-
   showBase() {
     let me = this;
     me.docs = [];
     this.db.allDocs({ include_docs: true, descending: true }, function (err, data) {
       me.docs = data;
-      //console.log("==> Refresh list", data);
+      console.log("==> Refresh list", data);
+      me.okStart = true;
     });
   };
+  getDocId(item) {
+    this.detailDoc = item;
+  }
   // ===== Sync opérations =====
   startSync() {
     console.log("Start Sync");
@@ -75,6 +81,7 @@ export class SynchroPage {
     var opts = { live: false, retry: true };
     this.syncExec = PouchDB.sync(this.db, this.remoteCouch, opts)
       .on('change', function (info) {
+        this.syncRun=true;
         // handle change
         me.sync.info = info;
         //me.showBase();
@@ -93,9 +100,8 @@ export class SynchroPage {
           "pull": (info.pull.end_time - info.pull.start_time),
           "push": (info.push.end_time - info.push.start_time)
         };
+        me.openStat();
         me.showBase();
-        me.openModal();
-
       }).on('paused', function (err) {
         // replication paused (e.g. replication up to date, user went offline)
         me.display.displayToast("Synchronisation en pause");
@@ -113,31 +119,29 @@ export class SynchroPage {
     console.log("End Sync");
   };
   getSyncDetail() {
-    this.openModal();
+    this.openStat();
   }
-  getDocId(item) {
-    this.detailDoc=item;
+  delDb() {
+    let me = this;
+    this.db.destroy().then(function (response) {
+      console.log("Del DB", response);
+      me.display.displayToast("Base effacée en local.");
+      me.loadBase(me.params);
+      me.showBase();
+    }).catch(function (err) {
+      console.log(err);
+    });
   }
-    delDb() {
-      let me = this;
-      this.db.destroy().then(function (response) {
-        console.log("Del DB", response);
-        me.display.displayToast("Base effacée en local.");
-        me.loadBase(me.params);
-      }).catch(function (err) {
-        console.log(err);
-      });
-    }
-    openModal() {
-      let modal = this.modalCtrl.create(statSynchroModal, { infos: this.sync.stats });
-      modal.present();
-    }
+  openStat() {
+    let modal = this.modalCtrl.create(statSynchroModal, { infos: this.sync.stats });
+    modal.present();
   }
-  // ========== Modal for displaying sync results ==========
-  @Component({
-    templateUrl: "build/pages/synchro/synchro-stats.html"
-  })
-  class statSynchroModal {
+}
+// ========== Modal for displaying sync results ==========
+@Component({
+  templateUrl: "build/pages/synchro/synchro-stats.html"
+})
+class statSynchroModal {
   infos: any;
   constructor(public platform: Platform, public params: NavParams, private viewCtrl: ViewController) {
     this.infos = this.params.get('infos');

@@ -23,10 +23,14 @@ export class SimulerPage {
   dataIn: any = {};
   idPage: any = {};
   idClient: any = "";
+  selSimu: any = "";
+  lstSimulation: any;
+
   idSimu: any = "";
   dataSimu: any = {};
   params: NavParams;
   pageStatus: any;
+  lstSimu: any = [];
   constructor(private nav: NavController, params: NavParams, private viewCtrl: ViewController, private events: Events, private CalcTools: CalcTools, private simu: Simu) {
     this.params = params;
     this.popupWindow = null;
@@ -36,8 +40,13 @@ export class SimulerPage {
     this.dataIn = this.params.data['currentDoc'];
     this.dataSimu = { "dateSimu": "", "idSimu": "", "data": [] };
     this.lstForms = [
-      { "id": 6, "title":"","pres": "detail", "status": "" }
     ];
+    this.lstSimu = [{ "code": "v1", "lib": "Opticap", "img":"succession.jpg" },
+      { "code": "v2", "lib": "E-Futuris - Diagnostic Retraite", "img":"succession.jpg" },
+      { "code": "v3", "lib": "E-Succession", "img":"succession.jpg" },
+      { "code": "epicaste", "lib": "Epicaste", "img":"succession.jpg" },
+      { "code": "demo", "lib": "Démonstration", "img":"ionic.png" }
+    ]
     // Return events from inputs forms
     this.events.subscribe('clientChange', eventData => {
       this.idClient = eventData[0]['currentCli'];
@@ -72,7 +81,18 @@ export class SimulerPage {
       this.dataSimu['idSimu'] = eventData[0]['insert_id'];
     });
   }
+  ngOnInit(){
+    this.lstSimulation=[];
+    for( let s of this.lstSimu){
+      this.lstSimulation[s.code]=[];
+    }
+  }
   close() {
     this.viewCtrl.dismiss();
+  }
+
+  getSimuList(simu) {
+    this.lstSimulation[simu] = this.simu.epicastGetSimu();
+    console.log(this.lstSimulation);
   }
 }
