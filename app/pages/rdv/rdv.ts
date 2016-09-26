@@ -112,6 +112,7 @@ export class RdvPage {
             etatVie: cli['client']['output'][0]['ETATVIE'],
             forms: [],
             docs: [],
+            simu:[],
             rdvStatus: false
           });
         }

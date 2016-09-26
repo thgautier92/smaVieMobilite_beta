@@ -147,7 +147,7 @@ export class FlexInput implements OnInit, OnChanges {
         console.log("GET SIMU DATA", data);
         this.dataNonInput['simu'] = data['results']['output'][0];
         dForm['extraData'] = this.dataNonInput;
-        this.dataIn['rdv']['resultByClient'][this.idClient]['forms'][this.selectedForm.id] = dForm;
+        this.dataIn['rdv']['resultByClient'][this.idClient]['simu'][this.selectedForm.id] = dForm;
         this.events.publish('rdvSave', this.dataIn);
       }, error => {
         console.log(error);

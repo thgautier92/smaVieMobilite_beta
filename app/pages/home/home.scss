@@ -1,4 +1,17 @@
 .home {
+    ion-thumbnail img {
+        max-width: 10.6rem;
+        max-height: 10.6rem;
+    }
+    h2 {
+        font-size: 1.6em;
+        font-weight: bold;
+        color: map-get($colors, favorite);
+    }
+    p {
+        font-size: 1.0em;
+        color: map-get($colors, primary);
+    }
     ion-card {
         position: relative;
         text-align: center;
@@ -22,7 +35,7 @@
         position: absolute;
         top: 52%;
         width: 100%;
-        color: #fff;
+        color: map-get($colors, primary);
     }
 }
 .logoHeader {

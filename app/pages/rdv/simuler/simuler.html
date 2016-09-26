@@ -20,13 +20,35 @@
     <ion-option *ngFor="let b of lstSimu" [value]="b">{{b.lib}}</ion-option>
   </ion-select>
   -->
+  <ion-toolbar primary>
+    <ion-title>Historique des simulations</ion-title>
+    <ion-buttons end>
+      <button (click)="getHistoSimu()"><ion-icon name="refresh"></ion-icon>{{maxSimuId+1}}</button>
+      <button><ion-icon name="add"></ion-icon></button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-list>
+    <ion-item-sliding *ngFor="let data of histoSimu">
+      <ion-item text-wrap>
+        <ion-row>
+          <ion-col width-20><span primary>{{data.simulateur}}</span></ion-col>
+          <ion-col width-20><span primary>{{data.id}}</span></ion-col>
+          <ion-col width-50><span secondary>{{data.produit}}</span></ion-col>
+          <ion-col width-30 text-right><span danger>{{data.dateSimu}}</span></ion-col>
+        </ion-row>
+      </ion-item>
+      <ion-item-options side="right">
+        <button danger><ion-icon name="trash"></ion-icon>Suppr.</button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
   <div no-padding>
     <ion-segment primary [(ngModel)]="selSimu">
       <ion-segment-button style="height: 9.2rem;" *ngFor="let b of lstSimu" [value]="b.code">
         <ion-img style="max-height: 5.2rem;" src="img/{{b.img}}"></ion-img>{{b.lib}}</ion-segment-button>
     </ion-segment>
   </div>
-
   <div [ngSwitch]="selSimu">
     <div *ngSwitchCase="'demo'">
       <flex-input [idPage]=idPage idForm=6 formTitle="Demo Simulateur" [dataIn]=dataIn [idClient]=idClient></flex-input>
@@ -56,10 +78,7 @@
             </ion-row>
           </ion-item>
           <ion-item-options side="right">
-            <button danger>
-        <ion-icon name="trash"></ion-icon>
-        Suppr.
-      </button>
+            <button danger><ion-icon name="trash"></ion-icon>Suppr.</button>
           </ion-item-options>
         </ion-item-sliding>
       </ion-list>

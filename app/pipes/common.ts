@@ -81,3 +81,13 @@ export class textToDate implements PipeTransform {
     return ret;
   }
 }
+@Pipe({ name: 'maxByKey', pure: false })
+export class maxByKeyPipe implements PipeTransform {
+  transform(collection: any, key: any): any {
+    let a=-1;
+    collection.forEach((elt, idx) => {
+        if (elt[key]>a) {a=elt[key];}
+      });
+    return a;
+  }
+}

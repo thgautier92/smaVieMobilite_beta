@@ -17,13 +17,17 @@
 <ion-content padding class="home">
   <!-- <button primary menuToggle>Menus</button> -->
   <h1 primary text-center>Bienvenue dans l'Ultra Mobilité</h1>
-  <ion-row wrap [hidden]="!userData['ok']">
-    <ion-col center *ngFor="let item of items">
-      <ion-card (click)="openNavDetailsPage(item)">
-        <ion-img src="img/{{item.icon}}"></ion-img>
-        <div class="card-title">{{item.title}}</div>
-        <div class="card-subtitle">{{item.description}}</div>
-      </ion-card>
-    </ion-col>
-  </ion-row>
+  <ion-grid>
+    <ion-row wrap [hidden]="!userData['ok']">
+      <ion-col *ngFor="let item of items" (click)="openNavDetailsPage(item)">
+        <ion-item no-padding text-center text-wrap no-lines>
+          <ion-thumbnail item-left>
+            <ion-img src="img/{{item.icon}}"></ion-img>
+          </ion-thumbnail>
+          <h2>{{item.title}}</h2>
+          <p>{{item.description}}</p>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
