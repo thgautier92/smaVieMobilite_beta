@@ -2,6 +2,7 @@ import { Component, Input} from '@angular/core';
 import { Page, NavController, ViewController, NavParams, Events } from 'ionic-angular';
 import {CalcTools} from '../../comon/calculate'
 import {FlexInput} from '../../../components/flex-input/flex-input';
+import {Paramsdata} from '../../../providers/params-data/params-data';
 
 /*
   Generated class for the DiagConseilPage page.
@@ -12,7 +13,7 @@ import {FlexInput} from '../../../components/flex-input/flex-input';
 @Component({
   templateUrl: 'build/pages/rdv/souscription/souscription.html',
   directives: [FlexInput],
-  providers: [CalcTools],
+  providers: [CalcTools,Paramsdata],
 })
 export class SouscriptionPage {
   lstForms: any = [];
@@ -26,11 +27,11 @@ export class SouscriptionPage {
   etape: any;
   histoSimu: any;
   lstProduit: any;
-  produit: any = {"code":"","fiscalite":""};
-  selProduit:any=null;
+  produit: any = { "code": "", "fiscalite": "" };
+  selProduit: any = null;
   lstFiscalite: any = [];
   ficalite: any = "";
-  constructor(private nav: NavController, params: NavParams, private viewCtrl: ViewController, private events: Events, private CalcTools: CalcTools) {
+  constructor(private nav: NavController, params: NavParams, private viewCtrl: ViewController, private events: Events, private CalcTools: CalcTools, private paramsApi: Paramsdata) {
     this.params = params;
     //this.idPage = this.params.data['currentPage'];
     this.idPage = 4
@@ -51,21 +52,13 @@ export class SouscriptionPage {
       { "code": "pj", "lib": "PJ" }
     ]
     this.etape = "pro";
-    this.lstProduit = [
-      {
-        "code": "BPM", "produit": "Batiplacement Multicompte", "docUrl": "", "options": [
-          { "code": "HPEA", "lib": "Fiscalité Hors PEA" },
-          { "code": "PEA", "lib": "Fiscalité PEA" }
-        ]
-      },
-      {
-        "code": "BRM", "produit": "Batiretraite Multicompte", "docUrl": "", "options": [
-          { "code": "HPEA", "lib": "Fiscalité Hors PEA" },
-          { "code": "PEA", "lib": "Fiscalité PEA" }
-        ]
-      }
+    this.paramsApi.loadRefs('produits').then(response => {
+      console.log(response);
+      this.lstProduit = response['data'];
+    }, error => {
+      console.log(error);
+    })
 
-    ]
     // Return events from inputs forms
     this.events.subscribe('clientChange', eventData => {
       this.idClient = eventData[0]['currentCli'];
@@ -86,15 +79,43 @@ export class SouscriptionPage {
   }
   ngOnInit() {
     this.getHistoSimu();
+    for (let e of this.lstEtapes) {
+      if (typeof this.dataIn['rdv']['souscription'][e.code] === 'undefined') {
+        this.dataIn['rdv']['souscription'][e.code] = {};
+      }
+    }
   }
   getHistoSimu() {
-    this.histoSimu = this.dataIn['rdv']['resultByClient'][this.idClient]['simu'];
+    this.histoSimu = this.dataIn['rdv']['resultByClient'][this.idClient]['simus'];
   }
-  selSimu(data) {
-    this.selProduit=data;
-    this.produit.code = data.code;
+  doChange(evt) {
+    console.log("Change segment", evt);
+    this.events.publish('rdvSave', this.dataIn);
   }
   close() {
     this.viewCtrl.dismiss();
   }
+  // Methods for the PRO segment
+  selSimu(data) {
+    this.produit.code = data.code;
+    this.dataIn['rdv']['souscription']['pro']['produit'] = this.produit;
+    this.selProduit = this.lstProduit.filter(item => item.code === this.produit.code)[0];
+  }
+  changeProduit(evt) {
+    this.selProduit = this.lstProduit.filter(item => item.code === this.produit.code)[0];
+    this.dataIn['rdv']['souscription']['pro']['produit'] = this.produit;
+  }
+  changeFiscalite(evt) {
+    this.dataIn['rdv']['souscription']['pro']['produit'] = this.produit;
+  }
+  // Methods for the VER segment
+  // Methods for the REP segment
+  // Methods for the ARB segment
+  // Methods for the CP segment
+  // Methods for the REL segment
+  // Methods for the BEN segment
+  // Methods for the PF segment
+
+
+
 }

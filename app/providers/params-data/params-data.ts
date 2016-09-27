@@ -26,6 +26,7 @@ export class Paramsdata {
   local: any;
   keyStore: any;
   paramsForm: any = null;
+  refs: any = null;
   dataMenu: any = null;
   dataForms: any = null;
   dataDocs: any = null;
@@ -59,7 +60,32 @@ export class Paramsdata {
   loadFile(file) {
     if (file !== "") window.open("data/docs/" + file, "_blank");
   }
-
+  loadRefs(id?) {
+    return new Promise(resolve => {
+      if (this.refs) {
+        console.log("Return REFS from MEMORY");
+        if (id) {
+          let r = this.refs.filter(item => item.id == id);
+          resolve(r[0]);
+        } else {
+          resolve(this.refs);
+        }
+      } else {
+        this.http.get('data/refs.json')
+          .map(res => res.json())
+          .subscribe(refs => {
+            console.log(refs);
+            this.refs = refs;
+            if (id) {
+              let r = this.refs.filter(item => item.id == id);
+              resolve(r[0]);
+            } else {
+              resolve(this.refs);
+            }
+          });
+      }
+    });
+  }
   /* ===== Methods for configuring dynamics forms ===== */
   loadForm() {
     return new Promise(resolve => {
@@ -82,7 +108,7 @@ export class Paramsdata {
     console.log("=====Get form data From SI", dataSI);
     console.log("=====Get form data From Input", dataRdv);
     */
-    if (!dataRdv) dataRdv={"forms":[]}
+    if (!dataRdv) dataRdv = { "forms": [] }
     return new Promise((resolve, reject) => {
       this.loadForm().then((data) => {
         //console.log("=====Forms Parameters ", data);
@@ -94,7 +120,7 @@ export class Paramsdata {
           if (form.length == 0) {
             form = data['forms'].filter(item => item['id'] === 1);
           }
-          console.log("=====Form ",form);
+          console.log("=====Form ", form);
           ret['form'] = form[0];
           let group = new FormGroup({});
           let groupValue = {};

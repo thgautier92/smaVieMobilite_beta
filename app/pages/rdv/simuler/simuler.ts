@@ -90,7 +90,7 @@ export class SimulerPage {
   }
   // ===== Manage SIMULATION =====
   getHistoSimu() {
-    this.histoSimu = this.dataIn['rdv']['resultByClient'][this.idClient]['simu'];
+    this.histoSimu = this.dataIn['rdv']['resultByClient'][this.idClient]['simus'];
     this.maxSimuId = new maxByKeyPipe().transform(this.histoSimu, "idSimu");
     console.log(this.dataIn, this.maxSimuId);
   }
@@ -101,7 +101,7 @@ export class SimulerPage {
         for (let e of l) {
           this.maxSimuId++;
           e['simulateur'] = simulator;
-          this.dataIn['rdv']['resultByClient'][this.idClient]['simu'].push(e);
+          this.dataIn['rdv']['resultByClient'][this.idClient]['simus'].push(e);
         }
         break;
       case 'demo':
@@ -117,7 +117,7 @@ export class SimulerPage {
     let prod = this.refSimu.filter(item => item.code === simulator);
     let e = { "idSimu": this.idSimu, "simulateur": simulator, "produit": prod[0]['lib'], "dateSimu": new Date(), "idExternal": "", "dataSimu": {} }
     this.startSimu(this.maxSimuId, simulator).then(response => {
-      this.dataIn['rdv']['resultByClient'][this.idClient]['simu'].push(e);
+      this.dataIn['rdv']['resultByClient'][this.idClient]['simus'].push(e);
       this.getHistoSimu();
       this.simuExec = true;
     }, error => {
@@ -171,17 +171,17 @@ export class SimulerPage {
     this.simu.getSimulatorById(simulator, this.idSimuExternal).then(response => {
       console.log("Data simu", response);
       loading.dismiss();
-      this.dataIn['rdv']['resultByClient'][this.idClient]['simu'].filter(item => item.idSimu == this.idSimu)[0]['idExternal'] = this.idSimuExternal;
+      this.dataIn['rdv']['resultByClient'][this.idClient]['simus'].filter(item => item.idSimu == this.idSimu)[0]['idExternal'] = this.idSimuExternal;
 
       switch (simulator) {
         case 'epicaste':
           break;
         case 'demo':
-          this.dataIn['rdv']['resultByClient'][this.idClient]['simu'].filter(item => item.idSimu == this.idSimu)[0]['dataSimu'] = response;
+          this.dataIn['rdv']['resultByClient'][this.idClient]['simus'].filter(item => item.idSimu == this.idSimu)[0]['dataSimu'] = response;
           break;
         case 'v1':
           this.simulatorData = JSON.parse(response['results']['output'][0]['dataout']);
-          this.dataIn['rdv']['resultByClient'][this.idClient]['simu'].filter(item => item.idSimu == this.idSimu)[0]['dataSimu'] = this.simulatorData
+          this.dataIn['rdv']['resultByClient'][this.idClient]['simus'].filter(item => item.idSimu == this.idSimu)[0]['dataSimu'] = this.simulatorData
 
           break;
         default:
@@ -200,7 +200,7 @@ export class SimulerPage {
     modal.present();
   }
   delSimu(idx) {
-    this.dataIn['rdv']['resultByClient'][this.idClient]['simu'].splice(idx, 1);
+    this.dataIn['rdv']['resultByClient'][this.idClient]['simus'].splice(idx, 1);
     this.getHistoSimu();
   }
   diagNext(formStatus, evt?) {

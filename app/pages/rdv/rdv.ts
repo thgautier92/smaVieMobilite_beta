@@ -102,8 +102,10 @@ export class RdvPage {
       // Create JSON Structure for data input by application
       let idResult = "resultByClient";
       let idDocsInput = "docsInput";
+      let idSousInput = "souscription";
       if (typeof me.currentRdv.rdv['status'] === 'undefined') me.currentRdv.rdv['status'] = "En cours";
       if (typeof me.currentRdv.rdv[idDocsInput] === 'undefined') me.currentRdv.rdv[idDocsInput] = [];
+      if (typeof me.currentRdv.rdv[idSousInput] === 'undefined') me.currentRdv.rdv[idSousInput] = {};
       if (typeof me.currentRdv.rdv[idResult] === 'undefined') {
         me.currentRdv.rdv[idResult] = [];
         for (var idx in rdv.clients) {
@@ -115,7 +117,7 @@ export class RdvPage {
             etatVie: cli['client']['output'][0]['ETATVIE'],
             forms: [],
             docs: [],
-            simu:[],
+            simus:[],
             rdvStatus: false
           });
         }

@@ -21,9 +21,8 @@
     <flex-input *ngIf="f.pres=='detail'" [idPage]=idPage [idForm]=f.id [formTitle]=f.title [dataIn]=dataIn [idClient]=idClient></flex-input>
   </div>
   -->
-  <ion-segment [(ngModel)]="etape">
-    <ion-segment-button *ngFor="let et of lstEtapes" [value]="et.code">
-      {{et.lib}}
+  <ion-segment [(ngModel)]="etape" (ionChange)="doChange($event)">
+    <ion-segment-button primary text-wrap *ngFor="let et of lstEtapes" [value]="et.code" [innerHTML]="et.lib">
     </ion-segment-button>
   </ion-segment>
   <div [ngSwitch]="etape">
@@ -48,8 +47,8 @@
               <ion-icon name="list-box"></ion-icon>
               A partir d'un produit
             </ion-label>
-            <ion-select [(ngModel)]="produit.code">
-              <ion-option *ngFor="let p of lstProduit" [value]="p.code">{{p.produit}}</ion-option>
+            <ion-select [(ngModel)]="produit.code" okText="Choisir" cancelText="Annuler" placeholder="Choisir un produit" (ngModelChange)="changeProduit($events)">
+              <ion-option *ngFor="let p of lstProduit" [value]="p.code" [innerHTML]="p.produit"></ion-option>
             </ion-select>
           </ion-item>
           <ion-item *ngIf="selProduit">
@@ -57,8 +56,8 @@
               <ion-icon name="list-box"></ion-icon>
               Fiscalité
             </ion-label>
-            <ion-select [(ngModel)]="produit.fiscalite">
-              <ion-option *ngFor="let p of selProduit.options" [value]="p.code">{{p.lib}}</ion-option>
+            <ion-select [(ngModel)]="produit.fiscalite" okText="Choisir" cancelText="Annuler">
+              <ion-option *ngFor="let p of selProduit.options" [value]="p.code" [innerHTML]="p.lib"></ion-option>
             </ion-select>
           </ion-item>
         </ion-list>
@@ -93,5 +92,4 @@
       <ion-card-content></ion-card-content>
     </ion-card>
   </div>
-
 </ion-content>

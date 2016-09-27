@@ -1,0 +1,37 @@
+[
+    {
+        "id": "produits",
+        "data": [
+            {
+                "code": "BPM",
+                "produit": "Batiplacement Multicompte",
+                "docUrl": "",
+                "options": [
+                    {
+                        "code": "HPEA",
+                        "lib": "Fiscalité Hors PEA"
+                    },
+                    {
+                        "code": "PEA",
+                        "lib": "Fiscalité PEA"
+                    }
+                ]
+            },
+            {
+                "code": "BRM",
+                "produit": "Batiretraite Multicompte",
+                "docUrl": "",
+                "options": [
+                    {
+                        "code": "HPEA",
+                        "lib": "Fiscalité Hors PEA"
+                    },
+                    {
+                        "code": "PEA",
+                        "lib": "Fiscalité PEA"
+                    }
+                ]
+            }
+        ]
+    }
+]
