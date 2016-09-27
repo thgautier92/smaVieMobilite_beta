@@ -1,15 +1,24 @@
 .start {
+  ion-card.cards-list-start ion-card-header {
+    color: map-get($colors, primary);
+  }
+  .rdv {
+    color: map-get($colors, rdv);
+  }
+  .prosp{
+    border-left: 6px solid map-get($colors, primary);
+  }
+  .soc{
+    border-left: 6px solid map-get($colors, secondary);
+  }
+  .termine {
+    color: map-get($colors, secondary);
+  }
+  .en_cours{
+    color: map-get($colors, favorite);
+  }
+  .abandon{
+    color: map-get($colors, danger);
+  }
+}
 
-}
-ion-card.cards-list-start ion-card-header {
-  color: map-get($colors, primary);
-}
-.rdv {
-  color: map-get($colors, rdv);
-}
-.prosp{
-  border-left: 6px solid map-get($colors, primary);
-}
-.soc{
-  border-left: 6px solid map-get($colors, secondary);
-}

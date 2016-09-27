@@ -65,6 +65,7 @@ export class RdvPage {
     ]
     this.rdvMenu = [
       //{ "id": 1, "lib": "Recopier", "icon": "copy", "page": OptionCopierPage, "nav": "dialog" },
+      { "id": 1, "lib": "Informations Client", "icon": "people", "page": null, "nav": "page" },
       { "id": 2, "lib": "Pièces justificatives", "icon": "camera", "page": OptionPiecesPage, "nav": "dialog" },
       { "id": 3, "lib": "Signatures", "icon": "create", "page": SignaturePage, "nav": "page" },
       { "id": 4, "lib": "Simuler", "icon": "calculator", "page": SimulerPage, "nav": "page" },
@@ -76,6 +77,7 @@ export class RdvPage {
     events.subscribe('rdvSave', eventData => {
       this.saveData(eventData[0]).then(response => {
         events.publish('rdvUpdate', eventData[0]);
+        this.display.displayToast("Données enregistrées.")
       }, error => { });
     });
     events.subscribe('menuStatusChange', eventData => {
@@ -100,6 +102,7 @@ export class RdvPage {
       // Create JSON Structure for data input by application
       let idResult = "resultByClient";
       let idDocsInput = "docsInput";
+      if (typeof me.currentRdv.rdv['status'] === 'undefined') me.currentRdv.rdv['status'] = "En cours";
       if (typeof me.currentRdv.rdv[idDocsInput] === 'undefined') me.currentRdv.rdv[idDocsInput] = [];
       if (typeof me.currentRdv.rdv[idResult] === 'undefined') {
         me.currentRdv.rdv[idResult] = [];
@@ -175,6 +178,8 @@ export class RdvPage {
       }
     }
     if (okEnd) {
+      this.currentRdv.rdv['status'] = "Terminé";
+      this.saveData(this.currentRdv);
       this.nav.setRoot(HomePage);
     } else {
       let alert = this.alertCtrl.create({
@@ -188,8 +193,18 @@ export class RdvPage {
             }
           },
           {
-            text: "Confirmer",
+            text: "Valider tel quel",
             handler: () => {
+              this.currentRdv.rdv['status'] = "Terminé";
+              this.saveData(this.currentRdv);
+              this.nav.setRoot(HomePage);
+            }
+          },
+          {
+            text: "Confirmer l'abandon ",
+            handler: () => {
+              this.currentRdv.rdv['status'] = "Abandonné";
+              this.saveData(this.currentRdv);
               this.nav.setRoot(HomePage);
             }
           }

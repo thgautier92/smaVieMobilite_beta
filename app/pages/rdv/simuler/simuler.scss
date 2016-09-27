@@ -1,3 +1,15 @@
-.souscription {
-
+.simuler {
+    ion-segment {
+        //flex-direction: column;
+    }
+    .segment-button {
+        //width: 100%;
+        height: 9.2rem;
+    }
+    .listSimu{
+        border-width: 2px;
+        height: 200px;
+        border-bottom-color:map-get($colors, rdv);
+        border-style: none;
+    }
 }

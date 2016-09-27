@@ -1,9 +1,9 @@
-import {LoadingController, ToastController, NavController} from 'ionic-angular';
+import {LoadingController, ToastController, AlertController, NavController} from 'ionic-angular';
 import {Injectable} from '@angular/core';
 
 @Injectable()
 export class DisplayTools {
-    constructor(public nav: NavController,private toastCtrl: ToastController,private loadingCtrl: LoadingController) {
+    constructor(public nav: NavController, private toastCtrl: ToastController, private loadingCtrl: LoadingController, private alertCtrl: AlertController) {
         this
         this.nav = nav;
     }
@@ -27,8 +27,12 @@ export class DisplayTools {
         toast.present();
     }
     displayAlert(msg) {
-        console.log(msg);
-        alert(msg);
+        let alert = this.alertCtrl.create({
+            "title": "Message important",
+            subTitle: msg,
+            buttons: ["J'ai compris"]
+        })
+       alert.present();
     }
     displayJson(el, data) {
 

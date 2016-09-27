@@ -82,9 +82,10 @@ export class Paramsdata {
     console.log("=====Get form data From SI", dataSI);
     console.log("=====Get form data From Input", dataRdv);
     */
+    if (!dataRdv) dataRdv={"forms":[]}
     return new Promise((resolve, reject) => {
       this.loadForm().then((data) => {
-        // console.log("=====Forms Parameters ", data);
+        //console.log("=====Forms Parameters ", data);
         if (data) {
           let ret = {}
           let form = data['forms'].filter(item => item['id'] == id);
@@ -93,7 +94,7 @@ export class Paramsdata {
           if (form.length == 0) {
             form = data['forms'].filter(item => item['id'] === 1);
           }
-          //console.log("=====Form ",form);
+          console.log("=====Form ",form);
           ret['form'] = form[0];
           let group = new FormGroup({});
           let groupValue = {};

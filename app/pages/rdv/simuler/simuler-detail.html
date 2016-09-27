@@ -1,0 +1,11 @@
+<ion-header>
+    <ion-navbar secondary>
+        <ion-title>Détail de la simulation</ion-title>
+        <ion-buttons end>
+            <button (click)="close()">Fermer</button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <pre>{{simuData|json}}</pre>
+</ion-content>

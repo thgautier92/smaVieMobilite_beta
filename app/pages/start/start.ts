@@ -58,11 +58,20 @@ export class StartPage {
     }, 2000);
     */
   }
-  showBase() {
+  showBase(status?) {
     let me = this;
     me.docs = [];
     this.db.allDocs({ include_docs: true, descending: true }, function (err, data) {
-      me.docs = new groupBy().transform(data.rows, 'doc', 'rdv', 'dateRdv', 10);
+      console.log(data);
+      if (status) {
+        let dataFilter = data.rows.filter(item => item.doc.rdv.status === status);
+        console.log("Filter",dataFilter);
+        me.docs = new groupBy().transform(dataFilter, 'doc', 'rdv', 'dateRdv', 10);
+      } else {
+        me.docs = new groupBy().transform(data.rows, 'doc', 'rdv', 'dateRdv', 10);
+      }
+
+      console.log(me.docs);
     });
   };
   start(item) {

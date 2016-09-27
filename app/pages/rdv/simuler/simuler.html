@@ -5,92 +5,115 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-  <ion-navbar secondary>
+  <ion-navbar primary>
     <ion-title>
       <ion-icon name="wifi"></ion-icon> Simulateurs</ion-title>
     <ion-buttons end>
-      <button (click)="close()">Fermer</button>
+      <button light outline (click)="getHistoSimu()"><ion-icon name="refresh"></ion-icon>{{maxSimuId+1}}</button>
+      <button light outline (click)="addSimu()"><ion-icon name="add"></ion-icon></button>
+      <button favorite (click)="diagNext('partial',$event)"><ion-icon name="pause"></ion-icon></button>
+      <button secondary (click)="diagNext('completed',$event)"><ion-icon name="play"></ion-icon></button>
+      <!-- <button (click)="close()">Fermer</button> -->
     </ion-buttons>
   </ion-navbar>
 </ion-header>
-<ion-content class="souscription">
+<ion-content class="simuler">
   <!--
   <ion-select clearInput [(ngModel)]="selSimu" cancelText="Annuler" okText="Choisir">
     <ion-option value="">== Choisir un simulateur ==</ion-option>
-    <ion-option *ngFor="let b of lstSimu" [value]="b">{{b.lib}}</ion-option>
+    <ion-option *ngFor="let b of refSimu" [value]="b">{{b.lib}}</ion-option>
   </ion-select>
-  -->
-  <ion-toolbar primary>
-    <ion-title>Historique des simulations</ion-title>
-    <ion-buttons end>
-      <button (click)="getHistoSimu()"><ion-icon name="refresh"></ion-icon>{{maxSimuId+1}}</button>
-      <button><ion-icon name="add"></ion-icon></button>
-    </ion-buttons>
-  </ion-toolbar>
-
-  <ion-list>
-    <ion-item-sliding *ngFor="let data of histoSimu">
-      <ion-item text-wrap>
-        <ion-row>
-          <ion-col width-20><span primary>{{data.simulateur}}</span></ion-col>
-          <ion-col width-20><span primary>{{data.id}}</span></ion-col>
-          <ion-col width-50><span secondary>{{data.produit}}</span></ion-col>
-          <ion-col width-30 text-right><span danger>{{data.dateSimu}}</span></ion-col>
-        </ion-row>
-      </ion-item>
-      <ion-item-options side="right">
-        <button danger><ion-icon name="trash"></ion-icon>Suppr.</button>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
-  <div no-padding>
-    <ion-segment primary [(ngModel)]="selSimu">
-      <ion-segment-button style="height: 9.2rem;" *ngFor="let b of lstSimu" [value]="b.code">
-        <ion-img style="max-height: 5.2rem;" src="img/{{b.img}}"></ion-img>{{b.lib}}</ion-segment-button>
-    </ion-segment>
-  </div>
-  <div [ngSwitch]="selSimu">
-    <div *ngSwitchCase="'demo'">
-      <flex-input [idPage]=idPage idForm=6 formTitle="Demo Simulateur" [dataIn]=dataIn [idClient]=idClient></flex-input>
-      <h4 *ngIf="dataSimu.idSimu">#Simulation : {{dataSimu.idSimu}}, le {{dataSimu.dateSimu}}</h4>
-      <ion-card *ngFor="let item of dataSimu.data">
-        <img [src]="item.graph" />
-        <ion-card-content>
-          <ion-card-title>
-            {{item.title}}
-          </ion-card-title>
-          <p>
-            Autres données...
-          </p>
-        </ion-card-content>
-      </ion-card>
-    </div>
-    <div *ngSwitchCase="'epicaste'">
-      <h3>Simulations EPICASTE</h3>
-      <button (click)="getSimuList(selSimu)"><ion-icon name="wifi"></ion-icon> Actualiser</button>
-      <ion-list>
-        <ion-item-sliding *ngFor="let data of lstSimulation[selSimu]">
-          <ion-item text-wrap>
-            <ion-row>
-              <ion-col width-20><span primary>{{data.id}}</span></ion-col>
-              <ion-col width-50><span secondary>{{data.produit}}</span></ion-col>
-              <ion-col width-30 text-right><span danger>{{data.dateSimu}}</span></ion-col>
-            </ion-row>
-          </ion-item>
-          <ion-item-options side="right">
-            <button danger><ion-icon name="trash"></ion-icon>Suppr.</button>
-          </ion-item-options>
-        </ion-item-sliding>
-      </ion-list>
-    </div>
-    <div *ngSwitchCase="'v1'">
-      Simulations HARVEST - Opticap
-    </div>
-    <div *ngSwitchCase="'v2'">
-      Simulations HARVEST - E-Futuris
-    </div>
-    <div *ngSwitchCase="'v3'">
-      Simulations EPICASTE - E-Succession
-    </div>
-  </div>
+-->
+  <ion-card>
+    <ion-card-header>Historique des simulations</ion-card-header>
+    <ion-card-content>
+      <ion-scroll scrollY="true" class="listSimu">
+        <ion-list>
+          <ion-item-sliding *ngFor="let data of histoSimu;let idx=index">
+            <ion-item text-wrap>
+              <ion-row>
+                <ion-col width-20><span primary>{{data.simulateur}}</span></ion-col>
+                <ion-col width-10><span primary>{{data.idSimu}}</span></ion-col>
+                <ion-col width-40 (click)="detailSimu(data)"><span secondary>{{data.produit}}</span></ion-col>
+                <ion-col width-30><span danger>{{data.dateSimu}}</span></ion-col>
+              </ion-row>
+            </ion-item>
+            <ion-item-options side="right">
+              <button danger (click)="delSimu(idx)"><ion-icon name="trash"></ion-icon>Suppr.</button>
+              <button primary (click)="detailSimu(data)"><ion-icon name="information-circle"></ion-icon>Détail</button>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+      </ion-scroll>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>Ajouter une simulation
+      <ion-segment primary [(ngModel)]="selSimu">
+        <ion-segment-button *ngFor="let b of refSimu" [value]="b.code">
+          <ion-img style="max-height: 5.2rem;" src="img/{{b.img}}"></ion-img>{{b.lib}}</ion-segment-button>
+      </ion-segment>
+    </ion-card-header>
+    <ion-card-content>
+      <div [ngSwitch]="selSimu">
+        <div *ngSwitchCase="'demo'">
+          <flex-input [idPage]=idPage idForm=6 formTitle="Demo Simulateur" [dataIn]=dataIn [idClient]=idClient></flex-input>
+          <h4 *ngIf="dataSimu.idSimu">#Simulation : {{dataSimu.idSimu}}, le {{dataSimu.dateSimu}}</h4>
+          <ion-card *ngFor="let item of dataSimu.data">
+            <img [src]="item.graph" />
+            <ion-card-content>
+              <ion-card-title>
+                {{item.title}}
+              </ion-card-title>
+              <p>
+                Autres données...
+              </p>
+            </ion-card-content>
+          </ion-card>
+        </div>
+        <div *ngSwitchCase="'epicaste'">
+          <h3 text-center>Simulations EPICASTE</h3>
+          <button (click)="getSimuList(selSimu)"><ion-icon name="wifi"></ion-icon> Actualiser</button>
+          <ion-list>
+            <ion-item-sliding *ngFor="let data of lstSimulation[selSimu]">
+              <ion-item text-wrap>
+                <ion-row>
+                  <ion-col width-20><span primary>{{data.id}}</span></ion-col>
+                  <ion-col width-50><span secondary>{{data.produit}}</span></ion-col>
+                  <ion-col width-30 text-right><span danger>{{data.dateSimu}}</span></ion-col>
+                </ion-row>
+              </ion-item>
+              <ion-item-options side="right">
+                <button danger><ion-icon name="trash"></ion-icon>Suppr.</button>
+              </ion-item-options>
+            </ion-item-sliding>
+          </ion-list>
+        </div>
+        <div *ngSwitchCase="'v1'">
+          <h3 text-center>Simulations HARVEST - Opticap</h3>
+          <button (click)="addSimu(selSimu)"><ion-icon name="wifi"></ion-icon> Démarrer une simulation</button>
+          <button (click)="getSimu(selSimu)"><ion-icon name="wifi"></ion-icon> Utiliser les données de la simulation</button>
+          <ion-card *ngFor="let item of simulatorData">
+            <img [src]="item.graph" />
+            <ion-card-content>
+              <ion-card-title>
+                {{item.title}}
+              </ion-card-title>
+              <p>
+                Autres données...
+              </p>
+            </ion-card-content>
+          </ion-card>
+        </div>
+        <div *ngSwitchCase="'v2'">
+          <h3 text-center>Simulations HARVEST - E-Futuris</h3>
+          <button (click)="addSimu(selSimu)"><ion-icon name="wifi"></ion-icon> Démarrer une simulation</button>
+        </div>
+        <div *ngSwitchCase="'v3'">
+          <h3 text-center>Simulations HARVEST - E-Succession</h3>
+          <button (click)="addSimu(selSimu)"><ion-icon name="wifi"></ion-icon> Démarrer une simulation</button>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

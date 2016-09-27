@@ -7,8 +7,12 @@
 <ion-header>
   <ion-navbar simple>
     <ion-title>Les rendez-vous préparés</ion-title>
-      <button menuToggle><ion-icon name="menu"></ion-icon></button>
+    <button menuToggle><ion-icon name="menu"></ion-icon></button>
     <ion-buttons end>
+      <button  (click)="showBase('')"><ion-icon name="flag"></ion-icon></button>
+      <button danger (click)="showBase('Abandonné')"><ion-icon name="flag"></ion-icon></button>
+      <button favorite (click)="showBase('En cours')"><ion-icon name="flag"></ion-icon></button>
+      <button secondary (click)="showBase('Terminé')"><ion-icon name="flag"></ion-icon></button>
       <button favorite (click)="showBase()"><ion-icon name="refresh"></ion-icon></button>
     </ion-buttons>
   </ion-navbar>
@@ -20,7 +24,11 @@
       <button ion-item *ngFor="let item of key.value" [ngClass]="{
                   'soc' : item.doc.rdv.ETATVIE=='SOCIETAIRE',
                   'prosp' : item.doc.rdv.ETATVIE=='PROSPECT'}" (click)="start(item)">
-        <ion-icon name="flag" item-right primary></ion-icon>
+        <ion-icon name="flag" item-right [ngClass]="{
+                  'termine' : item.doc.rdv.status=='Terminé',
+                  'en_cours' : item.doc.rdv.status=='En cours',
+                  'abandon' : item.doc.rdv.status=='Abandonné'}">
+          </ion-icon>
         <ion-row>
           <ion-col width-90 ><h3>Rendez-vous à <b>{{(item.doc.rdv.dateRdv |textToDate).time}}</b></h3></ion-col>
           <ion-col width-10 text-right class="small">#{{item.id}}</ion-col>
