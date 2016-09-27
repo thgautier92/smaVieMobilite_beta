@@ -15,8 +15,83 @@
 </ion-header>
 
 <ion-content class="souscription">
+  <!--
   <div *ngFor="let f of lstForms">
     <flex-list *ngIf="f.pres=='list'" [idPage]=idPage [idForm]=f.id [formTitle]=f.title [dataIn]=dataIn [idClient]=idClient></flex-list>
     <flex-input *ngIf="f.pres=='detail'" [idPage]=idPage [idForm]=f.id [formTitle]=f.title [dataIn]=dataIn [idClient]=idClient></flex-input>
   </div>
+  -->
+  <ion-segment [(ngModel)]="etape">
+    <ion-segment-button *ngFor="let et of lstEtapes" [value]="et.code">
+      {{et.lib}}
+    </ion-segment-button>
+  </ion-segment>
+  <div [ngSwitch]="etape">
+    <ion-card *ngSwitchCase="'pro'">
+      <ion-card-header>Ajouter une demande d'adhésion</ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-list-header secondary>
+            <ion-icon name="search"></ion-icon>
+            A partir d'une simulation existante
+          </ion-list-header>
+          <ion-item text-wrap *ngFor="let data of histoSimu;let idx=index">
+            <ion-row>
+              <ion-col width-20><span primary>{{data.simulateur}}</span></ion-col>
+              <ion-col width-10><span primary>{{data.idSimu}}</span></ion-col>
+              <ion-col width-40 (click)="selSimu(data)"><span secondary>{{data.produit}}</span></ion-col>
+              <ion-col width-30><span danger>{{data.dateSimu}}</span></ion-col>
+            </ion-row>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <ion-icon name="list-box"></ion-icon>
+              A partir d'un produit
+            </ion-label>
+            <ion-select [(ngModel)]="produit.code">
+              <ion-option *ngFor="let p of lstProduit" [value]="p.code">{{p.produit}}</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item *ngIf="selProduit">
+            <ion-label>
+              <ion-icon name="list-box"></ion-icon>
+              Fiscalité
+            </ion-label>
+            <ion-select [(ngModel)]="produit.fiscalite">
+              <ion-option *ngFor="let p of selProduit.options" [value]="p.code">{{p.lib}}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+    <ion-card *ngSwitchCase="'ver'">
+      <ion-card-header></ion-card-header>
+      <ion-card-content></ion-card-content>
+    </ion-card>
+    <ion-card *ngSwitchCase="'rep'">
+      <ion-card-header></ion-card-header>
+      <ion-card-content></ion-card-content>
+    </ion-card>
+    <ion-card *ngSwitchCase="'arb'">
+      <ion-card-header></ion-card-header>
+      <ion-card-content></ion-card-content>
+    </ion-card>
+    <ion-card *ngSwitchCase="'cp'">
+      <ion-card-header></ion-card-header>
+      <ion-card-content></ion-card-content>
+    </ion-card>
+    <ion-card *ngSwitchCase="'rel'">
+      <ion-card-header></ion-card-header>
+      <ion-card-content></ion-card-content>
+    </ion-card>
+    <ion-card *ngSwitchCase="'ben'">
+      <ion-card-header></ion-card-header>
+      <ion-card-content></ion-card-content>
+    </ion-card>
+    <ion-card *ngSwitchCase="'pj'">
+      <ion-card-header></ion-card-header>
+      <ion-card-content></ion-card-content>
+    </ion-card>
+  </div>
+
 </ion-content>

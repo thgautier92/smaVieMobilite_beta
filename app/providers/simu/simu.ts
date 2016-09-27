@@ -127,11 +127,11 @@ export class Simu {
   }
   // ===== Demo call to EPICASTE simulator ====
   epicastGetSimu() {
-    return [{ "idSimu": 254, "produit": "Batiretraite Multicompte", "dateSimu": "12/09/2016" },
-      { "idSimu": 854, "produit": "Batiretraite Multicompte", "dateSimu": "24/08/2016" },
-      { "idSimu": 3985, "produit": "Batiretraite Multicompte", "dateSimu": "18/02/2016" },
-      { "idSimu": 6, "produit": "Batiplacement Multicompte PEA", "dateSimu": "30/03/2016" },
-      { "idSimu": 9, "produit": "Batiplacement Multicompte PEA", "dateSimu": "17/07/2016" }]
+    return [{ "idSimu": 254, "code": "BRM", "produit": "Batiretraite Multicompte", "dateSimu": "12/09/2016" },
+      { "idSimu": 854, "code": "BRM", "produit": "Batiretraite Multicompte", "dateSimu": "24/08/2016" },
+      { "idSimu": 3985, "code": "BRM", "produit": "Batiretraite Multicompte", "dateSimu": "18/02/2016" },
+      { "idSimu": 6, "code": "BPM", "produit": "Batiplacement Multicompte PEA", "dateSimu": "30/03/2016" },
+      { "idSimu": 9, "code": "BPM", "produit": "Batiplacement Multicompte PEA", "dateSimu": "17/07/2016" }]
   }
   // ===== Old version off simulator integartion ====
   callSimu(data) {

@@ -31,7 +31,7 @@ export class ProfilRisquePage {
     this.dataIn = this.params.data['currentDoc'];
     this.dataOut = {};
     this.lstForms = [
-      { "id": 10, "title": "", "pres": "detail", "status": "" }
+      { "id": 32, "title": "", "pres": "detail", "status": "" }
     ];
     // Return events from inputs forms
     this.events.subscribe('clientChange', eventData => {

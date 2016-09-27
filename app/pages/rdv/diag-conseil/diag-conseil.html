@@ -15,16 +15,26 @@
 </ion-header>
 <ion-content padding class="diag-conseil">
   <flex-display [idPage]=idPage idForm=1 formTitle="Connaissance Client nécéssaire au Diagnostic conseil" [dataIn]=dataIn [idClient]=idClient></flex-display>
-  <ion-row>
-    <button (click)="callProfil()">Définir le Profil de risque</button>
-  </ion-row>
-  <ion-row *ngIf="profilCalculated">
-    <ion-col>
-      1. Sécuritaire 2. Modèré 3. Dynamique
-    </ion-col>
-    <ion-col>
-      <ion-range snaps="true" min="1" max="3" [(ngModel)]="profilCalculated" danger pin="true"></ion-range>
-    </ion-col>
-  </ion-row>
-  <flex-input *ngIf="profilCalculated" [idPage]=idPage idForm=31 formTitle="La SMAvie vous recommande les produits suivants" [dataIn]=dataIn [idClient]=idClient></flex-input>
+  <ion-card>
+    <ion-card-header text-center>
+      <button (click)="callProfil()">Définir le Profil de risque</button>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row *ngIf="profilCalculated">
+        <ion-col width-33 text-center>
+          <button *ngIf="profilCalculated==1" light round>Sécuritaire</button>
+          <button *ngIf="profilCalculated==2" favorite round>Modèré</button>
+          <button *ngIf="profilCalculated==3" secondary round>Dynamique</button>
+          <!-- <ion-range snaps="true" min="1" max="3" [(ngModel)]="profilCalculated" danger pin="true"></ion-range>-->
+        </ion-col>
+        <ion-col width-77>
+          <h4 *ngIf="profilCalculated==1" light>A votre profil Sécuritaire correspond...blabla</h4>
+          <h4 *ngIf="profilCalculated==2" favorite>A votre profil Modéré correspond...blabla</h4>
+          <h4 *ngIf="profilCalculated==3" secondary>A votre profil Dynamique correspond...blabla</h4>
+        </ion-col>
+      </ion-row>
+      <flex-input *ngIf="profilCalculated" [idPage]=idPage idForm=31 formTitle="La SMAvie vous recommande les produits suivants"
+        [dataIn]=dataIn [idClient]=idClient></flex-input>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
