@@ -29,9 +29,10 @@ export class SignServices {
           "account": "1549349",
           "auth": "<DocuSignCredentials><Username>#email#</Username><Password>#password#</Password><IntegratorKey>#key#</IntegratorKey></DocuSignCredentials>"
         }, "api": [
-          { "id": "login", "lib": "Login", "url": "login_information?api_password=false&include_account_id_guid=true&login_settings=all" },
-          { "id": "listTemplate", "lib": "Liste des templates", "url": "accounts/#account#/templates" },
-          { "id": 1, "lib": "Identité numérique", "url": "" }]
+          { "id": "login", "lib": "Login", "method": "get", "url": "login_information?api_password=false&include_account_id_guid=true&login_settings=all" },
+          { "id": "listTemplate", "lib": "Liste des templates", "method": "get", "url": "accounts/#account#/templates" },
+          { "id": "sendEnv", "lib": "Création d'une enveloppe", "method": "post", "url": "accounts/accounts/#account#/envelopes" },
+          { "id": 1, "lib": "Identité numérique", "method": "get", "url": "" }]
       },
       { "serv": "univerSign", "params": {}, "api": [] },
       { "serv": "docaPost", "params": {}, "api": [] }];
@@ -147,14 +148,29 @@ export class SignServices {
             let apiUrl = apiResponse['url'];
             apiUrl = apiUrl.replace("#account#", apiParam['account']);
             //Call API
-            this.http.get(api['url'] + "/" + apiUrl, options)
-              .map(res => res.json())
-              .subscribe(data => {
-                resolve(data);
-              }, error => {
-                console.log("GET error", error);
-                reject(error);
-              });
+            switch (apiResponse['method']) {
+              case 'get':
+                this.http.get(api['url'] + "/" + apiUrl, options)
+                  .map(res => res.json())
+                  .subscribe(data => {
+                    resolve(data);
+                  }, error => {
+                    console.log("GET error", error);
+                    reject(error);
+                  });
+                break;
+              case 'post':
+                this.http.post(api['url'] + "/" + apiUrl, options)
+                  .map(res => res.json())
+                  .subscribe(data => {
+                    resolve(data);
+                  }, error => {
+                    console.log("GET error", error);
+                    reject(error);
+                  });
+                break;
+              default:
+            }
           }, apiError => {
             reject(apiError);
           });
