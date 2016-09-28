@@ -66,8 +66,10 @@ export class OptionPiecesPage {
     let options = setOptions(srcType);
     let me = this;
     try {
-      Camera.getPicture(options).then((imageData) => {
-        me.base64Image = imageData;
+      Camera.getPicture(options).then(imageData => {
+        me.base64Image = 'data:image/jpg;base64,'+imageData;
+        console.log(imageData);
+        //me.base64Image = imageData;
         this.okCapture=true;
       }, (err) => {
         // Handle error
@@ -115,7 +117,7 @@ function setOptions(srcType) {
   var options = {
     // Some common settings are 20, 50, and 100
     quality: 50,
-    destinationType: Camera.DestinationType.FILE_URI,
+    destinationType: Camera.DestinationType.DATA_URL,
     // In this app, dynamically set the picture source, Camera or photo gallery
     sourceType: srcType,
     encodingType: Camera.EncodingType.JPEG,
