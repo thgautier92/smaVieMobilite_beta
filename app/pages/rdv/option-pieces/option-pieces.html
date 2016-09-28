@@ -26,7 +26,7 @@
         <ion-item-sliding *ngFor="let item of dataIn['rdv']['docsInput'];let idx=index">
           <ion-item>
             <ion-avatar item-left>
-              <img [src]="item['img64']">
+              <img [src]="'data:image/jpg;base64,'+item.img64">
             </ion-avatar>
             <h2>{{item.idDoc}}. {{item.nature}} - {{item.reference}}</h2>
           </ion-item>
@@ -41,7 +41,8 @@
     <div *ngSwitchCase="'capture'">
       <ion-card>
         <div class="image-container">
-          <ion-img [src]="base64Image" class="image-scale"></ion-img>
+          <ion-img *ngIf="!okCapture" [src]="'img/camera.jpg'" class="image-scale"></ion-img>
+          <ion-img *ngIf="okCapture" [src]="'data:image/jpg;base64,'+base64Image" class="image-scale"></ion-img>
           <button fab fab-right fab-top class="fab-map" (click)="takePhoto()"><ion-icon name="camera"></ion-icon></button>
           <button fab fab-left fab-top class="fab-map" (click)="takeMail()"><ion-icon name="mail"></ion-icon></button>
         </div>

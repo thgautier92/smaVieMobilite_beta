@@ -3,7 +3,7 @@
   <name>smaVieMobilite</name>
   <description>An Ionic Framework and Cordova project.</description>
   <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
-  <content src="index.html"/>
+  <content src="http://192.168.6.168:8100" original-src="index.html"/>
   <access origin="*"/>
   <allow-intent href="http://*/*"/>
   <allow-intent href="https://*/*"/>
@@ -68,4 +68,10 @@
   </plugin>
   <plugin name="cordova-plugin-inappbrowser" spec="~1.5.0"/>
   <icon src="resources/ios/icon/icon-small@3x.png"/>
+
+  <preference name="WindowsStoreDisplayName" value="smaVieMobilite" />
+  <vs:platformSpecificValues xmlns:vs="http://schemas.microsoft.com/appx/2014/htmlapps">
+    <vs:platformSpecificWidget platformName="windows" id="smaVieMobilite" version="1.0.0.0" />
+  </vs:platformSpecificValues>
+  <preference name="windows-target-version" value="10.0" />
 </widget>

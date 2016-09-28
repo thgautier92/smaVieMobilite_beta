@@ -28,7 +28,8 @@ export class OptionPiecesPage {
   lstfields: any = [];
   cible: any = null;
   nature: any = "";
-  base64Image: any = this.sanitizer.bypassSecurityTrustResourceUrl("img/camera.jpg");
+  base64Image: any = '';
+  okCapture:boolean=false;
   constructor(private nav: NavController, params: NavParams, private viewCtrl: ViewController, private sanitizer: DomSanitizationService,private modalCtrl: ModalController, private alertCtrl: AlertController, private events: Events, private menu: Paramsdata) {
     this.idClient = params.data['currentCli'];
     this.dataIn = params.data['currentDoc'];
@@ -66,9 +67,11 @@ export class OptionPiecesPage {
     let me = this;
     try {
       Camera.getPicture(options).then((imageData) => {
-        me.base64Image = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/jpeg;base64,' + imageData);
+        me.base64Image = imageData;
+        this.okCapture=true;
       }, (err) => {
         // Handle error
+        this.okCapture=false;
         let alert = this.alertCtrl.create({
           title: 'Capture de documents',
           subTitle: 'Appareil non disponible. <br>Erreur  : ' + err,
@@ -77,6 +80,7 @@ export class OptionPiecesPage {
         alert.present();
       });
     } catch (error) {
+      this.okCapture=false;
       let alert = this.alertCtrl.create({
         title: 'Capture de documents',
         subTitle: 'Appareil non disponible : ' + error,
