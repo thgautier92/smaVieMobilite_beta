@@ -28,7 +28,7 @@ export class OptionPiecesPage {
   lstfields: any = [];
   cible: any = null;
   nature: any = "";
-  base64Image: any = "img/camera.jpg";
+  base64Image: any = this.sanitizer.bypassSecurityTrustResourceUrl("img/camera.jpg");
   constructor(private nav: NavController, params: NavParams, private viewCtrl: ViewController, private sanitizer: DomSanitizationService,private modalCtrl: ModalController, private alertCtrl: AlertController, private events: Events, private menu: Paramsdata) {
     this.idClient = params.data['currentCli'];
     this.dataIn = params.data['currentDoc'];
