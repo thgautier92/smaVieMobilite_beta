@@ -156,8 +156,9 @@ export class SimulerPage {
         if (this.popupWindow && !this.popupWindow.closed) {
           this.popupWindow.doRefresh();
         } else {
-          this.popupWindow = window.open(url, "SIMU", options);
+          this.popupWindow = window.open(url, "_blank", options);
           this.popupWindow.focus();
+          console.log(this.popupWindow);
         }
         resolve(true);
       }, error => {

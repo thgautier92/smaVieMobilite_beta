@@ -68,8 +68,6 @@ export class OptionPiecesPage {
     try {
       Camera.getPicture(options).then(imageData => {
         me.base64Image = 'data:image/jpg;base64,'+imageData;
-        console.log(imageData);
-        //me.base64Image = imageData;
         this.okCapture=true;
       }, (err) => {
         // Handle error
