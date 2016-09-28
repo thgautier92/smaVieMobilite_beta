@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Camera } from 'ionic-native';
 import { Page, NavController, NavParams, Events, ModalController, AlertController, IONIC_DIRECTIVES, Platform, ViewController } from 'ionic-angular';
 import {REACTIVE_FORM_DIRECTIVES, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { DomSanitizationService, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import {Paramsdata} from '../../../providers/params-data/params-data';
 import {groupBy, ValuesPipe, KeysPipe} from '../../../pipes/common';
 
@@ -28,7 +29,7 @@ export class OptionPiecesPage {
   cible: any = null;
   nature: any = "";
   base64Image: any = "img/camera.jpg";
-  constructor(private nav: NavController, params: NavParams, private viewCtrl: ViewController, private modalCtrl: ModalController, private alertCtrl: AlertController, private events: Events, private menu: Paramsdata) {
+  constructor(private nav: NavController, params: NavParams, private viewCtrl: ViewController, private sanitizer: DomSanitizationService,private modalCtrl: ModalController, private alertCtrl: AlertController, private events: Events, private menu: Paramsdata) {
     this.idClient = params.data['currentCli'];
     this.dataIn = params.data['currentDoc'];
     this.lstCible = [];
@@ -65,7 +66,7 @@ export class OptionPiecesPage {
     let me = this;
     try {
       Camera.getPicture(options).then((imageData) => {
-        me.base64Image = 'data:image/jpeg;base64,' + imageData;
+        me.base64Image = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/jpeg;base64,' + imageData);
       }, (err) => {
         // Handle error
         let alert = this.alertCtrl.create({
