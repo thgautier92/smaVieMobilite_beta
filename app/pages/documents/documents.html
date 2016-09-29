@@ -17,11 +17,10 @@
     (ionInput)="getItems($event)" (ionCancel)="onCancel($event)" (ionClear)="onCancel($event)">
   </ion-searchbar>
   <ion-list>
-    <!-- (click)="openFile(item)" -->
-    <ion-item text-wrap *ngFor="let item of lstDocs">
-    <h2><a [href]="'data/docs/'+item.file" target="_blank">{{item.lib}}</a></h2>
-    <ion-note item-right><h6>{{item.dateMaj}}</h6></ion-note>
-    <ion-icon primary item-right name="eye"></ion-icon>
-  </ion-item>
+    <button ion-item text-wrap *ngFor="let item of lstDocs" (click)="openFile(item)">
+      <h2>{{item.lib}}</h2>
+      <ion-note item-right><h6>{{item.dateMaj}}</h6></ion-note>
+      <ion-icon primary item-right name="eye"></ion-icon>
+    </button>
   </ion-list>
 </ion-content>

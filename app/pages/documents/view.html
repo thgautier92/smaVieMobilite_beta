@@ -1,0 +1,11 @@
+<ion-header>
+    <ion-navbar action>
+        <ion-title>{{title}}</ion-title>
+        <ion-buttons end>
+            <button (click)="close()">Fermer</button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <pdfview [pdfSrc]="file"></pdfview>
+</ion-content>

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ModalController, NavParams, ViewController } from 'ionic-angular';
 import {Paramsdata} from '../../providers/params-data/params-data';
-import {File} from 'ionic-native';
+import {PdfViewer} from '../../components/pdf-viewer/pdf-viewer';
+
 
 /*
   Generated class for the DocumentsPage page.
@@ -11,12 +12,13 @@ import {File} from 'ionic-native';
 */
 @Component({
   templateUrl: 'build/pages/documents/documents.html',
-  providers: [Paramsdata]
+  providers: [Paramsdata],
+  directives: [PdfViewer]
 })
 export class DocumentsPage {
   lstDocs: any = [];
   searchQuery: string = '';
-  constructor(private nav: NavController, private paramsApi: Paramsdata) { }
+  constructor(private nav: NavController, private modalCtrl: ModalController, private paramsApi: Paramsdata) { }
   ngOnInit() {
     this.initializeItems();
   }
@@ -35,12 +37,34 @@ export class DocumentsPage {
       })
     }
   }
-  onCancel(){
+  onCancel() {
     this.initializeItems();
   }
   openFile(item) {
     //console.log(item);
-    this.paramsApi.displayFile(item.file);
+    //this.paramsApi.displayFile(item.file);
+    //let modal = this.modalCtrl.create(ViewPage, { "file": item.file });
+    //modal.present();
+    if(item.file!=="") this.nav.push(ViewPage, { "file": item.file, "title":item.lib });
   };
+}
+
+@Component({
+  templateUrl: 'build/pages/documents/view.html',
+  providers: [],
+  directives: [PdfViewer]
+})
+export class ViewPage {
+  file: any;
+  title:any="";
+  constructor(private nav: NavController, private navParams: NavParams, private viewCtrl: ViewController) {
+    console.log(this.navParams);
+    this.file = this.navParams.data['file'];
+    this.title=this.navParams.data['title'];
+    console.log(this.file);
+  }
+  close() {
+    this.viewCtrl.dismiss();
+  }
 
 }

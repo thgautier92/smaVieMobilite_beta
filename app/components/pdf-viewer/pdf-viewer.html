@@ -1,0 +1,28 @@
+<!--
+  Generated template for the Record component.
+
+  See https://angular.io/docs/ts/latest/api/core/ComponentMetadata-class.html
+  for more info on Angular 2 Components.
+-->
+
+<ion-toolbar>
+  <ion-row>
+    <ion-col>
+      <button (click)="onFirstPage()"><ion-icon name="rewind"></ion-icon></button>
+      <button (click)="onPrevPage()"><ion-icon name="arrow-back"></ion-icon></button>
+      <button (click)="onNextPage()"><ion-icon name="arrow-forward"></ion-icon></button>
+      <button (click)="onLastPage()"><ion-icon name="fastforward"></ion-icon></button> Page {{pageNum}}/{{pageCount}}
+    </ion-col>
+    <ion-col width-33>
+      <ion-item>
+        <ion-label>Zoom</ion-label>
+        <ion-select [(ngModel)]="scale" (ionChange)="changeScale()">
+          <ion-option *ngFor="let z of zoomRef" [value]="z.value">{{z.lib}}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</ion-toolbar>
+<ion-scroll style="width:100%;height:100%" scrollY="true" scrollX="true" zoom="true">
+  <canvas #result style="border:1px  solid black"></canvas>
+</ion-scroll>
