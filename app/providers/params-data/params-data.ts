@@ -57,10 +57,10 @@ export class Paramsdata {
         });
     });
   }
-  // Load a file (pdf,...) in internal navigator (inAppBrowser plugin)
-  loadFile(file) {
+  // Load and display a file (pdf,...) in internal navigator (inAppBrowser plugin)
+  displayFile(file) {
     if (file !== "") 
-     window.open("data/docs/" + file, "_blank");
+     window.open("data/docs/" + file, "_system");
   }
   loadRefs(id?) {
     return new Promise(resolve => {

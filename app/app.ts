@@ -4,6 +4,7 @@ import {StatusBar} from 'ionic-native';
 import {InAppBrowser} from 'ionic-native';
 
 import {CouchDbServices} from './providers/couch/couch';
+
 import {HomePage} from './pages/home/home';
 import {AuthPage} from './pages/auth/auth';
 import {SynchroPage} from './pages/synchro/synchro';
@@ -33,7 +34,6 @@ class MyApp {
   ) {
     this.initializeApp();
     this.events.subscribe('userChange', eventData => {
-      //console.log(eventData);
       this.userData = eventData[0];
       this.isAut = eventData[0]['ok'];
     });
@@ -48,10 +48,10 @@ class MyApp {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      StatusBar.styleDefault();
-      window.open = cordova.InAppBrowser.open;
+      if (this.platform.is('cordova')) {
+        StatusBar.styleDefault();
+        window.open = cordova.InAppBrowser.open;
+      }
     });
   };
   ngOnInit() {
@@ -72,7 +72,6 @@ class MyApp {
   };
   callConnect() {
     console.log("Call AUTH page");
-
     let modal = this.modalCtrl.create(AuthPage);
     modal.onDidDismiss(response => {
       console.log("Return from AUTH page", response);
@@ -87,7 +86,7 @@ class MyApp {
     this.isAut = false;
     this.nav.setRoot(AuthPage);
   };
-  goHome(){
+  goHome() {
     this.menu.close();
     this.nav.setRoot(HomePage, this.userData);
   }

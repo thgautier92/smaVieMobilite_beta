@@ -39,8 +39,8 @@ export class DocumentsPage {
     this.initializeItems();
   }
   openFile(item) {
-    console.log(item);
-    this.paramsApi.loadFile(item.file);
+    //console.log(item);
+    this.paramsApi.displayFile(item.file);
   };
 
 }

@@ -21,7 +21,7 @@ export class HomePage {
   userData:any;
   constructor(public nav: NavController, private params: NavParams, display: DisplayTools) {
     this.nav = nav;
-    console.log(params);
+    //console.log(params);
     this.userData = params.data;
     this.display = display;
     this.items = [
