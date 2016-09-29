@@ -4,6 +4,7 @@ import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import { FORM_DIRECTIVES, Control, ControlGroup, AbstractControl } from '@angular/common';
 import {FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+
 const mailFormat = '/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i';
 /*
   Generated class for the ParamsparamsForm provider.
@@ -58,7 +59,8 @@ export class Paramsdata {
   }
   // Load a file (pdf,...) in internal navigator (inAppBrowser plugin)
   loadFile(file) {
-    if (file !== "") window.open("data/docs/" + file, "_blank");
+    if (file !== "") 
+     window.open("data/docs/" + file, "_blank");
   }
   loadRefs(id?) {
     return new Promise(resolve => {

@@ -1,6 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {ionicBootstrap, Platform, MenuController, ModalController, Nav, Events} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
+import {InAppBrowser} from 'ionic-native';
 
 import {CouchDbServices} from './providers/couch/couch';
 import {HomePage} from './pages/home/home';
@@ -9,6 +10,8 @@ import {SynchroPage} from './pages/synchro/synchro';
 import {SignApiPage} from './pages/sign-api/sign-api';
 import {StartPage} from './pages/start/start';
 import {DocumentsPage} from './pages/documents/documents';
+
+declare var cordova: any;
 
 @Component({
   templateUrl: 'build/app.html',
@@ -48,6 +51,7 @@ class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
+      window.open = cordova.InAppBrowser.open;
     });
   };
   ngOnInit() {
