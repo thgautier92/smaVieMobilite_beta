@@ -58,7 +58,7 @@
     <preference name="windows-phone-target-version" value="10.0" />
     <preference name="windows-target-version" value="10.0" />
     <preference name="Windows.Universal" value="10.0.10240.0" />
-    <preference name="WindowsDefaultUriPrefix" value="ms-appx://" />
+    <preference name="WindowsDefaultUriPrefix" value="ms-appx-web://" />
     <preference name="Windows.Mobile-MaxVersionTested" value="10.0.10031.0" />
     <preference name="Windows.Universal-MinVersion" value="10.0.0.0" />
     <preference name="WindowsStoreIdentityName" value="smaVieMobilite" />
