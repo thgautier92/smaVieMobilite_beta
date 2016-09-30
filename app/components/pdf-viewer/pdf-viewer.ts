@@ -130,7 +130,8 @@ export class PdfViewer implements OnChanges {
     this.queueRenderPage(this.pageNum);
   }
   changeScale(){
-    console.log("Change scale", this.scale);
+    // ***** TODO : chnage scale method *****
+    //console.log("Change scale", this.scale);
     //this.pdfDoc.scale = this.scale;
     this.renderPage(this.pageNum,this.scale);
   }

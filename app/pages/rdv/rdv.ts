@@ -77,7 +77,7 @@ export class RdvPage {
     events.subscribe('rdvSave', eventData => {
       this.saveData(eventData[0]).then(response => {
         events.publish('rdvUpdate', eventData[0]);
-        this.display.displayToast("Données enregistrées.")
+        this.display.displayToast("Données enregistrées.",1)
       }, error => { });
     });
     events.subscribe('menuStatusChange', eventData => {

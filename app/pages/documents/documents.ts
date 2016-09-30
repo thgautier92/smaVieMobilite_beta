@@ -42,8 +42,7 @@ export class DocumentsPage {
   }
   openFile(item) {
     //console.log(item);
-    //this.paramsApi.displayFile(item.file);
-    //let modal = this.modalCtrl.create(ViewPage, { "file": item.file });
+    //let modal = this.modalCtrl.create(ViewPage, { "file": item.file, "title":item.lib });
     //modal.present();
     if(item.file!=="") this.nav.push(ViewPage, { "file": item.file, "title":item.lib });
   };

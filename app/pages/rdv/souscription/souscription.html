@@ -65,31 +65,150 @@
     </ion-card>
     <ion-card *ngSwitchCase="'ver'">
       <ion-card-header></ion-card-header>
-      <ion-card-content></ion-card-content>
+      <ion-card-content>
+        <flex-input [idPage]=idPage idForm=20 formTitle='Versements' [dataIn]=dataIn [idClient]=idClient></flex-input>
+      </ion-card-content>
     </ion-card>
     <ion-card *ngSwitchCase="'rep'">
-      <ion-card-header></ion-card-header>
-      <ion-card-content></ion-card-content>
+      <ion-card-header>
+        <ion-toolbar light position="top">
+          <ion-title start>Répartition des supports</ion-title>
+          <ion-buttons end>
+            <button outline primary (click)="addSupport()"><ion-icon name="add"></ion-icon> Ajouter</button>
+            <button secondary (click)="updateSupport(supportData)"><ion-icon name="play"></ion-icon></button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item *ngFor="let r of supportData;let idx=index">
+            <ion-item>
+              <ion-select [(ngModel)]="r.support" okText="Choisir" cancelText="Annuler">
+                <ion-option value="">== Choisir un support ==</ion-option>
+                <ion-option *ngFor="let sup of lstSupports" [value]="sup.code">{{sup.lib}}</ion-option>
+              </ion-select>
+              <ion-input [(ngModel)]="r.support" type="text" placeholder="Code du support"></ion-input>
+              <ion-input [(ngModel)]="r.part" type="number" min=0 max=100 placeholder="Part du support"></ion-input>
+            </ion-item>
+            <button ion-button danger item-right icon-left (click)="removeSupport(idx)">
+              <ion-icon name="trash"></ion-icon> Suppr.
+            </button>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
     </ion-card>
     <ion-card *ngSwitchCase="'arb'">
-      <ion-card-header></ion-card-header>
-      <ion-card-content></ion-card-content>
+      <ion-card-header>
+        <ion-toolbar light position="top">
+          <ion-title start>Options d'arbitrage</ion-title>
+          <ion-buttons end>
+            <button outline primary (click)="addArbitrage()"><ion-icon name="add"></ion-icon> Ajouter</button>
+            <button secondary (click)="updateArbitrage()"><ion-icon name="play"></ion-icon></button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-grid>
+          <ion-row wrap center *ngFor="let r of arbitrageData;let idx=index" class="arbitrage">
+            <ion-col width-10 text-wrap>{{r.lib}}</ion-col>
+            <ion-col>
+              <div [ngSwitch]="r.code">
+                <ion-list padding *ngSwitchCase="'#NA'">
+                </ion-list>
+                <ion-list padding *ngSwitchCase="'AC'">
+                  <ion-item *ngIf="r.data">
+                    <ion-label stacked>Zone à définir</ion-label>
+                    <ion-input [(ngModel)]="r.data.duree" type="text" placeholder=""></ion-input>
+                  </ion-item>
+                </ion-list>
+                <ion-list padding *ngSwitchCase="'GH'">
+                  <ion-item *ngIf="r.data">
+                    <ion-label stacked>Durée</ion-label>
+                    <ion-input [(ngModel)]="r.data.duree" type="number"></ion-input>
+                  </ion-item>
+                </ion-list>
+                <ion-list padding *ngSwitchCase="'VI'">
+                  <ion-item *ngIf="r.data">
+                    <ion-label stacked>Part BATI ACTIONS INVESTISSEMENT</ion-label>
+                    <ion-input [(ngModel)]="r.data.part_BAI" type="number"></ion-input>
+                  </ion-item>
+                  <ion-item padding *ngIf="r.data">
+                    <ion-label stacked>Part BATI ENTREPRENDRE EURO</ion-label>
+                    <ion-input [(ngModel)]="r.data" type="number"></ion-input>
+                  </ion-item>
+                </ion-list>
+                <ion-list padding *ngSwitchCase="'IP'">
+                  <ion-item *ngIf="r.data">
+                    <ion-label stacked>Montant</ion-label>
+                    <ion-input [(ngModel)]="r.data.montant" type="number"></ion-input>
+                  </ion-item>
+                  <ion-item padding *ngIf="r.data">
+                    <ion-label stacked>Durée</ion-label>
+                    <ion-input [(ngModel)]="r.data.duree" type="number"></ion-input>
+                  </ion-item>
+                  <ion-item padding *ngIf="r.data">
+                    <ion-label stacked>Périodicité</ion-label>
+                    <ion-select [(ngModel)]="r.data.periodicite" okText="Choisir" cancelText="Annuler">
+                      <ion-option *ngFor="let p of refPeriodicite" [value]="p.code">{{p.lib}}</ion-option>
+                    </ion-select>
+                  </ion-item>
+                  <ion-item>
+                    <h3>Supports</h3>
+                    <ion-buttons end>
+                      <button outline primary (click)="addArbitrageSupport(r.data.support)"><ion-icon name="add"></ion-icon> Ajouter</button>
+                      <button secondary (click)="updateArbitrageSupport(idx)"><ion-icon name="play"></ion-icon></button>
+                    </ion-buttons>
+                    <ion-list>
+                      <ion-item *ngFor="let item of supportArbitrageData;let idx=index">
+                        <ion-item>
+                          <ion-select [(ngModel)]="item.support" okText="Choisir" cancelText="Annuler">
+                            <ion-option value="">== Choisir un support ==</ion-option>
+                            <ion-option *ngFor="let sup of lstSupports" [value]="sup.code">{{sup.lib}}</ion-option>
+                          </ion-select>
+                          <ion-input [(ngModel)]="item.support" type="text" placeholder="Code du support"></ion-input>
+                          <ion-input [(ngModel)]="item.part" type="number" min=0 max=100 placeholder="Part du support"></ion-input>
+                        </ion-item>
+                        <button ion-button danger item-right icon-left (click)="removeArbitrageSupport(idx)">
+              <ion-icon name="trash"></ion-icon>
+            </button>
+                      </ion-item>
+                    </ion-list>
+                  </ion-item>
+                </ion-list>
+              </div>
+            </ion-col>
+            <ion-col width-10 text-right>
+              <button ion-button clear item-right icon-left (click)="removeArbitrage(idx)">
+                    <ion-icon danger name="trash"></ion-icon>
+                  </button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
     </ion-card>
     <ion-card *ngSwitchCase="'cp'">
       <ion-card-header></ion-card-header>
-      <ion-card-content></ion-card-content>
+      <ion-card-content>
+        <flex-input [idPage]=idPage idForm=21 formTitle='Conditions Particulières' [dataIn]=dataIn [idClient]=idClient></flex-input>
+      </ion-card-content>
     </ion-card>
     <ion-card *ngSwitchCase="'rel'">
       <ion-card-header></ion-card-header>
-      <ion-card-content></ion-card-content>
+      <ion-card-content>
+        <h3>Note Groupe SMA/DSI - Sept 2016 : Fonction à concevoir</h3>
+      </ion-card-content>
     </ion-card>
     <ion-card *ngSwitchCase="'ben'">
       <ion-card-header></ion-card-header>
-      <ion-card-content></ion-card-content>
+      <ion-card-content>
+        <h3>Note Groupe SMA/DSI - Sept 2016 : Fonction à concevoir</h3>
+      </ion-card-content>
     </ion-card>
     <ion-card *ngSwitchCase="'pj'">
       <ion-card-header></ion-card-header>
-      <ion-card-content></ion-card-content>
+      <ion-card-content>
+        <h3>Note Groupe SMA/DSI - Sept 2016 : Fonction à concevoir</h3>
+      </ion-card-content>
     </ion-card>
   </div>
 </ion-content>

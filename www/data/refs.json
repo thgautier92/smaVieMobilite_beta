@@ -33,5 +33,40 @@
                 ]
             }
         ]
-    }
+    },
+    {
+        "id": "supports",
+        "data": [
+            {
+                "code": "ACF",
+                "lib": "ACF"
+            },
+            {
+                "code": "BAA",
+                "lib": "Intitulé BAA..."
+            },
+            {
+                "code": "BAI",
+                "lib": "Intitulé BAI..."
+            },
+            {
+                "code": "BAP",
+                "lib": "Intitulé BAP..."
+            },
+            {
+                "code": "BEA",
+                "lib": "Intitulé BEA..."
+            },
+            {
+                "code": "BEE",
+                "lib": "Intitulé BEE..."
+            }
+        ]
+    },
+    {"id":"periodicite","data":[
+      { "code": "M", "lib": "Mensuelle" },
+      { "code": "T", "lib": "Trimestrielle" },
+      { "code": "S", "lib": "Semestrielle" },
+      { "code": "A", "lib": "Annuelle" }
+    ]}
 ]

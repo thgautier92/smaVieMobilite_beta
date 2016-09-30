@@ -966,7 +966,180 @@
                 }
             ]
         },
+        {
+            "id": 20,
+            "name": "versements",
+            "title": "Versements",
+            "icon": "body",
+            "fields": [
                 {
+                    "group": "Versement initial",
+                    "model": "vers_initial_mt",
+                    "title": "Montant",
+                    "default": "",
+                    "required": "false",
+                    "readOnly": "false",
+                    "error": "",
+                    "type": "number",
+                    "enum": [
+                        1000,
+                        10000
+                    ]
+                },
+                {
+                    "group": "Versement initial",
+                    "model": "vers_initial_date",
+                    "title": "Date",
+                    "default": "",
+                    "required": "false",
+                    "readOnly": "false",
+                    "error": "",
+                    "type": "date"
+                },
+                {
+                    "group": "Versement initial",
+                    "model": "vers_initial_mode_paiement",
+                    "title": "Mode de paiement",
+                    "default": "",
+                    "required": "false",
+                    "readOnly": "false",
+                    "error": "",
+                    "type": "enum",
+                    "enum": {
+                        "v1": "Chèque",
+                        "v2": "Prélévement",
+                        "v3": "Virement"
+                    }
+                },
+                {
+                    "group": "Versement programmé",
+                    "model": "vers_prog_mt",
+                    "title": "Montant",
+                    "default": "",
+                    "required": "false",
+                    "readOnly": "false",
+                    "error": "",
+                    "type": "number",
+                    "enum": [
+                        1000,
+                        10000
+                    ]
+                },
+                {
+                    "group": "Versement programmé",
+                    "model": "vers_prog_date",
+                    "title": "Début des versements",
+                    "default": "",
+                    "required": "false",
+                    "readOnly": "false",
+                    "error": "",
+                    "type": "date"
+                },
+                {
+                    "group": "Versement programmé",
+                    "model": "vers_prog_periodicite",
+                    "title": "Périodicité",
+                    "default": "",
+                    "required": "false",
+                    "readOnly": "false",
+                    "error": "",
+                    "type": "enum",
+                    "enum": {
+                        "M": "Mensuelle",
+                        "T": "Trimestrielle",
+                        "S": "Semestrielle",
+                        "A": "Annuelle"
+                    }
+                },
+                {
+                    "group": "Mandat SEPA",
+                    "model": "vers_iban",
+                    "title": "IBAN",
+                    "default": "",
+                    "required": "false",
+                    "readOnly": "false",
+                    "error": "",
+                    "type": "text"
+                },
+                {
+                    "group": "Mandat SEPA",
+                    "model": "vers_bic",
+                    "title": "BIC",
+                    "default": "",
+                    "required": "false",
+                    "readOnly": "false",
+                    "error": "",
+                    "type": "text"
+                }
+            ]
+        },
+        {
+            "id": 21,
+            "name": "conditions",
+            "title": "Conditions particulières",
+            "icon": "body",
+            "fields": [
+                {
+                    "group": "Confidentiel",
+                    "model": "derog_com",
+                    "title": "Dérogation Commercial",
+                    "default": "",
+                    "required": "false",
+                    "readOnly": "false",
+                    "error": "",
+                    "type": "number",
+                    "enum": [
+                        1000,
+                        10000
+                    ]
+                },
+                {
+                    "group": "Confidentiel",
+                    "model": "derog_com_unite",
+                    "title": "Unité",
+                    "default": "",
+                    "required": "false",
+                    "readOnly": "false",
+                    "error": "",
+                    "type": "radio",
+                    "enum": {
+                        "E": "€uro",
+                        "P": "%"
+                    }
+                },
+                {
+                    "group": "Confidentiel",
+                    "model": "collab_sma",
+                    "title": "Collaborateur SMA",
+                    "default": "",
+                    "required": "false",
+                    "readOnly": "false",
+                    "error": "",
+                    "type": "boolean"
+                },
+                {
+                    "group": "Animation réseau",
+                    "model": "campagne_com",
+                    "title": "Campagne Commerciale",
+                    "default": "",
+                    "required": "false",
+                    "readOnly": "false",
+                    "error": "",
+                    "type": "text"
+                },
+                {
+                    "group": "Animation réseau",
+                    "model": "offre_parrainage",
+                    "title": "Offre de parrainage",
+                    "default": "",
+                    "required": "false",
+                    "readOnly": "false",
+                    "error": "",
+                    "type": "text"
+                }
+            ]
+        },
+        {
             "id": 30,
             "name": "diag_info",
             "title": "Connaissance Client nécéssaire au Diagnostic conseil",
@@ -1014,7 +1187,7 @@
                 }
             ]
         },
-                {
+        {
             "id": 31,
             "name": "diag_reco",
             "title": "La SMAvie vous recommande les produits suivants",

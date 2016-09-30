@@ -38,6 +38,9 @@
         color: map-get($colors, primary);
     }
 }
+.toastInfo{
+    color: map-get($colors, danger);
+}
 .logoHeader {
     display:flex;
     align-items: center;

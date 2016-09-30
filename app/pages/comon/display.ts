@@ -13,13 +13,15 @@ export class DisplayTools {
         loading.present();
         return loading;
     }
-    displayToast(msg) {
+    displayToast(msg,duration?) {
+        if (!duration) duration=2000
         let toast = this.toastCtrl.create({
             message: msg,
-            duration: 2000,
+            duration: duration,
             showCloseButton: true,
             closeButtonText: "Fermer",
-            dismissOnPageChange: true
+            dismissOnPageChange: true,
+            cssClass:"toastInfo"
         });
         toast.onDidDismiss(() => {
             //console.log('Dismissed toast');

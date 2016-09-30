@@ -154,8 +154,11 @@ export class FlexInput implements OnInit, OnChanges {
       })
     } else {
       this.events.publish('rdvSave', this.dataIn);
+      this.events.publish('form_update',{"idForm":this.idForm,"dataForm":dForm});
     }
-    this.events.publish('rdvStatus_' + this.idPage, { idPage: this.idPage, form: this.selectedForm, status: formStatus });
+    let evtData = { idPage: this.idPage, form: this.selectedForm, status: formStatus };
+    //console.log("Event data", evtData);
+    this.events.publish('rdvStatus_' + this.idPage, evtData);
   }
   // ===== External Simulator with params ====
   openSimu(url) {
