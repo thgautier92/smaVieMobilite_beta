@@ -26,18 +26,23 @@ export class SouscriptionPage {
   pageStatus: any;
   lstEtapes: any = [];
   etape: any;
+  // Variable for PRO segment
   histoSimu: any;
   lstProduit: any;
   produit: any = { "code": "", "fiscalite": "" };
   selProduit: any = null;
   lstFiscalite: any = [];
   ficalite: any = "";
+  // Variable for REP segment
   lstSupports: any = [];
   supportData: any = [];
+  // Variable for ARB segment
   lstArbitrage: any = [];
   arbitrageData: any = [];
-  supportArbitrageData:any=[];
+  supportArbitrageData: any = [];
   refPeriodicite: any;
+  // Variable for REL segment
+  relData: any = [];
   constructor(private nav: NavController, params: NavParams, private viewCtrl: ViewController, private events: Events, private CalcTools: CalcTools, private paramsApi: Paramsdata, private display: DisplayTools) {
     this.params = params;
     //this.idPage = this.params.data['currentPage'];
@@ -68,8 +73,8 @@ export class SouscriptionPage {
     ]
     // load referentiels
     this.paramsApi.loadRefs('produits').then(response => { this.lstProduit = response['data']; }, error => { console.log(error); });
-    this.paramsApi.loadRefs('supports').then(response => {this.lstSupports = response['data'];}, error => {console.log(error);});
-    this.paramsApi.loadRefs('periodicite').then(response => {this.refPeriodicite = response['data'];}, error => {console.log(error);});
+    this.paramsApi.loadRefs('supports').then(response => { this.lstSupports = response['data']; }, error => { console.log(error); });
+    this.paramsApi.loadRefs('periodicite').then(response => { this.refPeriodicite = response['data']; }, error => { console.log(error); });
     this.etape = "pro";
 
     // Return events from inputs forms
@@ -107,9 +112,6 @@ export class SouscriptionPage {
       }
     }
   }
-  getHistoSimu() {
-    this.histoSimu = this.dataIn['rdv']['resultByClient'][this.idClient]['simus'];
-  }
   doChange(evt) {
     console.log("Change segment", evt);
     this.events.publish('rdvSave', this.dataIn);
@@ -120,6 +122,9 @@ export class SouscriptionPage {
   // General Event by form
 
   // Methods for the PRO segment
+  getHistoSimu() {
+    this.histoSimu = this.dataIn['rdv']['resultByClient'][this.idClient]['simus'];
+  }
   selSimu(data) {
     this.produit.code = data.code;
     this.dataIn['rdv']['souscription']['pro']['produit'] = this.produit;
@@ -165,7 +170,7 @@ export class SouscriptionPage {
   }
   // Method for IP Support
   addArbitrageSupport(source) {
-    console.log("Source",source);
+    console.log("Source", source);
     this.supportArbitrageData.push({ "support": "", "part": 0 });
   }
   removeArbitrageSupport(idx) {
@@ -182,13 +187,32 @@ export class SouscriptionPage {
     if (s != 100) {
       this.display.displayAlert("La somme des répartitions en UC doit être égale à 100%.");
     } else {
-      console.log(this.arbitrageData,this.supportArbitrageData,idx);
+      console.log(this.arbitrageData, this.supportArbitrageData, idx);
       this.arbitrageData[idx]['data']['supports'] = this.supportArbitrageData;
       this.updateArbitrage();
     }
   }
   // Methods for the CP segment
   // Methods for the REL segment
+  initREL() {
+    this.relData = [];
+    this.dataIn.clients.forEach(element => {
+      console.log(element);
+      this.relData.push({
+        "clientId": element.client.output[0].REF,
+        "name": element.client.output[0].NOM,
+        "roles": [
+          { "code": "adh", "lib": "Adhérent", "selRole": false, dataRole: { } },
+          { "code": "coadh", "lib": "Co-Adhérent", "selRole": false, dataRole: { } },
+          { "code": "payeur", "lib": "Payeur", "selRole": false, dataRole: { "iban": "","bic":"" } },
+          { "code": "sign", "lib": "Signataire", "selRole": false, dataRole: { "situation": "" } },
+        ]
+      });
+    });
+  }
+  removeRole(idxCli,idxRole) {
+    this.relData[idxCli]['roles'].splice(idxRole, 1);
+  }
   // Methods for the BEN segment
   // Methods for the PF segment
 

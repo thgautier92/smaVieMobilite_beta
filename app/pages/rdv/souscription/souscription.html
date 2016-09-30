@@ -193,9 +193,25 @@
       </ion-card-content>
     </ion-card>
     <ion-card *ngSwitchCase="'rel'">
-      <ion-card-header></ion-card-header>
+      <ion-card-header><button (click)="initREL()">Init</button></ion-card-header>
       <ion-card-content>
         <h3>Note Groupe SMA/DSI - Sept 2016 : Fonction non prototypée.</h3>
+        <ion-list *ngIf="relData!=[]">
+          <ion-item *ngFor="let client of relData;let idxCli=index">
+            <ion-list>
+              <ion-item-divider>{{client.clientId}} - {{client.name}}</ion-item-divider>
+              <ion-item *ngFor="let role of client.roles;let idxRol=index" no-lines>
+                {{role.lib}} ({{role.code}})
+                <ion-input *ngIf="role.code=='payeur'" [(ngModel)]="role.dataRole.iban" type="text" placeholder="IBAN"></ion-input>
+                <ion-input *ngIf="role.code=='payeur'" [(ngModel)]="role.dataRole.bic" type="text" placeholder="BIC"></ion-input>
+                <button ion-button danger item-right icon-left (click)="removeRole(idxCli,idxRol)">
+              <ion-icon name="trash"></ion-icon> Suppr.
+            </button>
+              </ion-item>
+            </ion-list>
+          </ion-item>
+        </ion-list>
+
       </ion-card-content>
     </ion-card>
     <ion-card *ngSwitchCase="'ben'">
