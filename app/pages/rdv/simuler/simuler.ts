@@ -157,8 +157,7 @@ export class SimulerPage {
           this.popupWindow.doRefresh();
         } else {
           this.popupWindow = window.open(url, "_blank", options);
-          this.popupWindow.focus();
-          console.log(this.popupWindow);
+          //console.log(this.popupWindow);
         }
         resolve(true);
       }, error => {
@@ -170,7 +169,7 @@ export class SimulerPage {
   getSimu(simulator) {
     let loading = this.display.displayLoading("Reception des données du simulateur", 5000);
     this.simu.getSimulatorById(simulator, this.idSimuExternal).then(response => {
-      console.log("Data simu", response);
+      //console.log("Data simu", response);
       loading.dismiss();
       this.dataIn['rdv']['resultByClient'][this.idClient]['simus'].filter(item => item.idSimu == this.idSimu)[0]['idExternal'] = this.idSimuExternal;
 
