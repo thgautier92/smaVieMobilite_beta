@@ -31,7 +31,8 @@ export class DiagConseilPage {
     this.dataOut = {};
     this.lstForms = [
       { "id": 3, "title": "", "pres": "detail", "status": "" },
-      { "id": 4, "title": "", "pres": "detail", "status": "" }
+      { "id": 4, "title": "", "pres": "detail", "status": "" },
+       { "id": 31, "title": "", "pres": "detail", "status": "" }
     ];
     // Return events from inputs forms
     this.events.subscribe('clientChange', eventData => {
