@@ -97,7 +97,6 @@ export class RdvPage {
   getRdv(id) {
     let me = this;
     this.db.get(id).then(function (rdv) {
-      //console.log(doc);
       me.currentRdv = rdv;
       // Create JSON Structure for data input by application
       let idResult = "resultByClient";
@@ -123,19 +122,18 @@ export class RdvPage {
         }
       }
       me.lstCli = me.currentRdv.rdv[idResult];
-      console.log("Current RDV", me.currentRdv);
+      console.log("Open current RDV", me.currentRdv);
       me.start(0);
     }).catch(function (error) {
       console.error(error);
     });
   }
   start(idx) {
-    console.log("Select client Index", idx);
+    //console.log("Select client Index", idx);
     this.titleRdv = this.currentRdv['clients'][idx]['client']['output'][0]['NOM'];
     this.currentCli = idx;
     //this.currentContext = { "currentPage": null, "currentCli": this.currentCli, "currentDoc": this.currentRdv }
     this.currentContext = { "currentCli": this.currentCli, "currentDoc": this.currentRdv }
-    console.log("Current Context", this.currentContext);
     this.events.publish('clientChange', this.currentContext);
   }
   retrieveData(idx) {

@@ -122,7 +122,7 @@ export class Paramsdata {
           if (form.length == 0) {
             form = data['forms'].filter(item => item['id'] === 1);
           }
-          console.log("=====Form ", form);
+          //console.log("=====Form ", form);
           ret['form'] = form[0];
           let group = new FormGroup({});
           let groupValue = {};

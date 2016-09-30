@@ -30,8 +30,6 @@ export class DiagConseilPage {
     this.dataIn = this.params.data['currentDoc'];
     this.dataOut = {};
     this.lstForms = [
-      { "id": 3, "title": "", "pres": "detail", "status": "" },
-      { "id": 4, "title": "", "pres": "detail", "status": "" },
        { "id": 31, "title": "", "pres": "detail", "status": "" }
     ];
     // Return events from inputs forms
@@ -45,8 +43,9 @@ export class DiagConseilPage {
       //console.log("Update status form", this.lstForms, dataReturn);
       let idForm = dataReturn[0]['form']['id'];
       let f = this.lstForms.filter(item => item['id'] === idForm);
+      console.log(idForm,this.lstForms,f);
       f[0]['status'] = dataReturn[0]['status'];
-      CalcTools.calcPageStatus(this.idPage, this.lstForms);
+      //CalcTools.calcPageStatus(this.idPage, this.lstForms);
     });
     this.events.subscribe('profilCalculted', dataReturn => {
       this.profilCalculated = dataReturn[0];
