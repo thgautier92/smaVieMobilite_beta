@@ -42,7 +42,7 @@ export class FlexDisplay implements OnInit, OnChanges {
 
   };
   ngOnChanges(changes: any) {
-    ////console.log("Data Changes", changes);
+    //console.log("Data Changes", changes);
     this.idClient = changes.idClient.currentValue;
     if (changes['dataIn']) {
       this.dataCurrent = changes.dataIn.currentValue;
@@ -78,8 +78,8 @@ export class FlexDisplay implements OnInit, OnChanges {
 
   // Validation form
   diagNext(formStatus, evt) {
-    ////console.log("Save data form", this.form.controls, this.selectedForm['fields']);
-    ////console.log("Click event",evt);
+    //console.log("Save data form", this.form.controls, this.selectedForm['fields']);
+    //console.log("Click event",evt);
     this.menuCurrent.status = formStatus;
     let fForm = [];
     for (var key in this.form.controls) {
@@ -105,7 +105,7 @@ export class FlexDisplay implements OnInit, OnChanges {
         this.dataIn['rdv']['resultByClient'][this.idClient]['forms'][this.selectedForm.id] = dForm;
         this.events.publish('rdvSave', this.dataIn);
       }, error => {
-        //console.log(error);
+        console.log(error);
       })
     } else {
       this.events.publish('rdvSave', this.dataIn);
@@ -132,7 +132,7 @@ export class FlexDisplay implements OnInit, OnChanges {
     //console.log("OPEN SIMU WITH DATA:", idx, field, url);
     let rdvId = this.dataCurrent['rdv']['rdvId'];
     this.simu.callSimu({ "rdvId": rdvId, "dataIn": this.dataCurrent }).then(data => {
-      ////console.log("Data from simu",data)
+      //console.log("Data from simu",data)
       me.simuExec = true;
       url = data['urlNext'];
       me.dataNonInput['idSimu'] = data['insert_id'];
@@ -146,7 +146,7 @@ export class FlexDisplay implements OnInit, OnChanges {
       }
       me.events.publish("simuStart", data, this.popupWindow);
     }, error => {
-      //console.log(error);
+      console.log(error);
       me.simuExec = false;
     });
   }

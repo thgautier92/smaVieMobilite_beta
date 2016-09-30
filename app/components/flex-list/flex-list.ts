@@ -52,7 +52,7 @@ export class FlexList {
   }
   diagNext(formStatus, evt) {
     //console.log("Save data form", this.form, this.selectedForm);
-    ////console.log("Click event",evt);
+    //console.log("Click event",evt);
     this.menuCurrent.status = formStatus;
     let dForm = { "form": this.selectedForm['title'], "status": formStatus, "formInput": this.list };
     this.dataIn['rdv']['resultByClient'][this.idClient]['forms'][this.idForm] = dForm;
@@ -74,7 +74,7 @@ export class FlexDetail {
   selectedFields: any = null;
   constructor(private viewCtrl: ViewController, private platform: Platform, private fb: FormBuilder, private navParams: NavParams, private paramsApi: Paramsdata, private events: Events) {
     this.formDetail = this.fb.group({});
-    ////console.log(navParams);
+    //console.log(navParams);
     this.idForm = navParams.data['idForm'];
   }
   ngOnInit() {
@@ -85,14 +85,14 @@ export class FlexDetail {
       this.selectedForm = data['form'];
       // Group fields array
       this.selectedFields = new groupBy().transform(this.selectedForm['fields'], 'group');
-      ////console.log("Display form", this.selectedForm, this.form, this.selectedFields)
+      //console.log("Display form", this.selectedForm, this.form, this.selectedFields)
     }, error => {
       console.error("Impossible de lire le formulaire", this.idForm);
       console.error(error);
     });
   }
   saveData() {
-    ////console.log(this.formDetail);
+    //console.log(this.formDetail);
     this.viewCtrl.dismiss({ "form": this.selectedForm, "value": this.formDetail['_value'] });
   }
   close() {

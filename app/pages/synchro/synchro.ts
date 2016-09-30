@@ -35,13 +35,13 @@ export class SynchroPage {
   }
   ngOnInit() {
     this.couch.verifSession(true).then(response => {
-      ////console.log(response);
+      //console.log(response);
       this.userData = response;
       this.params['base'] = this.userData['name'].toLowerCase();
       this.loadBase(this.params);
       this.showBase();
     }, error => {
-      //console.log(error);
+      console.log(error);
       this.userData = null;
       this.display.displayToast("Veuillez vous identifier ! Mode démo activé");
       this.loadBase(this.params);
@@ -49,7 +49,7 @@ export class SynchroPage {
     });
   }
   loadBase(params) {
-    ////console.log(params);
+    //console.log(params);
     let loading = this.display.displayLoading("Activation de la base " + params.base, 1);
     this.sync = { "start": false, "info": false, "error": false, "stats": false, "timer": false };
     this.db = new PouchDB(params.base);
@@ -62,7 +62,7 @@ export class SynchroPage {
     me.docs = [];
     this.db.allDocs({ include_docs: true, descending: true }, function (err, data) {
       me.docs = data;
-      //console.log("==> Refresh list", data);
+      console.log("==> Refresh list", data);
       me.okStart = true;
     });
   };
@@ -71,7 +71,7 @@ export class SynchroPage {
   }
   // ===== Sync opérations =====
   startSync() {
-    //console.log("Start Sync");
+    console.log("Start Sync");
     let me = this;
     this.sync.start = true;
     this.sync.info = false;
@@ -87,13 +87,13 @@ export class SynchroPage {
         //me.showBase();
       })
       .on('error', function (err) {
-        //console.log(err);
+        console.log(err);
         me.sync.error = err
         me.display.displayAlert(err);
       })
       .on('complete', function (info) {
         // handle complete
-        //console.log("Sync completed : ", info);
+        console.log("Sync completed : ", info);
         me.sync.stats = info;
         me.sync.start = false;
         me.sync.timer = {
@@ -116,7 +116,7 @@ export class SynchroPage {
   cancelSync() {
     this.syncExec.cancel();
     this.sync.start = false;
-    //console.log("End Sync");
+    console.log("End Sync");
   };
   getSyncDetail() {
     this.openStat();
@@ -124,12 +124,12 @@ export class SynchroPage {
   delDb() {
     let me = this;
     this.db.destroy().then(function (response) {
-      //console.log("Del DB", response);
+      console.log("Del DB", response);
       me.display.displayToast("Base effacée en local.");
       me.loadBase(me.params);
       me.showBase();
     }).catch(function (err) {
-      //console.log(err);
+      console.log(err);
     });
   }
   openStat() {

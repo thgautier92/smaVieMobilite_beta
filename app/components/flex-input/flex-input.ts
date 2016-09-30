@@ -39,7 +39,7 @@ export class FlexInput implements OnInit, OnChanges {
     this.form = this.fb.group({});
   }
   ngOnInit() {
-    ////console.log("==> Data passed to component : ", this.idPage, this.idForm, this.dataIn, this.idClient);
+    //console.log("==> Data passed to component : ", this.idPage, this.idForm, this.dataIn, this.idClient);
   };
   ngOnChanges(changes: any) {
     //console.log("Data Changes", changes);
@@ -54,7 +54,7 @@ export class FlexInput implements OnInit, OnChanges {
       this.dataIn['clients'][this.idClient]['client']['output'][0],
       this.dataIn['rdv']['resultByClient'][this.idClient])
       .then(response => {
-        ////console.log("==> Form change", response);
+        //console.log("==> Form change", response);
         this.form = response['formGroup'];
         this.selectedForm = response['selectedForm'];
         if (this.formTitle == "") this.formTitle = this.selectedForm['title'];
@@ -71,7 +71,7 @@ export class FlexInput implements OnInit, OnChanges {
       this.dataIn['clients'][this.idClient]['client']['output'][0],
       this.dataIn['rdv']['resultByClient'][this.idClient])
       .then(response => {
-        ////console.log("==> Form change", response);
+        //console.log("==> Form change", response);
         this.form = response['formGroup'];
         this.selectedForm = response['selectedForm'];
         if (this.formTitle == "") this.formTitle = this.selectedForm['title'];
@@ -87,10 +87,10 @@ export class FlexInput implements OnInit, OnChanges {
   *    - default value , initialized from the synchronised folder
   * ======================================================================= */
   loadForm(idForm, dataForm, dataRdv) {
-    ////console.log("LOAD FORM", idForm, dataForm, dataRdv)
+    //console.log("LOAD FORM", idForm, dataForm, dataRdv)
     return new Promise((resolve, reject) => {
       this.paramsApi.getForm(idForm, dataForm, dataRdv).then(data => {
-        ////console.log("== Return form data ", idForm, data);
+        //console.log("== Return form data ", idForm, data);
         let fields = new groupBy().transform(data['form']['fields'], 'group');
         resolve({ "idForm": idForm, "formGroup": data['formGroup'], "selectedForm": data['form'], "selectedFields": fields })
       }, error => {
@@ -104,7 +104,7 @@ export class FlexInput implements OnInit, OnChanges {
   }
   initField(idx, modelField) {
     // Init field with data already modified
-    ////console.log("Load data from current value", this.dataCurrent, modelField);
+    //console.log("Load data from current value", this.dataCurrent, modelField);
     let previousData = this.dataIn['rdv']['resultByClient'][this.idClient]['forms'];
     let previousValue = null;
     previousData.forEach(function (f) {
@@ -122,8 +122,8 @@ export class FlexInput implements OnInit, OnChanges {
   }
   // Validation form
   diagNext(formStatus, evt?) {
-    ////console.log("Save data form", this.form.controls, this.selectedForm['fields']);
-    ////console.log("Click event",evt);
+    //console.log("Save data form", this.form.controls, this.selectedForm['fields']);
+    //console.log("Click event",evt);
     this.menuCurrent.status = formStatus;
     let fForm = [];
     for (var key in this.form.controls) {
@@ -150,14 +150,14 @@ export class FlexInput implements OnInit, OnChanges {
         this.dataIn['rdv']['resultByClient'][this.idClient]['simu'][this.selectedForm.id] = dForm;
         this.events.publish('rdvSave', this.dataIn);
       }, error => {
-        //console.log(error);
+        console.log(error);
       })
     } else {
       this.events.publish('rdvSave', this.dataIn);
       this.events.publish('form_update',{"idForm":this.idForm,"dataForm":dForm});
     }
     let evtData = { idPage: this.idPage, form: this.selectedForm, status: formStatus };
-    ////console.log("Event data", evtData);
+    //console.log("Event data", evtData);
     this.events.publish('rdvStatus_' + this.idPage, evtData);
   }
   // ===== External Simulator with params ====
@@ -180,7 +180,7 @@ export class FlexInput implements OnInit, OnChanges {
     //console.log("OPEN SIMU WITH DATA:", idx, field, url);
     let rdvId = this.dataCurrent['rdv']['rdvId'];
     this.simu.callSimu({ "rdvId": rdvId, "dataIn": this.dataCurrent }).then(data => {
-      ////console.log("Data from simu",data)
+      //console.log("Data from simu",data)
       me.simuExec = true;
       url = data['urlNext'];
       me.dataNonInput['idSimu'] = data['insert_id'];
@@ -194,12 +194,12 @@ export class FlexInput implements OnInit, OnChanges {
       }
       me.events.publish("simuStart", data, this.popupWindow);
     }, error => {
-      //console.log(error);
+      console.log(error);
       me.simuExec = false;
     });
   }
   onSubmit() {
-    ////console.log("Submit Form", this.form);
+    //console.log("Submit Form", this.form);
   }
   isValid(ctrl) {
     //console.log(ctrl);

@@ -67,9 +67,9 @@ export class SouscriptionPage {
       { "code": "IP", "lib": "Investissement progressif", "data": { "montant": 0, "duree": 0, "periodicite": "", "supports": [] } },
     ]
     // load referentiels
-    this.paramsApi.loadRefs('produits').then(response => { this.lstProduit = response['data']; }, error => { //console.log(error); });
-    this.paramsApi.loadRefs('supports').then(response => {this.lstSupports = response['data'];}, error => {//console.log(error);});
-    this.paramsApi.loadRefs('periodicite').then(response => {this.refPeriodicite = response['data'];}, error => {//console.log(error);});
+    this.paramsApi.loadRefs('produits').then(response => { this.lstProduit = response['data']; }, error => { console.log(error); });
+    this.paramsApi.loadRefs('supports').then(response => {this.lstSupports = response['data'];}, error => {console.log(error);});
+    this.paramsApi.loadRefs('periodicite').then(response => {this.refPeriodicite = response['data'];}, error => {console.log(error);});
     this.etape = "pro";
 
     // Return events from inputs forms
@@ -80,7 +80,7 @@ export class SouscriptionPage {
       CalcTools.calcPageStatus(this.idPage, this.lstForms);
     });
     this.events.subscribe('form_update', eventData => {
-      //console.log(eventData);
+      console.log(eventData);
       let idForm = eventData[0]['idForm'];
       let spage = this.lstForms.filter(item => item['id'] == idForm)[0]['spage'];
       this.dataIn['rdv']['souscription'][spage][idForm] = eventData[0]['dataForm'];
@@ -90,7 +90,7 @@ export class SouscriptionPage {
     });
     /* Not Use
     this.events.subscribe('rdvStatus_' + this.idPage, dataReturn => {
-      //console.log("Update status form", this.lstForms, dataReturn);
+      console.log("Update status form", this.lstForms, dataReturn);
       let idForm = dataReturn[0]['form']['id'];
       let f = this.lstForms.filter(item => item['id'] == idForm);
       f[0]['status'] = dataReturn[0]['status'];
@@ -111,7 +111,7 @@ export class SouscriptionPage {
     this.histoSimu = this.dataIn['rdv']['resultByClient'][this.idClient]['simus'];
   }
   doChange(evt) {
-    //console.log("Change segment", evt);
+    console.log("Change segment", evt);
     this.events.publish('rdvSave', this.dataIn);
   }
   close() {
@@ -165,7 +165,7 @@ export class SouscriptionPage {
   }
   // Method for IP Support
   addArbitrageSupport(source) {
-    //console.log("Source",source);
+    console.log("Source",source);
     this.supportArbitrageData.push({ "support": "", "part": 0 });
   }
   removeArbitrageSupport(idx) {
@@ -182,7 +182,7 @@ export class SouscriptionPage {
     if (s != 100) {
       this.display.displayAlert("La somme des répartitions en UC doit être égale à 100%.");
     } else {
-      //console.log(this.arbitrageData,this.supportArbitrageData,idx);
+      console.log(this.arbitrageData,this.supportArbitrageData,idx);
       this.arbitrageData[idx]['data']['supports'] = this.supportArbitrageData;
       this.updateArbitrage();
     }

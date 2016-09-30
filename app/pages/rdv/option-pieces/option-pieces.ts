@@ -35,7 +35,7 @@ export class OptionPiecesPage {
     this.dataIn = params.data['currentDoc'];
     this.lstCible = [];
     for (let i in this.dataIn['clients']) {
-      ////console.log(i, this.dataIn['clients'][i]);
+      //console.log(i, this.dataIn['clients'][i]);
       this.lstCible.push({ "id": i, "name": this.dataIn['clients'][i]['client']['output'][0]['NOM'], "sel": false })
     };
     this.lstNatureInfo = [
@@ -53,7 +53,7 @@ export class OptionPiecesPage {
     });
   }
   delItem(idx){
-    //console.log(idx);
+    console.log(idx);
     this.dataIn['rdv']['docsInput'].splice(idx,1);
      this.events.publish('rdvSave', this.dataIn);
   }
@@ -92,7 +92,7 @@ export class OptionPiecesPage {
   takeMail() { }
   execute() {
     //store Image Data+Ref in docs
-     //console.log(this.dataIn,this.form);
+     console.log(this.dataIn,this.form);
     let idDoc=0;
     this.dataIn['rdv']['docsInput'].push(
       { "idClient": this.idClient, 
@@ -103,7 +103,7 @@ export class OptionPiecesPage {
       "img64": this.base64Image });
     // Save data to the client folder
     for (let key in this.lstCible) {
-      //console.log(this.dataIn, key);
+      console.log(this.dataIn, key);
       if (this.lstCible[key]['sel']) {
         this.dataIn['rdv']['resultByClient'][key]['docs'].push({"idClient": this.idClient, "idDoc": idDoc,"ts": new Date()});
       }

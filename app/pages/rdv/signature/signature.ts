@@ -53,10 +53,10 @@ export class SignaturePage {
       this.dataIn = eventData[0];
     });
     this.events.subscribe('rdvStatus_' + this.idPage, dataReturn => {
-      ////console.log("Update status form", this.lstForms, dataReturn);
+      //console.log("Update status form", this.lstForms, dataReturn);
       let idForm = dataReturn[0]['form']['id'];
       let f = this.lstForms.filter(item => item['id'] === idForm);
-      //console.log("Search Form status", f);
+      console.log("Search Form status", f);
       f[0]['status'] = dataReturn[0]['status'];
       CalcTools.calcPageStatus(this.idPage, this.lstForms);
     });
@@ -68,24 +68,24 @@ export class SignaturePage {
   getTemplates() {
     let load=this.display.displayLoading("Chargement des modèles");
     this.sign.callApi(this.srv, "listTemplate").then(response => {
-      //console.log(response);
+      console.log(response);
       this.lstDocSign = response['envelopeTemplates'];
       load.dismiss();
     }, error => {
       load.dismiss();
       this.display.displayToast("Service de signature NON DISPONIBLE");
-      //console.log(error);
+      console.log(error);
 
     })
   }
   startIdNum() {
-    //console.log("Start call " + this.srv, this.docSign);
+    console.log("Start call " + this.srv, this.docSign);
   }
   startSign() {
     this.sign.loadRootApi(this.srv).then(response => {
-      //console.log(response);
+      console.log(response);
     }, error => {
-      //console.log(error);
+      console.log(error);
     });
   }
   loadDocSign() {

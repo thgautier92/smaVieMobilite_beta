@@ -81,13 +81,13 @@ export class RdvPage {
       }, error => { });
     });
     events.subscribe('menuStatusChange', eventData => {
-      ////console.log("Update status menu", eventData);
+      //console.log("Update status menu", eventData);
       let idMenu = eventData[0]['id'];
       let m = this.dataMenu.filter(item => item['id'] === idMenu);
       m[0]['status'] = eventData[0]['status'];
     });
     events.subscribe('copyClientChange', eventData => {
-      //console.log("copyClientChange", eventData);
+      console.log("copyClientChange", eventData);
       this.start(+eventData[0]['id'])
     });
   }
@@ -97,7 +97,7 @@ export class RdvPage {
   getRdv(id) {
     let me = this;
     this.db.get(id).then(function (rdv) {
-      ////console.log(doc);
+      //console.log(doc);
       me.currentRdv = rdv;
       // Create JSON Structure for data input by application
       let idResult = "resultByClient";
@@ -123,19 +123,19 @@ export class RdvPage {
         }
       }
       me.lstCli = me.currentRdv.rdv[idResult];
-      //console.log("Current RDV", me.currentRdv);
+      console.log("Current RDV", me.currentRdv);
       me.start(0);
     }).catch(function (error) {
       console.error(error);
     });
   }
   start(idx) {
-    //console.log("Select client Index", idx);
+    console.log("Select client Index", idx);
     this.titleRdv = this.currentRdv['clients'][idx]['client']['output'][0]['NOM'];
     this.currentCli = idx;
     //this.currentContext = { "currentPage": null, "currentCli": this.currentCli, "currentDoc": this.currentRdv }
     this.currentContext = { "currentCli": this.currentCli, "currentDoc": this.currentRdv }
-    //console.log("Current Context", this.currentContext);
+    console.log("Current Context", this.currentContext);
     this.events.publish('clientChange', this.currentContext);
   }
   retrieveData(idx) {
@@ -150,21 +150,21 @@ export class RdvPage {
   // Save data in PouchDb locally
   saveData(docPut) {
     return new Promise((resolve, reject) => {
-      //console.log("==> SAVE : RDV is being saved in Pouch : ", docPut);
+      console.log("==> SAVE : RDV is being saved in Pouch : ", docPut);
       let id = docPut['_id'];
       this.db.get(id).then(docLocal => {
-        ////console.log(docLocal);
+        //console.log(docLocal);
         let rev = docLocal['_rev'];
         let up = { _id: id, _rev: rev, clients: docPut['clients'], rdv: docPut['rdv'] };
         this.db.put(up).then(saveResponse => {
-          ////console.log("<== RDV is saved successfully in Pouch", saveResponse);
+          //console.log("<== RDV is saved successfully in Pouch", saveResponse);
           resolve(saveResponse)
         }, saveError => {
-          //console.log("==> ERROR saving the RDV in Pouch", saveError);
+          console.log("==> ERROR saving the RDV in Pouch", saveError);
           reject(saveError);
         });
       }, error => {
-        //console.log(error);
+        console.log(error);
         reject(error);
       })
     });
@@ -191,7 +191,7 @@ export class RdvPage {
           {
             text: 'Annuler', role: 'cancel',
             handler: () => {
-              //console.log('Cancel clicked');
+              console.log('Cancel clicked');
             }
           },
           {

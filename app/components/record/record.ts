@@ -30,7 +30,7 @@ export class Record implements AfterViewInit,OnChanges {
     this.resultDiv = this.result.nativeElement;
   }
   ngOnChanges(changes: any) {
-    ////console.log(changes);
+    //console.log(changes);
     this.data=changes['dataRecord'].currentValue;
     this.render(this.data,this.levelOpen);
   }
@@ -44,7 +44,7 @@ export class Record implements AfterViewInit,OnChanges {
       this.resultDiv.appendChild(this.formatter.render());
       this.checkColor = 'transparent';
     } catch (e) {
-      //console.log("Erreur JSONFormatter",e);
+      console.log("Erreur JSONFormatter",e);
       this.checkColor = 'rgba(197, 69, 110, 0.30)';
     }
   }

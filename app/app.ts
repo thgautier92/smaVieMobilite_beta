@@ -60,7 +60,7 @@ class MyApp {
       this.isAut = true;
       this.nav.setRoot(HomePage, this.userData);
     }, error => {
-      //console.log("Verif return", error);
+      console.log("Verif return", error);
       this.isAut = false;
       this.userData = {};
       this.nav.setRoot(AuthPage);
@@ -71,10 +71,10 @@ class MyApp {
     this.callConnect()
   };
   callConnect() {
-    //console.log("Call AUTH page");
+    console.log("Call AUTH page");
     let modal = this.modalCtrl.create(AuthPage);
     modal.onDidDismiss(response => {
-      //console.log("Return from AUTH page", response);
+      console.log("Return from AUTH page", response);
       this.userData = response;
       this.nav.setRoot(HomePage, this.userData);
     })

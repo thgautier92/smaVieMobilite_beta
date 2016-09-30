@@ -24,7 +24,7 @@ export class DisplayTools {
             cssClass:"toastInfo"
         });
         toast.onDidDismiss(() => {
-            ////console.log('Dismissed toast');
+            //console.log('Dismissed toast');
         });
         toast.present();
     }

@@ -59,10 +59,10 @@ export class Simu {
         let options = new RequestOptions({ headers: credHeaders });
         this.http.post(url, JSON.stringify(dataCall), options)
           .subscribe(res => {
-            ////console.log("Post response", res);
+            //console.log("Post response", res);
             resolve(JSON.parse(res['_body']));
           }, error => {
-            //console.log("Post error", JSON.stringify(error));
+            console.log("Post error", JSON.stringify(error));
             if (typeof (error['_body']) === "string") {
               reject(JSON.parse(error['_body']));
             } else {
@@ -110,10 +110,10 @@ export class Simu {
         let options = new RequestOptions({ headers: credHeaders });
         this.http.get(url, options)
           .subscribe(res => {
-            ////console.log("Post response", res);
+            //console.log("Post response", res);
             resolve(JSON.parse(res['_body']));
           }, error => {
-            //console.log("Post error", JSON.stringify(error));
+            console.log("Post error", JSON.stringify(error));
             if (typeof (error['_body']) === "string") {
               reject({ error: "Erreur", reason: "La simulation n'est pas disponible." });
             } else {
@@ -138,7 +138,7 @@ export class Simu {
     return new Promise((resolve, reject) => {
       let url = this.rootUrl + "/vie/simu";
       if (!window['device']) {
-        //console.log("Proxy CORS added for Web application");
+        console.log("Proxy CORS added for Web application");
         url = "/gsapi/vie/simu";
       }
       // ***** To be modified for a specific target *****
@@ -156,10 +156,10 @@ export class Simu {
       let options = new RequestOptions({ headers: credHeaders });
       this.http.post(url, JSON.stringify(dataCall), options)
         .subscribe(res => {
-          ////console.log("Post response", res);
+          //console.log("Post response", res);
           resolve(JSON.parse(res['_body']));
         }, error => {
-          //console.log("Post error", JSON.stringify(error));
+          console.log("Post error", JSON.stringify(error));
           if (typeof (error['_body']) === "string") {
             reject(JSON.parse(error['_body']));
           } else {
@@ -172,7 +172,7 @@ export class Simu {
     return new Promise((resolve, reject) => {
       let url = this.rootUrl + "/vie/simu";
       if (!window['device']) {
-        //console.log("Proxy CORS added for Web application");
+        console.log("Proxy CORS added for Web application");
         url = "/gsapi/vie/simu";
       }
       // ***** To be modified for a specific target *****
@@ -186,10 +186,10 @@ export class Simu {
       let options = new RequestOptions({ headers: credHeaders });
       this.http.get(url + "/" + id, options)
         .subscribe(res => {
-          ////console.log("Get response", res);
+          //console.log("Get response", res);
           resolve(JSON.parse(res['_body']));
         }, error => {
-          //console.log("Get error", error);
+          console.log("Get error", error);
           if (typeof (error['_body']) === "string") {
             reject(JSON.parse(error['_body']));
           } else {
