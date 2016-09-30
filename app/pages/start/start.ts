@@ -53,16 +53,12 @@ export class StartPage {
     this.docs = []
     this.showBase();
     loading.dismiss();
-    /*
-    setTimeout(() => {
-    }, 2000);
-    */
   }
   showBase(status?) {
     let me = this;
     me.docs = [];
     this.db.allDocs({ include_docs: true, descending: true }, function (err, data) {
-      console.log(data);
+      //console.log(data);
       if (status) {
         let dataFilter = data.rows.filter(item => item.doc.rdv.status === status);
         console.log("Filter",dataFilter);
@@ -70,13 +66,12 @@ export class StartPage {
       } else {
         me.docs = new groupBy().transform(data.rows, 'doc', 'rdv', 'dateRdv', 10);
       }
-
-      console.log(me.docs);
+      //console.log("RDV Doc group by date",me.docs);
     });
   };
   start(item) {
     // start the RDV with data
-    console.log("Start RDV with item ", item);
+    //console.log("Start RDV with item ", item);
     item['doc']['rdvEnded'] = false;
     this.nav.setRoot(RdvPage, { base: this.base, rdvId: item.id });
   }

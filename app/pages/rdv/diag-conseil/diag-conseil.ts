@@ -43,7 +43,6 @@ export class DiagConseilPage {
       //console.log("Update status form", this.lstForms, dataReturn);
       let idForm = dataReturn[0]['form']['id'];
       let f = this.lstForms.filter(item => item['id'] === idForm);
-      console.log(idForm,this.lstForms,f);
       f[0]['status'] = dataReturn[0]['status'];
       //CalcTools.calcPageStatus(this.idPage, this.lstForms);
     });

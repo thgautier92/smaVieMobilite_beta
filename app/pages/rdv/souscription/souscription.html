@@ -34,12 +34,12 @@
             <ion-icon name="search"></ion-icon>
             A partir d'une simulation existante
           </ion-list-header>
-          <ion-item text-wrap *ngFor="let data of histoSimu;let idx=index">
+          <ion-item text-wrap *ngFor="let simu of histoSimu;let idx=index">
             <ion-row>
-              <ion-col width-20><span primary>{{data.simulateur}}</span></ion-col>
-              <ion-col width-10><span primary>{{data.idSimu}}</span></ion-col>
-              <ion-col width-40 (click)="selSimu(data)"><span secondary>{{data.produit}}</span></ion-col>
-              <ion-col width-30><span danger>{{data.dateSimu}}</span></ion-col>
+              <ion-col width-20><span primary>{{simu.simulateur}}</span></ion-col>
+              <ion-col width-10><span primary>{{simu.idSimu}}</span></ion-col>
+              <ion-col width-40 (click)="selSimu(simu)"><span secondary>{{simu.produit}}</span></ion-col>
+              <ion-col width-30><span danger>{{simu.dateSimu}}</span></ion-col>
             </ion-row>
           </ion-item>
           <ion-item>

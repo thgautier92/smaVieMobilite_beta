@@ -76,7 +76,6 @@ export class Paramsdata {
         this.http.get('data/refs.json')
           .map(res => res.json())
           .subscribe(refs => {
-            console.log(refs);
             this.refs = refs;
             if (id) {
               let r = this.refs.filter(item => item.id == id);
