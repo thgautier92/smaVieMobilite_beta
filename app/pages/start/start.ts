@@ -31,7 +31,7 @@ export class StartPage {
     this.platform = platform;
     this.display = display;
     this.params = couch.getParams();
-    //console.log(this.params);
+    ////console.log(this.params);
     this.docs = [];
   }
   ngOnInit() {
@@ -62,21 +62,21 @@ export class StartPage {
     let me = this;
     me.docs = [];
     this.db.allDocs({ include_docs: true, descending: true }, function (err, data) {
-      console.log(data);
+      //console.log(data);
       if (status) {
         let dataFilter = data.rows.filter(item => item.doc.rdv.status === status);
-        console.log("Filter",dataFilter);
+        //console.log("Filter",dataFilter);
         me.docs = new groupBy().transform(dataFilter, 'doc', 'rdv', 'dateRdv', 10);
       } else {
         me.docs = new groupBy().transform(data.rows, 'doc', 'rdv', 'dateRdv', 10);
       }
 
-      console.log(me.docs);
+      //console.log(me.docs);
     });
   };
   start(item) {
     // start the RDV with data
-    console.log("Start RDV with item ", item);
+    //console.log("Start RDV with item ", item);
     item['doc']['rdvEnded'] = false;
     this.nav.setRoot(RdvPage, { base: this.base, rdvId: item.id });
   }

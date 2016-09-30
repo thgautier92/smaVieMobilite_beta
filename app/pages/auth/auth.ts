@@ -33,17 +33,17 @@ export class AuthPage {
   }
   ngOnInit() { }
   login(credentials) {
-    //console.log(credentials);
+    ////console.log(credentials);
     this.couch.openSession(credentials, null).then(response => {
-      //console.log(response);
+      ////console.log(response);
       if (response['ok']) {
-        console.log("User Auth validated");
+        //console.log("User Auth validated");
         this.couch.verifSession(true).then(response => {
           this.isAut = true;
           this.events.publish('userChange', response);
           this.nav.setRoot(HomePage, response);
         }, error => {
-          console.log(error);
+          //console.log(error);
           this.isAut = false;
           let toast = this.toastCtrl.create({
             message: 'Connexion impossible. Erreur technique.',
@@ -52,7 +52,7 @@ export class AuthPage {
           toast.present();
         });
       } else {
-        console.log("Password not valid");
+        //console.log("Password not valid");
         let toast = this.toastCtrl.create({
           message: 'Utilisateur / mot de passe invalide !',
           duration: 3000
@@ -60,7 +60,7 @@ export class AuthPage {
         toast.present();
       }
     }, error => {
-      console.log(error);
+      //console.log(error);
       let toast = this.toastCtrl.create({
         message: 'Utilisateur / mot de passe invalide !',
         duration: 3000
@@ -99,11 +99,11 @@ export class SignUpPage {
     });
   }
   signup(credentials) {
-    console.log(credentials);
+    //console.log(credentials);
     this.couch.putUser(credentials, null).then(response => {
-      console.log("CouchDB response", response);
+      //console.log("CouchDB response", response);
       if (response['ok'] === true) {
-        console.log("User Auth creation validated");
+        //console.log("User Auth creation validated");
         let toast = this.toastCtrl.create({
           message: 'Compte crée. Vous pouvez vous connecter.',
           duration: 3000
@@ -111,7 +111,7 @@ export class SignUpPage {
         toast.present();
         this.nav.pop();
       } else {
-        console.log("Error during creating account");
+        //console.log("Error during creating account");
         let toast = this.toastCtrl.create({
           message: 'Création du compte impossible. Erreur technique.',
           duration: 3000
@@ -119,7 +119,7 @@ export class SignUpPage {
         toast.present();
       }
     }, error => {
-      console.log(error);
+      //console.log(error);
       let toast = this.toastCtrl.create({
         message: 'Connexion impossible. Erreur technique.',
         duration: 3000

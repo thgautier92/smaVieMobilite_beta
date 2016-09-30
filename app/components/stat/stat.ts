@@ -31,7 +31,7 @@ export class Stat implements AfterViewInit, OnChanges {
     //this.render(this.graphData);
   }
   ngOnChanges(changes: any) {
-    console.log(changes);
+    //console.log(changes);
     this.render(changes['graphData'].currentValue);
   }
   render(data) {
@@ -66,7 +66,7 @@ export class Stat implements AfterViewInit, OnChanges {
         }
       }
     });
-    console.log(myChart);
+    //console.log(myChart);
     this.displayChart = true;
   }
 };

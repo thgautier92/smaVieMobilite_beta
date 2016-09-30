@@ -65,7 +65,7 @@ export class Paramsdata {
   loadRefs(id?) {
     return new Promise(resolve => {
       if (this.refs) {
-        console.log("Return REFS from MEMORY");
+        //console.log("Return REFS from MEMORY");
         if (id) {
           let r = this.refs.filter(item => item.id == id);
           resolve(r[0]);
@@ -76,7 +76,7 @@ export class Paramsdata {
         this.http.get('data/refs.json')
           .map(res => res.json())
           .subscribe(refs => {
-            console.log(refs);
+            //console.log(refs);
             this.refs = refs;
             if (id) {
               let r = this.refs.filter(item => item.id == id);
@@ -92,7 +92,7 @@ export class Paramsdata {
   loadForm() {
     return new Promise(resolve => {
       if (this.paramsForm) {
-        console.log("Return forms from MEMORY");
+        //console.log("Return forms from MEMORY");
         resolve(this.paramsForm);
       } else {
         this.http.get('data/forms.json')
@@ -106,23 +106,23 @@ export class Paramsdata {
   }
   getForm(id, dataSI?, dataRdv?) {
     /*
-    console.log("=====Get form id", id)
-    console.log("=====Get form data From SI", dataSI);
-    console.log("=====Get form data From Input", dataRdv);
+    //console.log("=====Get form id", id)
+    //console.log("=====Get form data From SI", dataSI);
+    //console.log("=====Get form data From Input", dataRdv);
     */
     if (!dataRdv) dataRdv = { "forms": [] }
     return new Promise((resolve, reject) => {
       this.loadForm().then((data) => {
-        //console.log("=====Forms Parameters ", data);
+        ////console.log("=====Forms Parameters ", data);
         if (data) {
           let ret = {}
           let form = data['forms'].filter(item => item['id'] == id);
-          //console.log("=====Form find fo id", id, form);
+          ////console.log("=====Form find fo id", id, form);
           let formModel = data['dataToForm'];
           if (form.length == 0) {
             form = data['forms'].filter(item => item['id'] === 1);
           }
-          console.log("=====Form ", form);
+          //console.log("=====Form ", form);
           ret['form'] = form[0];
           let group = new FormGroup({});
           let groupValue = {};
@@ -163,7 +163,7 @@ export class Paramsdata {
               }
             }
             let field = question['model'];
-            //console.log("=== CREATE THE CONTROL", field, modelValue);
+            ////console.log("=== CREATE THE CONTROL", field, modelValue);
             question['value'] = modelValue;
 
             // Generate validators
@@ -177,15 +177,15 @@ export class Paramsdata {
             groupValue[field] = modelValue;
             //ctrl.updateValue(modelValue);
             group.addControl(field, ctrl);
-            //console.log("==== Question", group);
+            ////console.log("==== Question", group);
           });
-          //console.log("=====Form Group ", group, this.fb);
+          ////console.log("=====Form Group ", group, this.fb);
           //let formB = group;
           ret['formGroup'] = group;
-          //console.log("=====Return forms ", ret);
+          ////console.log("=====Return forms ", ret);
           resolve(ret);
         } else {
-          console.log("=====Return NULL forms ");
+          //console.log("=====Return NULL forms ");
           reject(null);
         }
       })
@@ -227,7 +227,7 @@ export class ValidationService {
     }
   }
   static numberFormat(control: Control, numLimit?: Array<number>): ValidationResult {
-    //console.log("Bornes : ", numLimit);
+    ////console.log("Bornes : ", numLimit);
     if (numLimit) {
       if (control.value < numLimit[0] || control.value > numLimit[1]) {
         return { "incorrectNumberFormat": true };

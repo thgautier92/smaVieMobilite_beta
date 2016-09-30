@@ -38,11 +38,11 @@ export class FlexDisplay implements OnInit, OnChanges {
     //this.form = this.fb.group({});
   }
   ngOnInit() {
-    console.log("==> Data passed to component : ", this.idPage, this.idForm, this.dataIn, this.idClient);
+    //console.log("==> Data passed to component : ", this.idPage, this.idForm, this.dataIn, this.idClient);
 
   };
   ngOnChanges(changes: any) {
-    //console.log("Data Changes", changes);
+    ////console.log("Data Changes", changes);
     this.idClient = changes.idClient.currentValue;
     if (changes['dataIn']) {
       this.dataCurrent = changes.dataIn.currentValue;
@@ -50,7 +50,7 @@ export class FlexDisplay implements OnInit, OnChanges {
       this.dataCurrent = this.dataIn;
     }
     this.loadForm(this.idForm, this.idClient, this.dataCurrent).then(response => {
-      console.log("==> Form Display change", response);
+      //console.log("==> Form Display change", response);
       if (this.formTitle == "") this.formTitle = this.selectedForm['title'];
       this.selectedFields = new groupBy().transform(response['formInput'], 'group');
       this.okForm = true;
@@ -66,7 +66,7 @@ export class FlexDisplay implements OnInit, OnChanges {
   * ======================================================================= */
   loadForm(idForm, idClient, data) {
     return new Promise((resolve, reject) => {
-      console.log("Data to display", idForm, idClient, data);
+      //console.log("Data to display", idForm, idClient, data);
       let dataForm = data['rdv']['resultByClient'][idClient]['forms'];
       let ret={};
       dataForm.forEach((elt, key) => {
@@ -78,8 +78,8 @@ export class FlexDisplay implements OnInit, OnChanges {
 
   // Validation form
   diagNext(formStatus, evt) {
-    //console.log("Save data form", this.form.controls, this.selectedForm['fields']);
-    //console.log("Click event",evt);
+    ////console.log("Save data form", this.form.controls, this.selectedForm['fields']);
+    ////console.log("Click event",evt);
     this.menuCurrent.status = formStatus;
     let fForm = [];
     for (var key in this.form.controls) {
@@ -99,13 +99,13 @@ export class FlexDisplay implements OnInit, OnChanges {
     this.dataIn['rdv']['resultByClient'][this.idClient]['forms'][this.selectedForm.id] = dForm;
     if (this.simuExec) {
       this.simu.getSimu(this.dataNonInput['idSimu']).then(data => {
-        console.log("GET SIMU DATA", data);
+        //console.log("GET SIMU DATA", data);
         this.dataNonInput['simu'] = data['results']['output'][0];
         dForm['extraData'] = this.dataNonInput;
         this.dataIn['rdv']['resultByClient'][this.idClient]['forms'][this.selectedForm.id] = dForm;
         this.events.publish('rdvSave', this.dataIn);
       }, error => {
-        console.log(error);
+        //console.log(error);
       })
     } else {
       this.events.publish('rdvSave', this.dataIn);
@@ -114,7 +114,7 @@ export class FlexDisplay implements OnInit, OnChanges {
   }
   // ===== External Simulator with params ====
   openSimu(url) {
-    console.log("Open url", url);
+    //console.log("Open url", url);
     var options = {
       location: 'yes',
       clearcache: 'yes',
@@ -129,10 +129,10 @@ export class FlexDisplay implements OnInit, OnChanges {
   }
   openSimuData(idx, field, url) {
     let me = this;
-    console.log("OPEN SIMU WITH DATA:", idx, field, url);
+    //console.log("OPEN SIMU WITH DATA:", idx, field, url);
     let rdvId = this.dataCurrent['rdv']['rdvId'];
     this.simu.callSimu({ "rdvId": rdvId, "dataIn": this.dataCurrent }).then(data => {
-      //console.log("Data from simu",data)
+      ////console.log("Data from simu",data)
       me.simuExec = true;
       url = data['urlNext'];
       me.dataNonInput['idSimu'] = data['insert_id'];
@@ -146,7 +146,7 @@ export class FlexDisplay implements OnInit, OnChanges {
       }
       me.events.publish("simuStart", data, this.popupWindow);
     }, error => {
-      console.log(error);
+      //console.log(error);
       me.simuExec = false;
     });
   }

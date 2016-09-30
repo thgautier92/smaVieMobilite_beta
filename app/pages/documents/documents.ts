@@ -26,7 +26,7 @@ export class DocumentsPage {
     this.paramsApi.loadDocs().then(response => {
       this.lstDocs = response;
     }, error => {
-      console.log(error);
+      //console.log(error);
     })
   }
   getItems(ev: any) {
@@ -41,7 +41,7 @@ export class DocumentsPage {
     this.initializeItems();
   }
   openFile(item) {
-    //console.log(item);
+    ////console.log(item);
     //let modal = this.modalCtrl.create(ViewPage, { "file": item.file, "title":item.lib });
     //modal.present();
     if(item.file!=="") this.nav.push(ViewPage, { "file": item.file, "title":item.lib });
@@ -57,10 +57,10 @@ export class ViewPage {
   file: any;
   title:any="";
   constructor(private nav: NavController, private navParams: NavParams, private viewCtrl: ViewController) {
-    console.log(this.navParams);
+    //console.log(this.navParams);
     this.file = this.navParams.data['file'];
     this.title=this.navParams.data['title'];
-    console.log(this.file);
+    //console.log(this.file);
   }
   close() {
     this.viewCtrl.dismiss();

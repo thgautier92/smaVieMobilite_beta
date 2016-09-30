@@ -13,7 +13,7 @@ export class ValuesPipe implements PipeTransform {
     for (var key in dict) {
       if (dict.hasOwnProperty(key)) {
         a.push({ "key": key, "value": dict[key] });
-        //console.log(key,dict[key]);
+        ////console.log(key,dict[key]);
       }
     }
     return a;
@@ -34,10 +34,10 @@ export class binaryData {
   // Transform is the new "return function(value, args)" in Angular 1.x
   transform(value, mime?) {
     var temp = value.substring(4, value.length - 1);
-    //console.log(temp, mime[0]);
+    ////console.log(temp, mime[0]);
     var file = new Blob([value], { type: mime[0] });
     var retUrl = URL.createObjectURL(file);
-    //console.log(retUrl);
+    ////console.log(retUrl);
     return file
   }
 }
@@ -51,7 +51,7 @@ export class groupBy implements PipeTransform {
       if (subgetter) prop = prop[subgetter];
       if (ssubgetter) prop = prop[ssubgetter];
       if (sub) prop=prop.substring(0,sub);
-      //console.log("GROUP BY:", collection, elm, getter, prop);
+      ////console.log("GROUP BY:", collection, elm, getter, prop);
       if (!result[prop]) {
         result[prop] = [];
       }

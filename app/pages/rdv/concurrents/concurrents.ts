@@ -43,11 +43,11 @@ export class ConcurrentsPage {
       CalcTools.calcPageStatus(this.idPage, this.lstForms);
     });
     this.events.subscribe('rdvUpdate', eventData => {
-      console.log("Update page conccurents with data", eventData);
+      //console.log("Update page conccurents with data", eventData);
       this.dataIn = eventData[0];
     });
     this.events.subscribe('rdvStatus_' + this.idPage, dataReturn => {
-      //console.log("Update status form", this.lstForms, dataReturn);
+      ////console.log("Update status form", this.lstForms, dataReturn);
       let idForm = dataReturn[0]['form']['id'];
       let f = this.lstForms.filter(item => item['id'] === idForm);
       f[0]['status'] = dataReturn[0]['status'];

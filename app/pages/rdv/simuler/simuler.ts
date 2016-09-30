@@ -65,14 +65,14 @@ export class SimulerPage {
       this.dataIn = eventData[0];
     });
     this.events.subscribe('rdvStatus_' + this.idPage, dataReturn => {
-      console.log("Update status form", this.lstForms, dataReturn);
+      //console.log("Update status form", this.lstForms, dataReturn);
       let idForm = dataReturn[0]['form']['id'];
       let f = this.lstForms.filter(item => item['id'] === idForm);
       f[0]['status'] = dataReturn[0]['status'];
       CalcTools.calcPageStatus(this.idPage, this.lstForms);
     });
     this.events.subscribe('rdvSave', eventData => {
-      //console.log("Data saved", eventData);
+      ////console.log("Data saved", eventData);
       if (this.popupWindow) this.popupWindow.close();
     });
 
@@ -92,7 +92,7 @@ export class SimulerPage {
   getHistoSimu() {
     this.histoSimu = this.dataIn['rdv']['resultByClient'][this.idClient]['simus'];
     this.maxSimuId = new maxByKeyPipe().transform(this.histoSimu, "idSimu");
-    console.log(this.dataIn, this.maxSimuId);
+    //console.log(this.dataIn, this.maxSimuId);
   }
   getSimuList(simulator) {
     switch (simulator) {
@@ -111,7 +111,7 @@ export class SimulerPage {
     this.getHistoSimu();
   }
   addSimu(simulator) {
-    console.log(simulator);
+    //console.log(simulator);
     this.maxSimuId++;
     this.idSimu = this.maxSimuId;
     let prod = this.refSimu.filter(item => item.code === simulator);
@@ -121,7 +121,7 @@ export class SimulerPage {
       this.getHistoSimu();
       this.simuExec = true;
     }, error => {
-      console.log(error);
+      //console.log(error);
       this.display.displayAlert(error['reason']);
     })
 
@@ -132,7 +132,7 @@ export class SimulerPage {
       let loading = this.display.displayLoading("Envoie des données au simulateur", 5000);
       let rdvId = this.dataIn['rdv']['rdvId'];
       this.simu.callSimulator(simulator, { "rdvId": rdvId, "dataIn": this.dataIn }).then(dataReturn => {
-        console.log("Data returned after sendind data", dataReturn);
+        //console.log("Data returned after sendind data", dataReturn);
         loading.dismiss();
         let url = "";
         switch (simulator) {
@@ -158,7 +158,7 @@ export class SimulerPage {
         } else {
           this.popupWindow = window.open(url, "_blank", options);
           this.popupWindow.focus();
-          console.log(this.popupWindow);
+          //console.log(this.popupWindow);
         }
         resolve(true);
       }, error => {
@@ -170,7 +170,7 @@ export class SimulerPage {
   getSimu(simulator) {
     let loading = this.display.displayLoading("Reception des données du simulateur", 5000);
     this.simu.getSimulatorById(simulator, this.idSimuExternal).then(response => {
-      console.log("Data simu", response);
+      //console.log("Data simu", response);
       loading.dismiss();
       this.dataIn['rdv']['resultByClient'][this.idClient]['simus'].filter(item => item.idSimu == this.idSimu)[0]['idExternal'] = this.idSimuExternal;
 
@@ -191,12 +191,12 @@ export class SimulerPage {
       if (this.popupWindow) this.popupWindow.close();
     }, error => {
       loading.dismiss();
-      console.log(error);
+      //console.log(error);
       this.display.displayToast(error.reason);
     })
   }
   detailSimu(data) {
-    console.log(data);
+    //console.log(data);
     let modal = this.modalCtrl.create(SimulerDetail, { "simuData": data });
     modal.present();
   }
@@ -220,7 +220,7 @@ export class SimulerPage {
 export class SimulerDetail {
   simuData: any;
   constructor(private viewCtrl: ViewController, private navParams: NavParams, private events: Events) {
-    console.log(navParams);
+    //console.log(navParams);
     this.simuData = navParams['data']['simuData'];
   }
   close() {

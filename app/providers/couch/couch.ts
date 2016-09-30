@@ -42,14 +42,14 @@ export class CouchDbServices {
       });
       this.http.request(options)
         .map(res => {
-          console.log(res);
+          //console.log(res);
           res.json();
         })
         .subscribe(data => {
           this.dataRequest = data;
           resolve(this.dataRequest);
         }, error => {
-          console.log("USER : User request error", error);
+          //console.log("USER : User request error", error);
           if (typeof (error._body) === "string") {
             reject(JSON.parse(error._body));
           } else {
@@ -72,14 +72,14 @@ export class CouchDbServices {
       });
       this.http.request(options)
         .subscribe(res => {
-          //console.log(res);
+          ////console.log(res);
           this.dataRequest = res.json();
           var headers = res.headers;
           var setCookieHeader = headers.get('Set-Cookie');
           this.local.set('id_user', JSON.stringify(this.dataRequest));
           resolve(this.dataRequest);
         }, error => {
-          console.log("USER : User request error", error);
+          //console.log("USER : User request error", error);
           if (typeof (error._body) === "string") {
             reject(JSON.parse(error._body));
           } else {
@@ -132,7 +132,7 @@ export class CouchDbServices {
         data => {
           resolve(data);
         }, error => {
-          console.log("USER : User request error", error);
+          //console.log("USER : User request error", error);
           if (typeof (error._body) === "string") {
             reject(JSON.parse(error._body));
           } else {
@@ -148,11 +148,11 @@ export class CouchDbServices {
   createBase(key, params) {
     return new Promise((resolve, reject) => {
       if (!params) params = defaultParams;
-      //console.log("HTTP Params :", params);
+      ////console.log("HTTP Params :", params);
       var rootUrl = 'http://' + params.srv + '/' + key;
       this.credHeaders.delete('Authorization');
       this.credHeaders.append('Authorization', 'Basic ' + window.btoa(params.user + ':' + params.password))
-      //console.log("HTTP Hearder :", this.credHeaders);
+      ////console.log("HTTP Hearder :", this.credHeaders);
       var options = new Request({
         method: RequestMethod.Put,
         headers: this.credHeaders,
@@ -165,7 +165,7 @@ export class CouchDbServices {
           this.dataBases = data;
           resolve(this.dataBases);
         }, error => {
-          //console.log("PROVIDER : Request error", error);
+          ////console.log("PROVIDER : Request error", error);
           if (typeof (error._body) === "string") {
             reject(JSON.parse(error._body));
           } else {
@@ -178,11 +178,11 @@ export class CouchDbServices {
   getDabases(key, params) {
     return new Promise((resolve, reject) => {
       if (!params) params = defaultParams;
-      //console.log("HTTP Params :", params);
+      ////console.log("HTTP Params :", params);
       var rootUrl = 'http://' + params.srv + '/' + key;
       this.credHeaders.delete('Authorization');
       this.credHeaders.append('Authorization', 'Basic ' + window.btoa(params.user + ':' + params.password))
-      //console.log("HTTP Hearder :", this.credHeaders);
+      ////console.log("HTTP Hearder :", this.credHeaders);
       var options = new Request({
         method: RequestMethod.Get,
         headers: this.credHeaders,
@@ -195,7 +195,7 @@ export class CouchDbServices {
           this.dataBases = data;
           resolve(this.dataBases);
         }, error => {
-          console.log("PROVIDER : Request error", error);
+          //console.log("PROVIDER : Request error", error);
           if (typeof (error._body) === "string") {
             resolve(JSON.parse(error._body));
           } else {
@@ -208,7 +208,7 @@ export class CouchDbServices {
   getDbDocs(base, range, skip) {
     return new Promise(resolve => {
       var rootUrl = 'http://' + defaultParams.srv + '/' + base + '/_all_docs?include_docs=true&limit=' + range + '&skip=' + skip;
-      //console.log("Get server info : " + rootUrl);
+      ////console.log("Get server info : " + rootUrl);
       var options = new Request({
         method: RequestMethod.Get,
         headers: this.credHeaders,
@@ -221,7 +221,7 @@ export class CouchDbServices {
           this.dataBases = data;
           resolve(this.dataBases);
         }, error => {
-          console.log("Request error");
+          //console.log("Request error");
           resolve(JSON.parse(error._body));
         });
     });
@@ -230,7 +230,7 @@ export class CouchDbServices {
   getDbDoc(base, id) {
     return new Promise(resolve => {
       var rootUrl = 'http://' + defaultParams.srv + '/' + base + '/' + id;
-      //console.log("Get server info : " + rootUrl);
+      ////console.log("Get server info : " + rootUrl);
       var options = new Request({
         method: RequestMethod.Get,
         headers: this.credHeaders,
@@ -243,7 +243,7 @@ export class CouchDbServices {
           this.dataBases = data;
           resolve(this.dataBases);
         }, error => {
-          console.log("Request error", error);
+          //console.log("Request error", error);
           resolve(JSON.parse(error._body));
         });
     })
@@ -264,14 +264,14 @@ export class CouchDbServices {
       if (data) {
         options['_body'] = JSON.stringify(data);
       }
-      console.log(options);
+      //console.log(options);
       this.http.request(options)
         .map(res => res.json())
         .subscribe(
         data => {
           resolve(data);
         }, error => {
-          console.log("Request error", error);
+          //console.log("Request error", error);
           reject(JSON.parse(error._body));
         });
     })

@@ -100,7 +100,7 @@ export class SignServices {
         auth = auth.replace("#email#", response['email']);
         auth = auth.replace("#password#", response['password']);
         auth = auth.replace("#key#", response['key']);
-        //console.log("AUTH", auth);
+        ////console.log("AUTH", auth);
         header.append('X-DocuSign-Authentication', auth);
         //header.append('withCredentials','true');
         resolve(header);
@@ -114,19 +114,19 @@ export class SignServices {
     return new Promise((resolve, reject) => {
       // get the Root Url
       this.loadRootApi(srv).then(response => {
-        console.log(response);
+        //console.log(response);
         api['url'] = response;
         //load Http header
         this.loadHeader(srv).then(response => {
-          console.log("HEADER", response);
+          //console.log("HEADER", response);
           api['header'] = response;
           resolve(api);
         }, error => {
-          console.log("Unable to load HEADER " + srv, error);
+          //console.log("Unable to load HEADER " + srv, error);
           reject({});
         });
       }, error => {
-        console.log("Unable to load API " + srv);
+        //console.log("Unable to load API " + srv);
         reject({});
       });
     });
@@ -135,16 +135,16 @@ export class SignServices {
     return new Promise((resolve, reject) => {
       // Load params
       this.getParam(srv).then(apiParam => {
-        //console.log("PARAMS", apiParam);
+        ////console.log("PARAMS", apiParam);
         // Load service
         this.getService(srv).then(api => {
-          //console.log("SERVICE", api);
+          ////console.log("SERVICE", api);
           var options = new RequestOptions({
             headers: api['header']
           });
           // get Api info
           this.getApi(srv, idApi).then(apiResponse => {
-            //console.log("API", api);
+            ////console.log("API", api);
             let apiUrl = apiResponse['url'];
             apiUrl = apiUrl.replace("#account#", apiParam['account']);
             //Call API
@@ -155,7 +155,7 @@ export class SignServices {
                   .subscribe(data => {
                     resolve(data);
                   }, error => {
-                    console.log("GET error", error);
+                    //console.log("GET error", error);
                     reject(error);
                   });
                 break;
@@ -165,7 +165,7 @@ export class SignServices {
                   .subscribe(data => {
                     resolve(data);
                   }, error => {
-                    console.log("GET error", error);
+                    //console.log("GET error", error);
                     reject(error);
                   });
                 break;
@@ -175,7 +175,7 @@ export class SignServices {
             reject(apiError);
           });
         }, error => {
-          console.log("Api Call", error);
+          //console.log("Api Call", error);
         });
       }, apiParamError => {
         reject("Fournisseur inconnu");

@@ -27,21 +27,21 @@ export class SignApiPage {
     })
   }
   loadApi(srv) {
-    console.log(srv);
+    //console.log(srv);
     this.sign.getApi(srv).then(response => {
-      console.log(response);
+      //console.log(response);
       this.lstApi = response;
     }, error => {
-      console.log(error);
+      //console.log(error);
     })
   }
   callApi(){
-    console.log(this.srv, this.api);
+    //console.log(this.srv, this.api);
     this.sign.callApi(this.srv,this.api).then(response=>{
-      console.log(response);
+      //console.log(response);
       this.result=response;
     },error=>{
-      console.log(error);
+      //console.log(error);
     })
   }
 }

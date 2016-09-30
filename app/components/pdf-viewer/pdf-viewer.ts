@@ -59,19 +59,19 @@ export class PdfViewer implements OnChanges {
     this.ctx = this.canvas.getContext('2d');
   }
   ngOnChanges(changes: any) {
-    //console.log(changes);
+    ////console.log(changes);
     var url = "data/docs/" + this.pdfSrc;
     // read Doc
-    console.log(url);
+    //console.log(url);
     PDFJS.getDocument(url).then(pdfDoc_ => {
-      console.log(pdfDoc_);
+      //console.log(pdfDoc_);
       if (pdfDoc_) {
         this.pdfDoc = pdfDoc_;
         this.pageCount = this.pdfDoc.numPages;
         this.renderPage(this.pageNum,this.scale);
       }
     }, error => {
-      console.log(error);
+      //console.log(error);
     });
   }
   renderPage(num,sc) {
@@ -131,7 +131,7 @@ export class PdfViewer implements OnChanges {
   }
   changeScale(){
     // ***** TODO : chnage scale method *****
-    //console.log("Change scale", this.scale);
+    ////console.log("Change scale", this.scale);
     //this.pdfDoc.scale = this.scale;
     this.renderPage(this.pageNum,this.scale);
   }
