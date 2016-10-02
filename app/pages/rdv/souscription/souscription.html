@@ -193,37 +193,58 @@
       </ion-card-content>
     </ion-card>
     <ion-card *ngSwitchCase="'rel'">
-      <ion-card-header><button (click)="initREL()">Init</button></ion-card-header>
+      <ion-card-header><button (click)="initREL()">Initialisation des relations</button></ion-card-header>
       <ion-card-content>
-        <h3>Note Groupe SMA/DSI - Sept 2016 : Fonction non prototypée.</h3>
-        <ion-list *ngIf="relData!=[]">
-          <ion-item *ngFor="let client of relData;let idxCli=index">
-            <ion-list>
-              <ion-item-divider>{{client.clientId}} - {{client.name}}</ion-item-divider>
-              <ion-item *ngFor="let role of client.roles;let idxRol=index" no-lines>
-                {{role.lib}} ({{role.code}})
-                <ion-input *ngIf="role.code=='payeur'" [(ngModel)]="role.dataRole.iban" type="text" placeholder="IBAN"></ion-input>
-                <ion-input *ngIf="role.code=='payeur'" [(ngModel)]="role.dataRole.bic" type="text" placeholder="BIC"></ion-input>
-                <button ion-button danger item-right icon-left (click)="removeRole(idxCli,idxRol)">
-              <ion-icon name="trash"></ion-icon> Suppr.
-            </button>
-              </ion-item>
-            </ion-list>
-          </ion-item>
-        </ion-list>
-
+        <div *ngIf="relData!=[]">
+          <ion-card *ngFor="let client of relData;let idxCli=index">
+            <ion-card-header>{{client.clientId}} - {{client.name}}</ion-card-header>
+            <ion-card-content>
+              <ion-row *ngFor="let role of client.roles;let idxRol=index">
+                <ion-col width-20>{{role.lib}} ({{role.code}})</ion-col>
+                <ion-col>
+                  <div *ngIf="role.code=='payeur'">
+                    <ion-item inset>
+                      <ion-label>IBAN</ion-label>
+                      <ion-input [(ngModel)]="role.dataRole.iban" type="text" placeholder="IBAN"></ion-input>
+                    </ion-item>
+                    <ion-item inset>
+                      <ion-label>BIC</ion-label>
+                      <ion-input [(ngModel)]="role.dataRole.bic" type="text" placeholder="BIC"></ion-input>
+                    </ion-item>
+                  </div>
+                </ion-col>
+                <ion-col width-10 text-right>
+                  <button ion-button danger item-right icon-left (click)="removeRole(idxCli,idxRol)"><ion-icon name="trash"></ion-icon></button>
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+          </ion-card>
+        </div>
       </ion-card-content>
     </ion-card>
     <ion-card *ngSwitchCase="'ben'">
-      <ion-card-header></ion-card-header>
+      <ion-card-header color="primary">Clauses Bénéficiaires</ion-card-header>
       <ion-card-content>
-        <h3>Note Groupe SMA/DSI - Sept 2016 : Fonction non prototypée.</h3>
+        <ion-list>
+          <ion-item *ngFor="let cl of refClauses;let idx=index">
+            {{cl.lib}}
+            <!-- <ion-label>{{cl.lib}}</ion-label><ion-checkbox primary (checked)="false"></ion-checkbox> -->
+            <button *ngIf="cl.form!=''" ion-button outline item-right icon-left (click)="openClause(cl)">Compléments...</button>
+          </ion-item>
+        </ion-list>
       </ion-card-content>
     </ion-card>
     <ion-card *ngSwitchCase="'pj'">
-      <ion-card-header></ion-card-header>
+      <ion-card-header>Liste des pièces jointes</ion-card-header>
       <ion-card-content>
-        <h3>Note Groupe SMA/DSI - Sept 2016 : Fonction non prototypée.</h3>
+        <ion-list>
+          <ion-item *ngFor="let item of dataIn['rdv']['docsInput'];let idx=index">
+            <ion-avatar item-left>
+              <img [attr.src]="item.img64">
+            </ion-avatar>
+            <h2>{{item.idDoc}}. {{item.nature}} - {{item.reference}}</h2>
+          </ion-item>
+        </ion-list>
       </ion-card-content>
     </ion-card>
   </div>

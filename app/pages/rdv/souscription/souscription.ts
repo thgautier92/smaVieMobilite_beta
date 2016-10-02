@@ -1,5 +1,5 @@
 import { Component, Input} from '@angular/core';
-import { Page, NavController, ViewController, NavParams, Events } from 'ionic-angular';
+import { Page, NavController, ViewController, NavParams, ModalController, Events } from 'ionic-angular';
 import {CalcTools} from '../../comon/calculate';
 import {DisplayTools} from '../../comon/display';
 import {FlexInput} from '../../../components/flex-input/flex-input';
@@ -43,7 +43,9 @@ export class SouscriptionPage {
   refPeriodicite: any;
   // Variable for REL segment
   relData: any = [];
-  constructor(private nav: NavController, params: NavParams, private viewCtrl: ViewController, private events: Events, private CalcTools: CalcTools, private paramsApi: Paramsdata, private display: DisplayTools) {
+  // Variable for BEN segment
+  refClauses: any = [];
+  constructor(private nav: NavController, params: NavParams, private viewCtrl: ViewController, private modal: ModalController, private events: Events, private CalcTools: CalcTools, private paramsApi: Paramsdata, private display: DisplayTools) {
     this.params = params;
     //this.idPage = this.params.data['currentPage'];
     this.idPage = 7
@@ -75,6 +77,7 @@ export class SouscriptionPage {
     this.paramsApi.loadRefs('produits').then(response => { this.lstProduit = response['data']; }, error => { console.log(error); });
     this.paramsApi.loadRefs('supports').then(response => { this.lstSupports = response['data']; }, error => { console.log(error); });
     this.paramsApi.loadRefs('periodicite').then(response => { this.refPeriodicite = response['data']; }, error => { console.log(error); });
+    this.paramsApi.loadRefs('clauses').then(response => { this.refClauses = response['data']; }, error => { console.log(error); });
     this.etape = "pro";
 
     // Return events from inputs forms
@@ -202,20 +205,45 @@ export class SouscriptionPage {
         "clientId": element.client.output[0].REF,
         "name": element.client.output[0].NOM,
         "roles": [
-          { "code": "adh", "lib": "Adhérent", "selRole": false, dataRole: { } },
-          { "code": "coadh", "lib": "Co-Adhérent", "selRole": false, dataRole: { } },
-          { "code": "payeur", "lib": "Payeur", "selRole": false, dataRole: { "iban": "","bic":"" } },
+          { "code": "adh", "lib": "Adhérent", "selRole": false, dataRole: {} },
+          { "code": "coadh", "lib": "Co-Adhérent", "selRole": false, dataRole: {} },
+          { "code": "payeur", "lib": "Payeur", "selRole": false, dataRole: { "iban": "", "bic": "" } },
           { "code": "sign", "lib": "Signataire", "selRole": false, dataRole: { "situation": "" } },
         ]
       });
     });
   }
-  removeRole(idxCli,idxRole) {
+  removeRole(idxCli, idxRole) {
     this.relData[idxCli]['roles'].splice(idxRole, 1);
   }
   // Methods for the BEN segment
-  // Methods for the PF segment
-
-
+  openClause(cl) {
+    console.log(cl);
+    if (cl['form'] != "") {
+      let modal=this.modal.create(ClauseDetailPage,{"idClient":this.idClient,"idForm":cl['form'],"dataIn":this.dataIn});
+      modal.present();
+    }
+  }
+  // Methods for the PJ segment
+}
+@Component({
+  templateUrl: 'build/pages/rdv/souscription/clause_detail.html',
+  directives: [FlexInput],
+  providers: []
+})
+export class ClauseDetailPage {
+  idClient:any;
+  idForm: any;
+  dataIn:any;
+  constructor(private nav: NavController, private navParams: NavParams, private viewCtrl: ViewController) {
+    console.log(this.navParams);
+    this.idClient=this.navParams.data['idClient'];
+    this.idForm = this.navParams.data['idForm'];
+    this.dataIn = this.navParams.data['dataIn'];
+  }
+  close() {
+    this.viewCtrl.dismiss();
+  }
 
 }
+

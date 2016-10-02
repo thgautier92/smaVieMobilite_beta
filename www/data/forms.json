@@ -1139,6 +1139,65 @@
                 }
             ]
         },
+                {
+            "id": 25,
+            "name": "beneficaire",
+            "title": "Bénéficiaire",
+            "icon": "body",
+            "fields": [
+                {
+                    "group": "",
+                    "model": "bene_civilite",
+                    "title": "Civilité",
+                    "default": "",
+                    "required": "false",
+                    "readOnly": "false",
+                    "error": "",
+                    "type": "enum",
+                    "enum": {"v1":"Monsieur","v2":"Madame"}
+                },
+                {
+                    "group": "",
+                    "model": "bene_nom",
+                    "title": "Nom",
+                    "default": "",
+                    "required": "false",
+                    "readOnly": "false",
+                    "error": "",
+                    "type": "text"
+                },
+                {
+                    "group": "",
+                    "model": "bene_prenom",
+                    "title": "Prénom",
+                    "default": "",
+                    "required": "false",
+                    "readOnly": "false",
+                    "error": "",
+                    "type": "text"
+                },
+                {
+                    "group": "",
+                    "model": "bene_dateNaissance",
+                    "title": "Date de naissance",
+                    "default": "",
+                    "required": "false",
+                    "readOnly": "false",
+                    "error": "",
+                    "type": "date"
+                },
+                {
+                    "group": "",
+                    "model": "bene_lieuNaissance",
+                    "title": "Lieu de naissance",
+                    "default": "",
+                    "required": "false",
+                    "readOnly": "false",
+                    "error": "",
+                    "type": "text"
+                }
+            ]
+        },
         {
             "id": 30,
             "name": "diag_info",
