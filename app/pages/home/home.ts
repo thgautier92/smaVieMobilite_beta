@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, MenuController } from 'ionic-angular';
 import {DisplayTools} from '../comon/display';
 import {StartPage} from '../start/start';
 import {SynchroPage} from '../synchro/synchro';
@@ -18,8 +18,8 @@ import {DocumentsPage} from '../documents/documents';
 export class HomePage {
   items: any;
   display: any;
-  userData:any;
-  constructor(public nav: NavController, private params: NavParams, display: DisplayTools) {
+  userData: any;
+  constructor(public nav: NavController, private menuCtrl: MenuController, private params: NavParams, display: DisplayTools) {
     this.nav = nav;
     //console.log(params);
     this.userData = params.data;
@@ -31,8 +31,12 @@ export class HomePage {
       { 'title': 'Documents', 'icon': 'documents.jpg', 'description': "La base documentaire", 'link': DocumentsPage, 'color': this.display.getRandomColor() },
     ];
   }
-  ngOnInit(){
-    
+  ngOnInit() {
+
+  }
+  openMenu(evt) {
+    console.log("Touch event",evt);
+    this.menuCtrl.open();
   }
   openNavDetailsPage(item) {
     this.nav.setRoot(item.link);
